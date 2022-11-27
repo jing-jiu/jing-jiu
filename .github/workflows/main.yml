@@ -15,7 +15,12 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: "16.x"
-
+            - name: Cache node modules
+              # 设置包缓存目录，避免每次下载
+              uses: actions/cache@v1
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
             - name: Hexo Generate # 安装 Hexo 依赖并且生成静态文件
               run: |
                   npm i
@@ -26,5 +31,11 @@ jobs:
                   SSH_PRIVATE: ${{ secrets.HEXO_DEPLOY }}
                   GIT_NAME: jing-jiu
                   GIT_EMAIL: 1482877448@qq.com
+                  GITHUB_REPO: github.com/jing-jiu/jing-jiu
               run: |
-                  npx hexo d
+                  cd ./public && git init && git add .
+                  git config user.name "jing-jiu"
+                  git config user.email "1482877448@qq.com"
+                  git add .
+                  git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
+                  git push --force --quiet "https://${{ secrets.HEXO_DEPLOY }}@$GITHUB_REPO" blog:blog
