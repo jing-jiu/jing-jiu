@@ -22,9 +22,15 @@ jobs:
                   npx hexo g
 
             - name: Hexo Deploy # 部署步骤，这里以 hexo deploy 为例
-              # env:
-              #     SSH_PRIVATE: ${{ secrets.SSH_PRIVATE }}
-              #     GIT_NAME: jing-jiu
-              #     GIT_EMAIL: 1482877448@qq.com
+              env:
+                  SSH_PRIVATE: ${{ secrets.HEXO_DEPLOY }}
+                  GIT_NAME: jing-jiu
+                  GIT_EMAIL: 1482877448@qq.com
               run: |
+                  mkdir -p ~/.ssh/
+                  echo "$SSH_PRIVATE" | tr -d '\r' > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan github.com >> ~/.ssh/known_hosts
+                  git config --global jing-jiu "$GIT_NAME"
+                  git config --global 1482877448@qq.com "$GIT_EMAIL"
                   npx hexo d
