@@ -36,6 +36,7 @@ jobs:
                   cd ./public && git init && git add .
                   git config user.name "jing-jiu"
                   git config user.email "1482877448@qq.com"
+                  touch README
                   git add .
                   git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-                  git push -f
+                  git push --force --quiet "https://${{ secrets.HEXO_DEPLOY }}@$GITHUB_REPO" blog:blog
