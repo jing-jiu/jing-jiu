@@ -20,8 +20,7 @@ jobs:
               run: |
                   rm -f .yarnclean
                   npm i
-                  rm -rf ./public
-                  yarn run hexo generate
+                  npx hexo g
 
             - name: Hexo Deploy # 部署步骤，这里以 hexo deploy 为例
               env:
@@ -35,4 +34,4 @@ jobs:
                   ssh-keyscan github.com >> ~/.ssh/known_hosts
                   git config --global jing-jiu "$GIT_NAME"
                   git config --global 1482877448@qq.com "$GIT_EMAIL"
-                  yarn run hexo deploy
+                  npx hexo d
