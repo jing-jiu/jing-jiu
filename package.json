@@ -24,7 +24,7 @@
     "hexo-server": "^3.0.0",
     "hexo-theme-fluid": "^1.9.3",
     "hexo-theme-landscape": "^0.0.3",
-    "nunjucks": "3.0.0"
+    "nunjucks": "3.2.3"
   },
   "main": "index.js",
   "repository": "git@github.com:jing-jiu/jing-jiu.git",
