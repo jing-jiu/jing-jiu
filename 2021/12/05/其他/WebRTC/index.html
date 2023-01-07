@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jing-jiu/img/fluid.png">
+  <link rel="icon" href="/jing-jiu/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jing-Jiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="WebRTC相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebRTC相关">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/WebRTC/index.html">
+<meta property="og:site_name" content="Jing-Jiu Blog">
+<meta property="og:description" content="WebRTC相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-star.jpg">
+<meta property="article:published_time" content="2021-12-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-07T06:43:40.289Z">
+<meta property="article:author" content="Jing-Jiu">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-star.jpg">
+  
+  
+  
+  <title>WebRTC相关 - Jing-Jiu Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/jing-jiu/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/jing-jiu/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/jing-jiu/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jing-jiu.github.io","root":"/jing-jiu/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/jing-jiu/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/jing-jiu/js/utils.js" ></script>
+  <script  src="/jing-jiu/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/jing-jiu/">
+      <strong>HOME</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/jing-jiu/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="WebRTC相关"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jing-Jiu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-05 10:00" pubdate>
+          2021年12月5日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">WebRTC相关</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-浏览器中的协议栈"><a href="#一-浏览器中的协议栈" class="headerlink" title="一.浏览器中的协议栈"></a>一.浏览器中的协议栈</h2><blockquote>
+<p>左侧为http协议的协议栈，右侧为WebRTC协议栈</p>
+</blockquote>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/%E5%8D%8F%E8%AE%AE%E6%A0%88.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+<h3 id="1-http相关协议栈"><a href="#1-http相关协议栈" class="headerlink" title="1.http相关协议栈"></a>1.http相关协议栈</h3><ul>
+<li>API层：提供了XHR、SSE、WebSocket</li>
+<li>应用层：提供了http1.x&#x2F;2.0https协议</li>
+<li>会话层：使用了TLS协议（可选），对于https需要这个协议，对于http并不需要</li>
+<li>传输层：底层使用TCP传输，流传输</li>
+<li>网络层：IP协议</li>
+</ul>
+<h3 id="2-WebRTC协议栈"><a href="#2-WebRTC协议栈" class="headerlink" title="2.WebRTC协议栈"></a>2.WebRTC协议栈</h3><ul>
+<li>API层：提供了RTCPeerConnection和DataChannel</li>
+<li>应用层：对于PeerConnection使用了SRTP协议，对于DataChannel使用了SCTP协议（流控传输协议）</li>
+<li>会话层：使用了DTLS协议（仿照TLS），对于SRTP可选，对于SCTP为必须</li>
+<li>链路检测层：ICE&#x2F;STUN&#x2F;TURN检测端到端之间的通路，进行连通性检测</li>
+<li>传输层：底层使用UDP传输，报文传输</li>
+<li>网络层：IP协议</li>
+</ul>
+<h2 id="二-WebRTC传输协议分析"><a href="#二-WebRTC传输协议分析" class="headerlink" title="二.WebRTC传输协议分析"></a>二.WebRTC传输协议分析</h2><h3 id="1-RTP-x2F-SRTP"><a href="#1-RTP-x2F-SRTP" class="headerlink" title="1. RTP&#x2F;SRTP"></a>1. RTP&#x2F;SRTP</h3><blockquote>
+<p>区别在于传输内容是否加密，同样对于RTCP&#x2F;SRTCP一样。如下图（前12字节固定 + (0~15)个32位的CSRC标识符）</p>
+</blockquote>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/rtp.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+<p>其中：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs markdown">V (2bits)：   RTP协议的版本号，当前协议版本号为2。<br>P (1bit)：    填充标志，如果设置填充位P=1，在包尾将包含附加填充字节，它不属于有效载荷。填充的最后一个八进制包含应该忽略的八进制计数。某些加密算法需要固定大小的填充字节，或为在底层协议数据单元中携带几个RTP包。<br>X (1bit)：    扩展标志，如果X=1，则在RTP报头后跟有一个扩展报头<br>CC(4bits):     CSRC计数器，指示CSRC 标识符的个数。<br><br>Ｍ (1bit)：    标记位（不同载荷含义不同，视频标记一帧的最后一个分片slice则=1,其他=0）标识帧边界<br>PT (7bits)：    载荷类型RTP<span class="hljs-emphasis">_PAYLOAD_</span>RTSP,记录后面资料使用哪种 Codec ， receiver 端找出相应的 decoder 解碼出來。例如H264=96---用于区分不同的编解码器<br>序列号(16bits)： 用于标识发送者所发送的 RTP 报文的序列号（初始值随机），每发送一个报文，序号增加 1<br><br>时间戳(32bits)： 时间戳反映了该 RTP 报文的第一个八位组的采样时刻。 接受者使用时间戳来计算延迟和抖动， 并进行同步控制。如果帧分包后，如何组合？通过时间戳和序列号判断，同一个帧的timestamp相同，并且序列号连续。还可以通过M标记位<br>SSRC(32bits):  区分是在和谁通信。值随机选择，参加同一视频会议的两个同步信源的SSRC要相同。音视频源各有自己的ssrc，如果已经存在一个SSRC，则后面产生的不允许重复，后面的需要重新更改SSRC<br><br>贡献源(CSRC)标识符(32bits)：每个CSRC标识符占32位，可以有0～15个。每个CSRC标识了包含在该RTP报文有效载荷中的所有特约信源。<br>应用场景：多路混音、混流时使用，多人通信时，将音频进行混音后，其贡献者有多人，每一个的ssrc都放入一个CSRC当中去<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-RTP-x2F-RTCP"><a href="#2-RTP-x2F-RTCP" class="headerlink" title="2. RTP&#x2F;RTCP"></a>2. RTP&#x2F;RTCP</h3><blockquote>
+<p>RTP协议定义流媒体数据在互联网上传输的数据包格式，而RTCP协议则负责可靠传输、流量控制和拥塞控制等服务质量保证。</p>
+</blockquote>
+<h3 id="3-DTLS"><a href="#3-DTLS" class="headerlink" title="3. DTLS"></a>3. DTLS</h3><blockquote>
+<p>在对SRTP&#x2F;SRTCP数据进行加密之前，需要对证书进行检测，算法协商，通过DTLS实现。</p>
+</blockquote>
+<p>DTLS协议在UDP提供的socket之上实现了客户机与服务器双方的握手连接，并且在握手过程中通过使用PSK或ECC实现了加密，并且利用cookie验证机制和证书实现了通信双方的身份认证，并且用在报文段头部加上序号，缓存乱序到达的报文段和重传机制实现了可靠传送。</p>
+<p>大体来说分成三个过程：明文通信过程、非对成加密通信过程、对称加密通信过程；</p>
+<ol>
+<li><p>明文通信过程：在通信两端首次向对方发送 Hello 消息时，由于双方都没有协商好要使用哪种加密方式，因此这个过程中的消息都是使用明文进行发送的。<br>a. Client Hello：客户端首先向服务端发起握手，在握手消息中告诉对方自己支持的 SSL&#x2F;TLS 版本、加密套件（包括非对称加密时使用的算法与、非对称加密时使用的算法、产生密钥的伪随机函数 PRF）与数据压缩算法（TLS1.3之后就已经没有这个字段）等；还会携带一个 Session ID，因为握手流程的开销比较大，使用 Session ID 可以在下一次与 TLS 握手的过程跳过后续繁琐的握手流程，重用之前的握手结果（如版本号、加密算法套件、master-key 等）；并产生一个随机数 A，也告诉给对方；</p>
+<p>b. Server Hello：服务端响应一个 Server Hello 消息，携带协商出来的 TLS&#x2F;SSL 版本号、加密套件和数据压缩算法，如果服务端同意客户端重用上次的会话，就返回一个相同的 Session ID，否则就填入一个全新的 Session ID；</p>
+<p>c. Server Certificate（可选）：携带服务端数字证书（CA）以验证服务端身份，里面携带了服务端非对称加密所使用的公钥；这步虽然是可选的，但是一般来说客户端都会要求验证服务端的身份，在大多数情况下这步都会执行；</p>
+<p>d. Server Key Exchange（可选）：在使用某些非对称加密算法（例如 DH 算法）的情况下，Server Certificate 里的信息是不足够的，或者 Server Certificate 在某些通信过程中直接被省略了（没有验证服务端身份），需要 Server Key Exchange 里的额外信息来帮助客户端生成 pre-master key；</p>
+<p>e. Client Sertificate Request（可选）：在有些安全性要求高的场景，例如银行支付等，不仅需要验证服务端的身份，还需要验证客户端的身份，这时候服务端就会要求客户端提供客户端的身份证书；</p>
+<p>f. Server Hello Done：表明 Server Hello 结束；</p>
+<p>g. Client Certificate（可选）：如果服务端要求客户端提供数字证书以验证身份，则客户端发送自己的身份证书给服务端；</p>
+</li>
+<li><p>非对称加密通信过程：由于非对称加密通信的性能较差，在实际的通信过程中其实使用的是对称加密通信，为了保证对称加密通信过程的安全性，也就是需要避免对称加密密钥被窃取，这个密钥在协商过程中使用非对称加密来进行加密。</p>
+<p>a. Client Key Exchange：客户端在验证服务端的身份证书后，会取出其中的服务端公钥，产生一个随机数 C，作为 pre-master key，在本地使用之前的随机数 A、B 和这次生成的 C 共同生成对称加密密钥 master-key；使用服务端公钥对 pre-master key 加密后发送给服务端；</p>
+<p>b. Certificate Verify（可选）：如果服务端要求客户端提供客户端证书，那么客户端在发送 Client Key Exchange 之后必须马上发送 Certificate Verify，其中的内容是客户端使用自己的私钥加密的一段数据，提供给服务端用客户端的公钥来进行解密验证。之所以需要这一步是为了确保客户端发送的证书确实是它自己的证书；</p>
+<p>c. Client Change Cipher Spec：提示服务端随后使用 master key 来进行对称加密通信；</p>
+<p>d. Client Handshake Finished: 表明客户端侧 SSL&#x2F;TLS 握手结束；</p>
+<p>e. Server Change Cipher Spec：提示客户端随后使用 master key 来进行对称加密通信；</p>
+<p>f. Server Handshake Finished：表明服务端侧 SSL&#x2F;TLS 握手结束；</p>
+</li>
+<li><p>对称加密通信过程：通过上述握手过程协商出对称加密算法及使用的对称加密密钥之后，随后的通信过程，也就是实际的应用通信过程，都使用的是对称加密。</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/jing-jiu/categories/WebRTC/" class="category-chain-item">WebRTC</a>
+  
+  
+    <span>></span>
+    
+  <a href="/jing-jiu/categories/WebRTC/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/jing-jiu/tags/WebRTC/">#WebRTC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>WebRTC相关</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2021/12/05/其他/WebRTC/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jing-Jiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/TensorFlow/" title="TensorFlow相关">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TensorFlow相关</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86%E6%8A%80%E6%9C%AF/" title="媒体协商技术">
+                        <span class="hidden-mobile">媒体协商技术</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/jing-jiu/js/events.js" ></script>
+<script  src="/jing-jiu/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/jing-jiu/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/jing-jiu/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/jing-jiu/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jing-jiu/img/fluid.png">
+  <link rel="icon" href="/jing-jiu/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jing-Jiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="React表单实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React表单实现">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2022/03/05/Framework/React/%E8%A1%A8%E5%8D%95%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Jing-Jiu Blog">
+<meta property="og:description" content="React表单实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-slfn.jpg">
+<meta property="article:published_time" content="2022-03-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-07T06:41:35.218Z">
+<meta property="article:author" content="Jing-Jiu">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="组件">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-slfn.jpg">
+  
+  
+  
+  <title>React表单实现 - Jing-Jiu Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/jing-jiu/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/jing-jiu/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/jing-jiu/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jing-jiu.github.io","root":"/jing-jiu/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/jing-jiu/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/jing-jiu/js/utils.js" ></script>
+  <script  src="/jing-jiu/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/jing-jiu/">
+      <strong>HOME</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/jing-jiu/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React表单实现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jing-Jiu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-05 10:00" pubdate>
+          2022年3月5日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React表单实现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="受控表单"><a href="#受控表单" class="headerlink" title="受控表单"></a>受控表单</h1><blockquote>
+<p>状态变化交由<strong>React</strong>处理</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> [value, setValue] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>)<br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">handleChange</span> = (<span class="hljs-params">e</span>) =&gt; &#123; <span class="hljs-title function_">setValue</span>(e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>) &#125;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;</span><br><span class="language-xml">      alert(value);</span><br><span class="language-xml">    &#125;&#125;&gt;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">&#123;handleChange&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br>  )<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>如上述代码，input框监听onChange方法，每当数据改变时调用setValue进行数据更新。</p>
+<h1 id="非受控表单"><a href="#非受控表单" class="headerlink" title="非受控表单"></a>非受控表单</h1><blockquote>
+<p>状态变化通过ref引用获取</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> input = <span class="hljs-title function_">useRef</span>(<span class="hljs-literal">null</span>)<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;</span><br><span class="language-xml">      const data = input.current.value</span><br><span class="language-xml">      alert(data);</span><br><span class="language-xml">    &#125;&#125;&gt;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&#123;input&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br>  )<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>输入框的值不通过setState更新，而是从ref中获取。</p>
+<h1 id="实现表单组件"><a href="#实现表单组件" class="headerlink" title="实现表单组件"></a>实现表单组件</h1><h2 id="了解使用方式"><a href="#了解使用方式" class="headerlink" title="了解使用方式"></a>了解使用方式</h2><blockquote>
+<p>以ArcoDesign为例</p>
+</blockquote>
+<p>可以在**<code>Form.Item</code><strong>传入</strong> <code>field</code>**属性，即可使控件变为受控组件，表单项的值都将会被 <strong><code>Form</code></strong> 收集。</p>
+<ol>
+<li>受控模式下 <code>FormItem</code>会接管控件，自动给表单控件添加相应的 <code>value</code>和 <code>onChange</code>，所有的数据收集都由 <code>Form</code> 内部完成。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Form</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">&#123;(v)</span> =&gt;</span> &#123;</span><br><span class="language-xml">        console.log(v);</span><br><span class="language-xml">      &#125;&#125;</span><br><span class="language-xml">      style=&#123;&#123; width: 600 &#125;&#125;</span><br><span class="language-xml">    &gt;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">FormItem</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&#x27;Username&#x27;</span> <span class="hljs-attr">field</span>=<span class="hljs-string">&#x27;name&#x27;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">FormItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">FormItem</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&#x27;Age&#x27;</span> <span class="hljs-attr">field</span>=<span class="hljs-string">&#x27;age&#x27;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">InputNumber</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">FormItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">FormItem</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;primary&#x27;</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">&#x27;submit&#x27;</span>&gt;</span></span><br><span class="language-xml">          Submit</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">FormItem</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="useForm"><a href="#useForm" class="headerlink" title="useForm"></a>useForm</h3><ol>
+<li>通过 <strong>useForm()</strong> 获取 <strong>formInstance</strong> 实例，form表单的数据也在实例上</li>
+<li><strong>formInstance</strong> 实例对外提供了全局的方法如 <strong>setFieldsValue</strong> 、 <strong>getFieldsValue</strong></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useRef &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">FormStore</span> &#123;<br>    <span class="hljs-comment">// 存储表单数据</span><br>    store = &#123;&#125;<br>    <span class="hljs-comment">// 获取单个字段值</span><br>    getFieldValue = <span class="hljs-function">(<span class="hljs-params">name</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">store</span>[name]<br>    &#125;<br>    <span class="hljs-comment">// 获取所有字段值</span><br>    getFieldsValue = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">store</span><br>    &#125;<br>    <span class="hljs-comment">// 设置字段的值</span><br>    setFieldsValue = <span class="hljs-function">(<span class="hljs-params">newStore</span>) =&gt;</span> &#123;<br>        <span class="hljs-comment">// 更新store的值</span><br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">store</span> = &#123;<br>            ...<span class="hljs-variable language_">this</span>.<span class="hljs-property">store</span>,<br>            ...newStore,<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 提供FormStore实例方法</span><br>    getForm = <span class="hljs-function">() =&gt;</span> (&#123;<br>        <span class="hljs-attr">getFieldValue</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">getFieldValue</span>,<br>        <span class="hljs-attr">getFieldsValue</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">getFieldsValue</span>,<br>        <span class="hljs-attr">setFieldsValue</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">setFieldsValue</span>,<br>    &#125;);<br>&#125;<br><span class="hljs-comment">// 创建单例formStore</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">useForm</span>(<span class="hljs-params">form</span>) &#123;<br>    <span class="hljs-keyword">const</span> formRef = <span class="hljs-title function_">useRef</span>();<br>    <span class="hljs-keyword">if</span> (!formRef.<span class="hljs-property">current</span>) &#123;<br>        <span class="hljs-keyword">if</span> (form) &#123;<br>            formRef.<span class="hljs-property">current</span> = form;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">const</span> formStore = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FormStore</span>();<br>            formRef.<span class="hljs-property">current</span> = formStore.<span class="hljs-title function_">getForm</span>();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> [formRef.<span class="hljs-property">current</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Form"><a href="#Form" class="headerlink" title="Form"></a>Form</h3><ol>
+<li>将<strong>formInstance</strong>实例进行传递</li>
+<li>然后渲染子节点</li>
+</ol>
+<p>创建公用的Context</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">FieldContext</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createContext</span>(&#123;&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>阻止<strong>onSubmit</strong>默认事件，并执行Form的<strong>onSubmit</strong>方法，传入最新的表单数据，将<strong>formInstance</strong>实例传递下去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">Form</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> &#123; form, onSubmit, children, ...restProps &#125; = props;<br>    <span class="hljs-keyword">const</span> [formInstance] = <span class="hljs-title function_">useForm</span>(form) <span class="hljs-keyword">as</span> any;<br>    <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span></span></span><br><span class="hljs-tag"><span class="language-xml">            &#123;<span class="hljs-attr">...restProps</span>&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">&#123;(e)</span> =&gt;</span> &#123;</span><br><span class="language-xml">                e.preventDefault()</span><br><span class="language-xml">                onSubmit(formInstance.getFieldsValue())</span><br><span class="language-xml">            &#125;&#125;&gt;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">FieldContext.Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;formInstance&#125;</span>&gt;</span></span><br><span class="language-xml">                &#123;children&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">FieldContext.Provider</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br>    )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="FormItem"><a href="#FormItem" class="headerlink" title="FormItem"></a>FormItem</h3><ol>
+<li>调用<strong>cloneElement</strong>给子组件添加<strong>value</strong>和<strong>onChange</strong>的props</li>
+<li>在<strong>onChange</strong>时调用<strong>setFieldsValue</strong>更新表单数据</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">Item</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> context = <span class="hljs-title function_">useContext</span>(<span class="hljs-title class_">FieldContext</span>);<br>    <span class="hljs-keyword">const</span> &#123; children &#125; = props;<br>    <span class="hljs-comment">// Field 中传进来的子元素变为受控组件，也就是主动添加上 value 和 onChange 属性方法</span><br>    <span class="hljs-keyword">const</span> <span class="hljs-title function_">getControlled</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>        <span class="hljs-keyword">const</span> &#123; field &#125; = props;<br>        <span class="hljs-keyword">const</span> &#123; getFieldValue, setFieldsValue &#125; = context<br>        <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">value</span>: <span class="hljs-title function_">getFieldValue</span>(field),<br>            <span class="hljs-attr">onChange</span>: <span class="hljs-function">(<span class="hljs-params">event: any</span>) =&gt;</span> &#123;<br>                <span class="hljs-keyword">const</span> newValue = event.<span class="hljs-property">target</span>.<span class="hljs-property">value</span><br>                <span class="hljs-title function_">setFieldsValue</span>(&#123; [field]: newValue &#125;)<br>            &#125;,<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">cloneElement</span>(children, <span class="hljs-title function_">getControlled</span>())<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> useForm <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./useForm.js&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./App.css&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Form</span>, <span class="hljs-title class_">Item</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Form.tsx&#x27;</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> [form] = <span class="hljs-title function_">useForm</span>();<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">form</span>=<span class="hljs-string">&#123;form&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">&#123;(v)</span> =&gt;</span> &#123;</span><br><span class="language-xml">        console.log(v);</span><br><span class="language-xml">      &#125;&#125;</span><br><span class="language-xml">    &gt;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Item</span> <span class="hljs-attr">field</span>=<span class="hljs-string">&quot;usename&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Item</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Item</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>整体来看，使用useForm创建实例，通过这个实例存储表单数据，通过给子组件注入props实现收集数据的功能。这里仅做了一个简单实现，还有许多特性有待拓展。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/jing-jiu/categories/React/" class="category-chain-item">React</a>
+  
+  
+    <span>></span>
+    
+  <a href="/jing-jiu/categories/React/Framework/" class="category-chain-item">Framework</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/jing-jiu/tags/React/">#React</a>
+      
+        <a href="/jing-jiu/tags/%E7%BB%84%E4%BB%B6/">#组件</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React表单实现</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2022/03/05/Framework/React/表单组件/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jing-Jiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/04/05/Framework/React/%E5%9F%BA%E7%A1%80/" title="React相关基础知识">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React相关基础知识</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/jing-jiu/2021/12/25/%E5%85%B6%E4%BB%96/WebRTC%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="WebRTC网络基础">
+                        <span class="hidden-mobile">WebRTC网络基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/jing-jiu/js/events.js" ></script>
+<script  src="/jing-jiu/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/jing-jiu/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/jing-jiu/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/jing-jiu/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

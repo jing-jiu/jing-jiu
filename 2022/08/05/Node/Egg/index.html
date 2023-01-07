@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jing-jiu/img/fluid.png">
+  <link rel="icon" href="/jing-jiu/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jing-Jiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Egg实现源码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Egg源码">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2022/08/05/Node/Egg/index.html">
+<meta property="og:site_name" content="Jing-Jiu Blog">
+<meta property="og:description" content="Egg实现源码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-naruto.jpg">
+<meta property="article:published_time" content="2022-08-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-07T06:23:27.825Z">
+<meta property="article:author" content="Jing-Jiu">
+<meta property="article:tag" content="Egg">
+<meta property="article:tag" content="Node">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-naruto.jpg">
+  
+  
+  
+  <title>Egg源码 - Jing-Jiu Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/jing-jiu/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/jing-jiu/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/jing-jiu/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jing-jiu.github.io","root":"/jing-jiu/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/jing-jiu/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/jing-jiu/js/utils.js" ></script>
+  <script  src="/jing-jiu/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/jing-jiu/">
+      <strong>HOME</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/jing-jiu/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Egg源码"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jing-Jiu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-05 10:00" pubdate>
+          2022年8月5日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Egg源码</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Egg"><a href="#Egg" class="headerlink" title="Egg"></a>Egg</h1><p>在Koa的基础上，阿里封装了一个企业级的NodeJS框架——egg.js。将Koa的行为进一步分离成controller，service，model三层，并规范了路由的写法——约定式路由。</p>
+<h2 id="约定式路由"><a href="#约定式路由" class="headerlink" title="约定式路由"></a>约定式路由</h2><p>实现约定式路由的核心方法是load函数，通过fs遍历约定文件夹（ <strong>controller，service，model…</strong> ）下的文件，导出文件的内容，生成一个对象挂载到Egg的实例上。</p>
+<h3 id="load"><a href="#load" class="headerlink" title="load"></a><strong>load</strong></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;path&quot;</span>);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">load</span>(<span class="hljs-params">dir, cb</span>) &#123;<br>    <span class="hljs-comment">// 获取绝对路径</span><br>    <span class="hljs-keyword">const</span> url = path.<span class="hljs-title function_">resolve</span>(__dirname, dir);<br>    <span class="hljs-comment">// 读取路径下的文件</span><br>    <span class="hljs-keyword">const</span> files = fs.<span class="hljs-title function_">readdirSync</span>(url, &#123; <span class="hljs-attr">encoding</span>: <span class="hljs-string">&quot;ascii&quot;</span> &#125;);<br>    <span class="hljs-comment">// 遍历路由文件 将配置解析到路由器中</span><br>    files.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">filename</span>) =&gt;</span> &#123;<br>        filename = filename.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&quot;.js&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);<br>        <span class="hljs-comment">// 导入文件</span><br>        <span class="hljs-keyword">const</span> file = <span class="hljs-built_in">require</span>(url + <span class="hljs-string">&quot;/&quot;</span> + filename);<br>        <span class="hljs-comment">// 处理逻辑</span><br>        <span class="hljs-title function_">cb</span>(filename, file);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="initRouter"><a href="#initRouter" class="headerlink" title="initRouter"></a>initRouter</h3><p>处理routes下面的文件，约定每一个文件为一个路由，其中的每一个是对应的子路由,这里对路由简单书写，实际可能会更复杂一点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">initRouter</span>(<span class="hljs-params">app</span>) &#123;<br>    <span class="hljs-keyword">const</span> router = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Router</span>();<br>    <span class="hljs-title function_">load</span>(<span class="hljs-string">&quot;routes&quot;</span>, <span class="hljs-function">(<span class="hljs-params">filename, routes</span>) =&gt;</span> &#123;<br>        <span class="hljs-comment">// 若是index文件 就不加前缀 如果是其他的文件 路由前缀就是文件名</span><br>        <span class="hljs-keyword">const</span> prefix = filename === <span class="hljs-string">&quot;index&quot;</span> ? <span class="hljs-string">&quot;&quot;</span> : <span class="hljs-string">`/<span class="hljs-subst">$&#123;filename&#125;</span>`</span>;<br>        routes = <span class="hljs-keyword">typeof</span> routes == <span class="hljs-string">&quot;function&quot;</span> ? <span class="hljs-title function_">routes</span>(app) : routes;<br>        <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(routes).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> &#123;<br>            <span class="hljs-keyword">const</span> [method, path] = key.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot; &quot;</span>);<br>            router[method](prefix + path, <span class="hljs-keyword">async</span> (ctx) =&gt; &#123;<br>                <span class="hljs-comment">// 传⼊ctx</span><br>                app.<span class="hljs-property">ctx</span> = ctx; <span class="hljs-comment">// 挂载⾄app</span><br>                <span class="hljs-keyword">await</span> routes[key](app); <span class="hljs-comment">// 路由处理器现在接收到的是app</span><br>            &#125;);<br>        &#125;);<br>    &#125;);<br>    <span class="hljs-keyword">return</span> router;<br>&#125;<br><span class="hljs-comment">// routes/index.js</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-function">(<span class="hljs-params">app</span>) =&gt;</span> (&#123;<br>    <span class="hljs-string">&quot;get /&quot;</span>: app.<span class="hljs-property">$controller</span>.<span class="hljs-property">home</span>.<span class="hljs-property">index</span>,<br>    <span class="hljs-string">&quot;get /detail&quot;</span>: app.<span class="hljs-property">$controller</span>.<span class="hljs-property">home</span>.<span class="hljs-property">detail</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="MVC分离"><a href="#MVC分离" class="headerlink" title="MVC分离"></a>MVC分离</h2><p><strong>controller，service，model同理。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// controller-loader.js</span><br><span class="hljs-keyword">const</span> &#123; load &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./router-loader&quot;</span>);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">initController</span>(<span class="hljs-params">app</span>) &#123;<br>    <span class="hljs-keyword">const</span> controllers = &#123;&#125;;<br><br>    <span class="hljs-title function_">load</span>(<span class="hljs-string">&quot;controller&quot;</span>, <span class="hljs-function">(<span class="hljs-params">filename, controller</span>) =&gt;</span> &#123;<br>        controllers[filename] = <span class="hljs-title function_">controller</span>(app);<br>    &#125;);<br>    <span class="hljs-keyword">return</span> controllers;<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123; initController &#125;;<br><span class="hljs-comment">// controller/home.js</span><br><span class="hljs-comment">// 这里对controller做简单处理，egg中会继承Controller类 然后在类中书写方法，但是作用一致</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-function">(<span class="hljs-params">app</span>) =&gt;</span> (&#123;<br>    <span class="hljs-attr">index</span>: <span class="hljs-keyword">async</span> (ctx) =&gt; &#123;<br>        <span class="hljs-keyword">const</span> name = <span class="hljs-keyword">await</span> app.<span class="hljs-property">$service</span>.<span class="hljs-property">user</span>.<span class="hljs-title function_">getName</span>();<br>        app.<span class="hljs-property">ctx</span>.<span class="hljs-property">body</span> = <span class="hljs-string">&quot;ctrl user&quot;</span> + name;<br>    &#125;,<br>    <span class="hljs-attr">detail</span>: <span class="hljs-function">(<span class="hljs-params">ctx</span>) =&gt;</span> &#123;<br>        app.<span class="hljs-property">ctx</span>.<span class="hljs-property">body</span> = <span class="hljs-string">&quot;Home Detail&quot;</span>;<br>    &#125;,<br>&#125;);<br><br><br><span class="hljs-comment">// service-loader.js</span><br><span class="hljs-keyword">const</span> &#123; load &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./router-loader&quot;</span>);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">initService</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> services = &#123;&#125;;<br>    <span class="hljs-title function_">load</span>(<span class="hljs-string">&quot;service&quot;</span>, <span class="hljs-function">(<span class="hljs-params">filename, service</span>) =&gt;</span> &#123;<br>        services[filename] = service;<br>    &#125;);<br>    <span class="hljs-keyword">return</span> services;<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123; initService &#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Egg类"><a href="#Egg类" class="headerlink" title="Egg类"></a>Egg类</h2><p>本质上是对Koa的扩展，实现MVC结构。</p>
+<ul>
+<li><strong>model</strong>层即数据库实体层与数据库中的表一一对应；</li>
+<li><strong>controller</strong>层负责前后端交互，接受前端请求，调用service层，接收service层返回的数据，最后返回具体的页面和数据到客户端；</li>
+<li><strong>service</strong>层即业务逻辑层，完成业务的功能设计。 <strong>主要是针对具体的问题的操作，把一些数据层的操作进行组合，间接与数据库打交道（提供操作数据库的方法）</strong> 。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> &#123; initController &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./ctrl-loader&quot;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-title class_">Koa</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./lib/application&quot;</span>);<br><span class="hljs-keyword">const</span> &#123; initRouter &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./router-loader&quot;</span>);<br><span class="hljs-keyword">const</span> &#123; initService &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./service-loader&quot;</span>);<br><span class="hljs-keyword">const</span> &#123; loadConfig &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./config-loader&quot;</span>);<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Egg</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">conf</span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$app</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Koa</span>(conf);<br>        <span class="hljs-title function_">loadConfig</span>(<span class="hljs-variable language_">this</span>);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$controller</span> = <span class="hljs-title function_">initController</span>(<span class="hljs-variable language_">this</span>);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$service</span> = <span class="hljs-title function_">initService</span>();<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span> = <span class="hljs-title function_">initRouter</span>(<span class="hljs-variable language_">this</span>);<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-property">stack</span>);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$app</span>.<span class="hljs-title function_">use</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span>.<span class="hljs-title function_">routes</span>());<br>    &#125;<br>    <span class="hljs-title function_">start</span>(<span class="hljs-params">...arg</span>) &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$app</span>.<span class="hljs-title function_">listen</span>(...arg);<br>    &#125;<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-title class_">Egg</span>;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/jing-jiu/categories/Node/" class="category-chain-item">Node</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/jing-jiu/tags/Egg/">#Egg</a>
+      
+        <a href="/jing-jiu/tags/Node/">#Node</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Egg源码</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2022/08/05/Node/Egg/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jing-Jiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/08/07/%E6%8E%A2%E7%B4%A2/ServerLess%E4%BA%86%E8%A7%A3/" title="Serverless了解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Serverless了解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/08/05/%E6%8E%A2%E7%B4%A2/%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%96%B9%E6%A1%88/" title="微前端方案">
+                        <span class="hidden-mobile">微前端方案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/jing-jiu/js/events.js" ></script>
+<script  src="/jing-jiu/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/jing-jiu/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/jing-jiu/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/jing-jiu/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

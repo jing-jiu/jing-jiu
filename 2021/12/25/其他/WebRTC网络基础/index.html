@@ -1,0 +1,853 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jing-jiu/img/fluid.png">
+  <link rel="icon" href="/jing-jiu/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jing-Jiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="WebRTC网络基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebRTC网络基础">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2021/12/25/%E5%85%B6%E4%BB%96/WebRTC%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Jing-Jiu Blog">
+<meta property="og:description" content="WebRTC网络基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-star.jpg">
+<meta property="article:published_time" content="2021-12-25T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-07T06:43:37.099Z">
+<meta property="article:author" content="Jing-Jiu">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-star.jpg">
+  
+  
+  
+  <title>WebRTC网络基础 - Jing-Jiu Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/jing-jiu/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/jing-jiu/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/jing-jiu/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jing-jiu.github.io","root":"/jing-jiu/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/jing-jiu/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/jing-jiu/js/utils.js" ></script>
+  <script  src="/jing-jiu/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/jing-jiu/">
+      <strong>HOME</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/jing-jiu/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="WebRTC网络基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jing-Jiu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-25 10:00" pubdate>
+          2021年12月25日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          75 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">WebRTC网络基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="WebRTC网络基础"><a href="#WebRTC网络基础" class="headerlink" title="WebRTC网络基础"></a>WebRTC网络基础</h1><h2 id="1-NAT协议"><a href="#1-NAT协议" class="headerlink" title="1.NAT协议"></a>1.NAT协议</h2><pre><code class="hljs">是将IP数据报头中的IP地址转换为另一个IP地址的过程。
+</code></pre>
+<p>作用:</p>
+<ol>
+<li>在实际应用中，NAT主要用于实现私有网络访问公共网络的功能。这种通过使用少量的公网IP地址代表较多的私网IP地址的方式，将有助于减缓可用IP地址空间的枯竭。</li>
+<li>出于安全考虑   外网想要攻击内网就需要经过网关  部分就会被过滤</li>
+</ol>
+<p>种类：</p>
+<ul>
+<li><p>完全锥型  无限制</p>
+<p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，任何外部主机只要知道这个(PublicIP:PublicPort)就可以发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包。</p>
+<p>其在NAT上建立的内外网的映射表如下：</p>
+<p>{</p>
+<pre><code class="hljs">内网:IP,
+
+内网端口,
+
+映射的外网IP,
+
+映射的外网端口
+</code></pre>
+<p>}</p>
+<ul>
+<li>C1，C2向STUN发消息</li>
+<li>交换公网IP及端口</li>
+</ul>
+</li>
+<li><p>地址限制型</p>
+<p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，如果任何外部主机想要发送数据给这个内网主机，只要知道这个(PublicIP:PublicPort)<strong>并且内网主机之前用这个socket曾向这个外部主机IP发送过数据</strong>。只要满足这两个条件，这个外部主机就可以用自己的**(IP,任何端口)**发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包。</p>
+<p>其在NAT上建立的内外网的映射表如下：</p>
+<p>{</p>
+<pre><code class="hljs">内网:IP,
+
+内网端口,
+
+映射的外网IP,
+
+映射的外网端口,
+
+被访问主机的IP
+</code></pre>
+<p>}</p>
+<ul>
+<li>C1向C2发请求  C2通过C1发的请求返回数据</li>
+<li>交换公网IP及端口 端口限制型类似</li>
+</ul>
+</li>
+<li><p>端口限制型</p>
+<p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，如果任何外部主机想要发送数据给这个内网主机，只要知道这个(PublicIP:PublicPort)并且内网主机之前用这个socket曾向这个外部主机(IP,Port)发送过数据。只要满足这两个条件，这个外部主机就可以用自己的**(IP,Port)**发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包</p>
+<p>其在NAT上建立的内外网的映射表如下：</p>
+<p>{</p>
+<pre><code class="hljs">内网:IP,
+
+内网端口,
+
+映射的外网IP,
+
+映射的外网端口,
+
+被访问主机的IP,
+
+被访问主机的端口
+</code></pre>
+<p>}</p>
+</li>
+<li><p>对称型</p>
+<p>内网主机建立一个UDP socket(LocalIP,LocalPort),当用这个socket第一次发数据给外部主机1时,NAT为其映射一个(PublicIP-1,Port-1),以后内网主机发送给外部主机1的所有数据都是用这个(PublicIP-1,Port-1)，如果内网主机同时用这个socket给外部主机2发送数据，第一次发送时，NAT会为其分配一个(PublicIP-2,Port-2), 以后内网主机发送给外部主机2的所有数据都是用这个(PublicIP-2,Port-2).如果NAT有多于一个公网IP，则PublicIP-1和PublicIP-2可能不同，如果NAT只有一个公网IP,则Port-1和Port-2肯定不同，也就是说一定不能是PublicIP-1等于 PublicIP-2且Port-1等于Port-2。此外，如果任何外部主机想要发送数据给这个内网主机，那么它首先应该收到内网主机发给他的数据，然后才能往回发送，否则即使他知道内网主机的一个(PublicIP,Port)也不能发送数据给内网主机，这种NAT无法实现UDP-P2P通信。</p>
+<ul>
+<li>端口猜测</li>
+</ul>
+</li>
+<li><p>穿越组合</p>
+<ul>
+<li>端口受限  –&gt; 对称</li>
+<li>对称 –&gt; 对称          二者无法打通</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-STUN服务"><a href="#2-STUN服务" class="headerlink" title="2.STUN服务"></a>2.STUN服务</h2><pre><code class="hljs">(Simple Traversal of User Datagram Protocol (UDP) Through Network Address Translators (NATs))
+STUN(穿越NAT的简单UDP传输)服务器允许所有的NAT客户终端(如防火墙后边的计算机)与位于局区域网以外的VOIP服务商实现电话通话。
+其允许应用程序发现自己和公网之间的中间件类型，同时也能允许应用程序发现自己被NAT分配的公网IP。
+</code></pre>
+<h3 id="协议内容"><a href="#协议内容" class="headerlink" title="协议内容"></a>协议内容</h3><ul>
+<li><p>STUN header</p>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/STUN.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li><p>2个字节类型</p>
+</li>
+<li><p>2个字节消息长度，不包括消息头</p>
+</li>
+<li><p>16个字节事务ID（128bit），请求与相应事务ID相同</p>
+<p>STUN Message Type：</p>
+<ol>
+<li><p>最高的2位必须置零，这可以在当STUN和其他协议复用的时候，用来区分STUN包和其他协议数据包。</p>
+</li>
+<li><p>STUN Message Type 字段定义了消息的类型（ 请求&#x2F;成功响应&#x2F;失败响应&#x2F;指示）和消息的主方法。<br>虽然我们有4个消息类别，但在STUN中只有两种类型的事务，即请求&#x2F;响应类型和指示类型。响应类型分为成功和出错两种，用来帮助快速处理STUN信息。Message Type字段又可以进一步分解为如下结构：</p>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/stun-message.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+<p>MessageClass定义：0b00表示request，0b01表示indication，0b10表示success response，0b11表示error response</p>
+</li>
+<li><p>Message Length 字段存储了信息的长度，以字节为单位，不包括20字节的STUN头部。由于所有的STUN属性都是都是4字节对齐（填充）的，因此这个字段最后两位应该恒等于零，这也是辨别STUN包的一个方法之一。</p>
+</li>
+<li><p>Magic Cookie 字段包含固定值0x2112A442，<strong>这是为了前向兼容RFC3489，因为在RFC3489&#x2F;STUN中，这一区域是事务ID的一部分。另外选择固定数值也是为了服务器判断客户端是否能识别特定的属性。</strong>还有一个作用就是在协议多路复用时候也可以将其作为判断标志之一。（32位）</p>
+</li>
+<li><p>Transaction ID</p>
+<p>字段是个96位的标识符，用来区分不同的STUN传输事务。</p>
+<p>对于request&#x2F;response传输，事务ID由客户端选择，服务器收到后以同样的事务ID返回response；对于indication则由发送方自行选择。事务ID的主要功能是把request和response联系起来，同时也在防止攻击方面有一定作用。服务端也把事务ID当作一个Key来识别不同的STUN客户端，因此必须格式化且随机在0~2^(96-1)之间。重发同样的request请求时可以重用相同的事务ID，但是客户端进行新的传输时，必须选择一个新的事务ID。</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>STUN Message Body</p>
+<ul>
+<li>通常跟着0个或者多个属性，每个属性必须是TLV编码的（Type-Length-Value）</li>
+</ul>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/TLV.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+</li>
+</ul>
+<h2 id="3-TURN服务"><a href="#3-TURN服务" class="headerlink" title="3.TURN服务"></a>3.TURN服务</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">TURN的全称为Traversal Using Relays around NAT，是STUN/RFC5389的一个拓展，主要添加了Relay功能。如果终端在NAT之后， 那么在特定的情景下，有可能使得终端无法和其对等端（peer）进行直接的通信，这时就需要公网的服务器作为一个中继， 对来往的数据进行转发。这个转发的协议就被定义为TURN。TURN和其他中继协议的不同之处在于，它允许客户端使用同一个中继地址（relay address） 与多个不同的peer进行通信。<br></code></pre></td></tr></table></figure>
+
+<p><strong>整体流程</strong><br><img src="http://47.115.206.47/wp-content/uploads/2021/09/TRUN.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"><br><strong>TURN Allocate</strong><br><img src="http://47.115.206.47/wp-content/uploads/2021/09/TRUN-Allocate.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="img"></p>
+<h2 id="4-NAT类型检测"><a href="#4-NAT类型检测" class="headerlink" title="4.NAT类型检测"></a>4.NAT类型检测</h2><h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">有一个公网的Server并且绑定了两个公网IP(IP-1,IP-2)。这个Server做UDP监听(IP-1,Port-1),(IP-2,Port-2)并根据客户端的要求进行应答。<br></code></pre></td></tr></table></figure>
+
+<h3 id="为什么使用UDP协议"><a href="#为什么使用UDP协议" class="headerlink" title="为什么使用UDP协议"></a>为什么使用UDP协议</h3><pre><code class="hljs">因为UDP是无连接协议，只要你发送数据给他，他就可以收到，而TCP需要建立连接
+</code></pre>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><pre><code class="hljs">客户端发送ECHO请求给服务端  客户端等待服务端返回数据
+</code></pre>
+<p><img src="http://47.115.206.47/wp-content/uploads/2021/09/NAT%E6%89%93%E6%B4%9E%E6%AD%A5%E9%AA%A4.png" srcset="/jing-jiu/img/loading.gif" lazyload alt="NAT打洞步骤"></p>
+<h2 id="5-ICE框架"><a href="#5-ICE框架" class="headerlink" title="5.ICE框架"></a>5.ICE框架</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown">webrtc就是通过 ICE 这套框架来处理复杂的网络环境的。<br>如果想启用这个功能,你必须让你的应用程序传 ICE 服务器的URL：<br>ICE试着找最好的路径来让客户端建立连接,他会尝试所有可能的选项,然后选择最合适的方案。<br>ICE首先尝试P2P连接（STUN）,如果失败就会通过TURN服务器进行转接。<br></code></pre></td></tr></table></figure>
+
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="1-ICE-的角色"><a href="#1-ICE-的角色" class="headerlink" title="1. ICE 的角色"></a>1. ICE 的角色</h4><p>   分为 controlling和controlled。</p>
+<p>   offer 一方为controlling角色，answer一方为controlled角色。</p>
+<h4 id="2-ICE的模式"><a href="#2-ICE的模式" class="headerlink" title="2. ICE的模式"></a>2. ICE的模式</h4><p>   分为FULL ICE和Lite ICE：</p>
+<p>   FULL ICE:是双方都要进行连通性检查，完成的走一遍流程。</p>
+<p>   Lite ICE: 在FULL ICE和Lite ICE互通时，只需要FULL ICE一方进行连通性检查， Lite一方只需回应response消息。这种模式对于部署在公网的设备比较常用。</p>
+<h4 id="3-ICE-Candidate"><a href="#3-ICE-Candidate" class="headerlink" title="3. ICE Candidate"></a>3. ICE Candidate</h4><p>   媒体传输的候选地址（包括协议，ip，端口，类型），组成candidate pair做连通性检查，确定传输路径。（ICE主要收集Candidate 对Candidate pair做排序 以及连通性）</p>
+<ul>
+<li>主机候选者（本机的）</li>
+<li>映射候选者（NAT映射的）</li>
+<li>中继候选者（TURN服务器开通的）</li>
+</ul>
+<h4 id="4-Componet-ID"><a href="#4-Componet-ID" class="headerlink" title="4.  Componet ID"></a>4.  Componet ID</h4><p>   传输媒体的类型,1代表RTP;2代表 RTCP。</p>
+<p>   WebRTC采用Rtcp-mux方式，也就是RTP和RTCP在同一通道内传输，减少ICE的协商和通道的保活。</p>
+<h4 id="5-Type"><a href="#5-Type" class="headerlink" title="5. Type"></a>5. Type</h4><p>（Host&#x2F;Srvflx&#x2F;Relay&#x2F;Prflx）</p>
+<h4 id="6-Checklist"><a href="#6-Checklist" class="headerlink" title="6. Checklist"></a>6. Checklist</h4><p>由candidate pair生成按优先级排序的链表,用于ICE连通性检查。</p>
+<h4 id="7-Validlist"><a href="#7-Validlist" class="headerlink" title="7. Validlist"></a>7. Validlist</h4><p>由连通性检查成功的candidate pair按优先级排序的链表,用于ICE提名和选择最终路径。</p>
+<h4 id="8-Base"><a href="#8-Base" class="headerlink" title="8. Base"></a>8. Base</h4><p>   是指候选者的基础地址（Srvflx address 的base 是本地host address。</p>
+<p>   host address和 relayed address 的base 是自身。）</p>
+<h4 id="9-SDP协议"><a href="#9-SDP协议" class="headerlink" title="9. SDP协议"></a>9. SDP协议</h4><blockquote>
+<p>是一种通用的会话描述协议，主要用来描述多媒体会话，用途包括会话声明、会话邀请、会话初始化等。</p>
+</blockquote>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs routeros">SDP的每行都是&lt;type&gt;=&lt;value&gt;的形式<br><br><span class="hljs-attribute">v</span>=0    协议版本号<br><br><span class="hljs-attribute">o</span>=alice 2890844526 2890844526 <span class="hljs-keyword">IN</span> IP4 host.anywhere.com 会话发起者<br>其中<span class="hljs-attribute">o</span>=&lt;username&gt; &lt;sess-id&gt; &lt;sess-version&gt; &lt;nettype&gt; &lt;addrtype&gt; &lt;unicast-address&gt;<br>username：发起者的用户名，不允许存在空格，如果应用不支持用户名，则为-。<br>sess-id：会话id，由应用自行定义，规范的建议是NTP(Network Time Protocol)时间戳。<br>sess-version：会话版本，用途由应用自行定义，只要会话数据发生变化时（比如编码），sess-version随着递增就行。同样的，规范的建议是NTP时间戳。<br>nettype：网络类型，比如<span class="hljs-keyword">IN</span>表示Internet。<br>addrtype：地址类型，比如IP4、IV6<br>unicast-address：域名，或者IP地址。<br><br>s=	会话名（不能为空  可以赋一个空格）<br><br><span class="hljs-attribute">c</span>=IN IP4 host.anywhere.com  <br>连接数据 <span class="hljs-attribute">c</span>=&lt;nettype&gt; &lt;addrtype&gt; &lt;connection-address&gt;<br>nettype：网络类型，比如<span class="hljs-keyword">IN</span>，表示 Internet。<br>addrtype：地址类型，比如IP4、IP6。<br>connection-address：如果是广播，则为广播地址组；如果是单播，则为单播地址；<br><br><span class="hljs-attribute">t</span>=0 0<br>时间  作用：声明会话的开始、结束时间。 <span class="hljs-attribute">t</span>=&lt;start-time&gt; &lt;stop-time&gt;<br><br><span class="hljs-attribute">m</span>=audio 49170 RTP/AVP 0<br>媒体描述  <span class="hljs-attribute">m</span>=&lt;media&gt; &lt;port&gt; &lt;proto&gt; &lt;fmt&gt; <span class="hljs-built_in">..</span>.<br>media：媒体类型。包括 video、audio、text、application、message等。<br>port：传输媒体流的端口，具体含义取决于使用的网络类型（在<span class="hljs-attribute">c</span>=中声明）和使用的协议(proto，在m=中声明)。<br>proto：传输协议，具体含义取决于<span class="hljs-attribute">c</span>=中定义的地址类型，比如c=是IP4，那么这里的传输协议运行在IP4之上。比如：<br>    UDP：传输层协议是UDP。<br>    RTP/AVP：针对视频、音频的RTP协议，跑在UDP之上。<br>    RTP/SAVP：针对视频、音频的SRTP协议，跑在UDP之上。<br>fmt：媒体格式的描述，可能有多个。根据 proto 的不同，fmt 的含义也不同。比如 proto 为 RTP/SAVP 时，fmt 表示 RTP payload 的类型。如果有多个，表示在这次会话中，多种payload类型可能会用到，且第一个为默认的payload类型。<br>例如：<span class="hljs-attribute">m</span>=video 9 UDP/TLS/RTP/SAVPF 122 102 100 101 124 120 123 119<br><br><span class="hljs-attribute">a</span>=rtpmap:0 PCMU/8000<br>附加属性 作用：用于扩展SDP。<br>作用：用于扩展SDP。<br><br>有两种作用范围：会话级别(session-level)、媒体级别（media-level）。<br>媒体级别：媒体描述（<span class="hljs-attribute">m</span>=）后面可以跟任意数量的 a= 字段，对媒体描述进行扩展。<br>会话级别：在第一个媒体字段(media field)前，添加的 a= 字段是会话级别的。<br>有如下两种格式：<br><span class="hljs-attribute">a</span>=&lt;attribute&gt;    <span class="hljs-attribute">a</span>=recvonly<br><span class="hljs-attribute">a</span>=&lt;attribute&gt;:&lt;value&gt;   <span class="hljs-attribute">a</span>=rtpmap:0 PCMU/8000<br><br><span class="hljs-attribute">m</span>=video 51372 RTP/AVP 31<br><br><span class="hljs-attribute">a</span>=rtpmap:31 H261/90000<br><br><span class="hljs-attribute">m</span>=video 53000 RTP/AVP 32<br><br><span class="hljs-attribute">a</span>=rtpmap:32 MPV/90000<br></code></pre></td></tr></table></figure>
+
+<h3 id="ICE过程"><a href="#ICE过程" class="headerlink" title="ICE过程"></a>ICE过程</h3><h4 id="1-Gather-candidates"><a href="#1-Gather-candidates" class="headerlink" title="1. Gather candidates"></a>1. Gather candidates</h4><p>根据Componet ID获取所有候选者  同时生成foundation foundation是用于判断candiadate是否相同</p>
+<h4 id="2-删除重复的候选者"><a href="#2-删除重复的候选者" class="headerlink" title="2. 删除重复的候选者"></a>2. 删除重复的候选者</h4><p>如果两个候选者地址，Base地址一样 则删除</p>
+<h4 id="3-交换candidates"><a href="#3-交换candidates" class="headerlink" title="3. 交换candidates"></a>3. 交换candidates</h4><p>   ICE使用offer&#x2F;answer的方式，双方通过SDP协商交换candidates信息。</p>
+<p>   Candidate信息包括type,foundation,base,component id,transport。</p>
+<p>   SDP a行格式如下:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">a</span>=candidate:<span class="hljs-number">1</span> <span class="hljs-number">1</span> UDP <span class="hljs-number">9654321</span> <span class="hljs-number">212.223.223.223</span> <span class="hljs-number">12345</span> typ srflx raddr <span class="hljs-number">10.216.33.9</span> rport <span class="hljs-number">54321</span><br></code></pre></td></tr></table></figure>
+
+<p>   表示 foundation为1，媒体是RTP，采用UDP协议，公网映射地址为212.223.223.223:12345，优先级为9654321，type为srflx，base地址为10.216.33.9:54321。</p>
+<h4 id="4-生成candidate-pairs"><a href="#4-生成candidate-pairs" class="headerlink" title="4. 生成candidate pairs"></a>4. 生成candidate pairs</h4><p>   在本端收到远端candidates后，将Component ID和transport protocol相同的candidates组成pair。<br>   修整candidate pair，如果是srvflx地址，则需要用其base地址替换。<br>   对端也是同样的流程。</p>
+<h4 id="5-生成checklist"><a href="#5-生成checklist" class="headerlink" title="5. 生成checklist"></a>5. 生成checklist</h4><p>将candidate pairs按照优先级排序，生成checklist，供连通性检查使用</p>
+<h4 id="6-连通性检查"><a href="#6-连通性检查" class="headerlink" title="6. 连通性检查"></a>6. 连通性检查</h4><p>   Ordinary checks 两端都按照各自checklist分别进行检查。</p>
+<p>   Triggered checks 收到对端的检查时，也在对应的candidate pair上发起连通性检查，以提高效率</p>
+<p>   如果checklist里有relay candidate，则必须首先为relay candidate创建permission。</p>
+<h4 id="7-发送连通性检查请求"><a href="#7-发送连通性检查请求" class="headerlink" title="7. 发送连通性检查请求"></a>7. 发送连通性检查请求</h4><h4 id="8-生成validlist"><a href="#8-生成validlist" class="headerlink" title="8. 生成validlist"></a>8. 生成validlist</h4><h4 id="9-提名candidate-pair"><a href="#9-提名candidate-pair" class="headerlink" title="9. 提名candidate pair"></a>9. 提名candidate pair</h4><h4 id="10-选择最终传输地址"><a href="#10-选择最终传输地址" class="headerlink" title="10. 选择最终传输地址"></a>10. 选择最终传输地址</h4><h2 id="网络协议分析-（tcpdump-与-wireshark）"><a href="#网络协议分析-（tcpdump-与-wireshark）" class="headerlink" title="网络协议分析 （tcpdump 与 wireshark）"></a>网络协议分析 （tcpdump 与 wireshark）</h2><h3 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h3><pre><code class="hljs">tcpdump tcp -i eth1 -t -s 0 -c 100 and dst port ! 22 and src net 192.168.1.0/24 -w ./target.cap
+其中：
+tcp: ip icmp arp rarp 和 tcp、udp、icmp这些选项等都要放到第一个参数的位置，用来过滤数据报的类型
+-i eth1 : 只抓经过接口eth1的包
+-t : 不显示时间戳
+-s 0 : 抓取数据包时默认抓取长度为68字节。加上-S 0 后可以抓到完整的数据包
+-c 100 : 只抓取100个数据包
+dst port ! 22 : 不抓取目标端口是22的数据包
+src net 192.168.1.0/24 : 数据包的源网络地址为192.168.1.0/24
+-w ./target.cap : 保存成cap文件，方便用ethereal(即wireshark)分析
+</code></pre>
+<h3 id="搭建TRUN服务器"><a href="#搭建TRUN服务器" class="headerlink" title="搭建TRUN服务器"></a>搭建TRUN服务器</h3><h4 id="1-下载并安装libevent-2-0"><a href="#1-下载并安装libevent-2-0" class="headerlink" title="1. 下载并安装libevent-2.0"></a>1. 下载并安装libevent-2.0</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://github.com/downloads/libevent/libevent/libevent-<span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">21</span>-stable.tar.gz<br><span class="hljs-attribute">tar</span> zxvf libevent-<span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">21</span>-stable.tar.gz<br><span class="hljs-attribute">cd</span> libevent-<span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">21</span>-stable &amp;&amp; ./configure<br><span class="hljs-attribute">make</span> &amp;&amp; make install<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-下载编译安装coturn"><a href="#2-下载编译安装coturn" class="headerlink" title="2. 下载编译安装coturn"></a>2. 下载编译安装coturn</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/coturn/coturn<br><span class="hljs-built_in">cd</span> coturn <br>./configure <br>make <br>make install<br>查看是否安装成功<br><span class="hljs-built_in">which</span> turnserver<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3. 配置文件"></a>3. 配置文件</h4><p>   在&#x2F;usr&#x2F;local&#x2F;etc&#x2F;目录下有turnserver.conf.default，复制为turnserver.conf</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">cd <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/etc/</span><br>cp turnserver.conf.<span class="hljs-keyword">default</span> turnserver.conf<br></code></pre></td></tr></table></figure>
+
+<p>   使用ifcongig查询网卡名称和内网地址</p>
+<h4 id="4-生成签名证书"><a href="#4-生成签名证书" class="headerlink" title="4. 生成签名证书"></a>4. 生成签名证书</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">yum install openssl <br>openssl req -x509 -newkey rsa:<span class="hljs-number">2048</span> -keyout <span class="hljs-regexp">/etc/</span>turn_server_pkey.pem -out <span class="hljs-regexp">/etc/</span>turn_server_cert.pem -days <span class="hljs-number">99999</span> -nodes <br>生成的两个文件一般在<span class="hljs-regexp">/etc/</span>目录下<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-修改配置信息"><a href="#5-修改配置信息" class="headerlink" title="5. 修改配置信息"></a>5. 修改配置信息</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">relay-device</span>=eth0   #与前ifconfig查到的网卡名称一致<br><span class="hljs-attribute">listening-ip</span>=xxx    #内网IP<br><span class="hljs-attribute">listening-port</span>=3478<br><span class="hljs-attribute">tls-listening-port</span>=5349<br><span class="hljs-attribute">relay-ip</span>=xxx       #内网IP<br><span class="hljs-attribute">external-ip</span>=xxx    #公网IP<br><span class="hljs-attribute">relay-threads</span>=50<br>lt-cred-mech<br><span class="hljs-attribute">cert</span>=/etc/turn_server_cert.pem<br><span class="hljs-attribute">pkey</span>=/etc/turn_server_pkey.pem<br><span class="hljs-attribute">pidfile</span>=”/var/run/turnserver.pid”<br><span class="hljs-attribute">min-port</span>=49152<br><span class="hljs-attribute">max-port</span>=65535<br><span class="hljs-attribute">user</span>=hxh:123456    #用户名密码，创建IceServer时用<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-开启turnserver，执行命令"><a href="#6-开启turnserver，执行命令" class="headerlink" title="6. 开启turnserver，执行命令"></a>6. 开启turnserver，执行命令</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">turnserver -o -a -f <span class="hljs-attribute">-user</span>=zjf:123456 -r Guangdong<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-在阿里云后台的安全组规则中添加用到的端口，包括3478端口的tcp-x2F-udp"><a href="#7-在阿里云后台的安全组规则中添加用到的端口，包括3478端口的tcp-x2F-udp" class="headerlink" title="7. 在阿里云后台的安全组规则中添加用到的端口，包括3478端口的tcp&#x2F;udp"></a>7. 在阿里云后台的安全组规则中添加用到的端口，包括3478端口的tcp&#x2F;udp</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs csharp">或者使用命令行<br>添加<br>firewall-cmd --zone=<span class="hljs-keyword">public</span> --<span class="hljs-keyword">add</span>-port=<span class="hljs-number">3478</span>/udp --permanent<br>firewall-cmd --zone=<span class="hljs-keyword">public</span> --<span class="hljs-keyword">add</span>-port=<span class="hljs-number">3478</span>/tcp --permanent<br>重新载入<br>firewall-cmd --reload<br>重启防火墙<br>systemctl restart firewalld<br></code></pre></td></tr></table></figure>
+
+<h4 id="8-在浏览器中打开https-webrtc-github-io-samples-src-content-peerconnection-trickle-ice-进行验证"><a href="#8-在浏览器中打开https-webrtc-github-io-samples-src-content-peerconnection-trickle-ice-进行验证" class="headerlink" title="8. 在浏览器中打开https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/进行验证"></a>8. 在浏览器中打开<a target="_blank" rel="noopener" href="https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/%E8%BF%9B%E8%A1%8C%E9%AA%8C%E8%AF%81">https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/进行验证</a></h4><p>如果返回relay类型的数据且最终为Done则说明测试成功<br>需要注意的是：在Chrome中测试虽然同样会返回relay数据但会报一些错误</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">Note: errors from onicecandidateerror above are not neccessarily fatal. For example an IPv6 DNS lookup may fail but relay candidates can still be gathered via IPv4.<br>The server stun:47.115.206.47:3478 returned an error with code=701:<br>STUN server address is incompatible.<br>The server stun:stun.l.google.com:19302 returned an error with code=701:<br>STUN host lookup received error.<br></code></pre></td></tr></table></figure>
+
+<p>但是在firfox中则不会存在这个问题，但无论如何均不影响使用。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/jing-jiu/categories/WebRTC/" class="category-chain-item">WebRTC</a>
+  
+  
+    <span>></span>
+    
+  <a href="/jing-jiu/categories/WebRTC/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/jing-jiu/tags/WebRTC/">#WebRTC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>WebRTC网络基础</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2021/12/25/其他/WebRTC网络基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jing-Jiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/03/05/Framework/React/%E8%A1%A8%E5%8D%95%E7%BB%84%E4%BB%B6/" title="React表单实现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React表单实现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/RTP%20Media/" title="RTP Media">
+                        <span class="hidden-mobile">RTP Media</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/jing-jiu/js/events.js" ></script>
+<script  src="/jing-jiu/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/jing-jiu/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/jing-jiu/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/jing-jiu/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

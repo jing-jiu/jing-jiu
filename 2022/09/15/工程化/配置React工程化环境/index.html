@@ -1,0 +1,827 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jing-jiu/img/fluid.png">
+  <link rel="icon" href="/jing-jiu/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jing-Jiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="通过手动配置React开发环境了解常用webpack的loader &amp; plugin。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置React工程化环境">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2022/09/15/%E5%B7%A5%E7%A8%8B%E5%8C%96/%E9%85%8D%E7%BD%AEReact%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="Jing-Jiu Blog">
+<meta property="og:description" content="通过手动配置React开发环境了解常用webpack的loader &amp; plugin。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-catGirl.jpg">
+<meta property="article:published_time" content="2022-09-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-07T06:45:25.054Z">
+<meta property="article:author" content="Jing-Jiu">
+<meta property="article:tag" content="工程化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-catGirl.jpg">
+  
+  
+  
+  <title>配置React工程化环境 - Jing-Jiu Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/jing-jiu/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/jing-jiu/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/jing-jiu/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jing-jiu.github.io","root":"/jing-jiu/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/jing-jiu/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/jing-jiu/js/utils.js" ></script>
+  <script  src="/jing-jiu/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/jing-jiu/">
+      <strong>HOME</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/jing-jiu/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/jing-jiu/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="配置React工程化环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jing-Jiu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-15 10:00" pubdate>
+          2022年9月15日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">配置React工程化环境</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>通过手动配置React开发环境了解常用webpack的loader &amp; plugin。</p>
+</blockquote>
+<h1 id="处理常见资源"><a href="#处理常见资源" class="headerlink" title="处理常见资源"></a>处理常见资源</h1><blockquote>
+<p>众所周知，webpack只能识别js，其他文件如果直接引入是无法识别的，那么就需要借助loader &amp; plugin的能力帮助webpack处理这些文件。</p>
+</blockquote>
+<ol>
+<li>图片资源<ol>
+<li>File-loader<br>在JS代码中import&#x2F;require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(png|jpg|gif)$/</span>,<br>    <span class="hljs-attr">use</span>: &#123;<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;file-loader&#x27;</span>,<br>        <span class="hljs-attr">options</span>: &#123;<br>            <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;[name].[ext]&#x27;</span>,<br>            <span class="hljs-attr">outputPath</span>: <span class="hljs-string">&#x27;images&#x27;</span>,<br>        &#125;<br>    &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>Url-loader<br>功能与File-loader类似，但是在设定limit字段后，当引入的文件小于指定大小会将文件转为Base64格式。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(png|jpg|gif)$/i</span>,<br>    <span class="hljs-attr">use</span>: [&#123;<br>      <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;url-loader&#x27;</span>,<br>      <span class="hljs-attr">options</span>: &#123;<br>        <span class="hljs-attr">limit</span>: <span class="hljs-number">8192</span>,<br>      &#125;,<br>    &#125;]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>svg-inline-loader<br>会将 SVG 文件内联为模块。</li>
+<li>css文件<ol>
+<li>Css-loader<br>解析@import&#x2F;url()引入的文件。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>    <span class="hljs-attr">use</span>: [<span class="hljs-string">&#x27;style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>]<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>style-loader<br>配合css-loader使用，将css插入到dom中。</li>
+<li>html文件<ol>
+<li>HtmlWebpackPlugin<br>当使用webpack打包时，创建 &#x2F; 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlWebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;/public/index.html&#x27;</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>jsx or tsx<ol>
+<li>Babel-loader + @babel&#x2F;preset-react &#x2F; @babel&#x2F;preset-typescript<br>将jsx &#x2F; tsx文件使用babel-loader，React 预设规则集 @babel&#x2F;preset-react ，完成 JSX 到 JS 的转换。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.tsx$/</span>,<br>    <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel-loader&#x27;</span>,<br>    <span class="hljs-attr">options</span>: &#123;<br>        <span class="hljs-attr">presets</span>: [[<span class="hljs-string">&#x27;@babel/preset-react&#x27;</span>, &#123;<br>            <span class="hljs-string">&#x27;runtime&#x27;</span>: <span class="hljs-string">&#x27;automatic&#x27;</span><br>        &#125;], <span class="hljs-string">&quot;@babel/preset-typescript&quot;</span>]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>vue</li>
+<li>vue-loader vue单文件的解析</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> &#123; <span class="hljs-title class_">VueLoaderPlugin</span> &#125; = <span class="hljs-title function_">require</span>(<span class="hljs-params"><span class="hljs-string">&#x27;vue-loader&#x27;</span></span>)<br>&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>    <span class="hljs-attr">use</span>: [<span class="hljs-string">&#x27;vue-loader&#x27;</span>]<br>&#125;<br><span class="hljs-attr">plugins</span>: [ <span class="hljs-keyword">new</span> <span class="hljs-title class_">VueLoaderPlugin</span>() ]<br></code></pre></td></tr></table></figure>
+
+<h1 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h1><p>安装 <strong>webpack-dev-server，</strong> 如下配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">open</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h1><ul>
+<li>Eslint<br>js语法检测</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// .eslintrc.js</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>    <span class="hljs-attr">extends</span>: [<br>        <span class="hljs-comment">// 启用Eslint推荐规则</span><br>        <span class="hljs-string">&#x27;eslint:recommended&#x27;</span>,<br>        <span class="hljs-comment">// 启用React推荐规则</span><br>        <span class="hljs-string">&#x27;plugin:react/recommended&#x27;</span>,<br>    ],<br>    <span class="hljs-attr">overrides</span>: [<br>        &#123;<br>            <span class="hljs-comment">// 对ts tsx调用如下配置进行处理 关闭一些处理规则</span><br>            <span class="hljs-attr">files</span>: [<span class="hljs-string">&#x27;*.ts&#x27;</span>, <span class="hljs-string">&#x27;*.tsx&#x27;</span>],<br>            <span class="hljs-attr">extends</span>: [<br>                <span class="hljs-string">&#x27;plugin:@typescript-eslint/eslint-recommended&#x27;</span>,<br>                <span class="hljs-string">&#x27;plugin:@typescript-eslint/recommended&#x27;</span><br>            ],<br>            <span class="hljs-attr">parser</span>: <span class="hljs-string">&#x27;@typescript-eslint/parser&#x27;</span>,<br>            <span class="hljs-attr">plugins</span>: [<br>                <span class="hljs-string">&#x27;@typescript-eslint/eslint-plugin&#x27;</span>,<br>            ],<br>            <span class="hljs-attr">rules</span>: &#123;<br>                <span class="hljs-string">&#x27;@typescript-eslint/ban-ts-ignore&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span>,<br>                <span class="hljs-string">&#x27;@typescript-eslint/no-explicit-any&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span>,<br>                <span class="hljs-string">&#x27;@typescript-eslint/no-use-before-define&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span><br>            &#125;,<br>        &#125;<br>    ],<br>    <span class="hljs-comment">// 自动设置检查的React版本是安装的React的版本</span><br>    <span class="hljs-attr">settings</span>: &#123;<br>        <span class="hljs-attr">react</span>: &#123;<br>            <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;detect&#x27;</span>,<br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">rules</span>: &#123;<br>        <span class="hljs-string">&#x27;react/jsx-no-undef&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span><br>    &#125;,<br>    <span class="hljs-comment">// 表示支持browser、es2020、node、commonjs中预定义的全局变量</span><br>    <span class="hljs-attr">env</span>: &#123;<br>        <span class="hljs-attr">browser</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">es2020</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">node</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">commonjs</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>    <span class="hljs-comment">//配置之前的步骤中设置的全局变量，比如React</span><br>    <span class="hljs-attr">globals</span>: &#123;<br>        <span class="hljs-title class_">React</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">ReduxConnect</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">Axios</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">UseEffect</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>    <span class="hljs-attr">ignorePatterns</span>: [<span class="hljs-string">&#x27;dist/&#x27;</span>],<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>stylelint<br>样式文件语法检测。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;stylelint-config-standard&#x27;</span>],<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-string">&quot;stylelint-order&quot;</span>],<br>  <span class="hljs-attr">rules</span>:&#123;<br>    <span class="hljs-string">&#x27;no-descending-specificity&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;function-url-quotes&#x27;</span>: <span class="hljs-string">&#x27;always&#x27;</span>,<br>    <span class="hljs-string">&#x27;string-quotes&#x27;</span>: <span class="hljs-string">&#x27;double&#x27;</span>, <br>    <span class="hljs-string">&#x27;indentation&#x27;</span>: <span class="hljs-number">2</span>,<br>    <span class="hljs-string">&#x27;unit-case&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;color-hex-case&#x27;</span>: <span class="hljs-string">&#x27;upper&#x27;</span>,<br>    <span class="hljs-string">&#x27;color-hex-length&#x27;</span>: <span class="hljs-string">&#x27;long&#x27;</span>,<br>    <span class="hljs-string">&#x27;rule-empty-line-before&#x27;</span>: <span class="hljs-string">&#x27;never&#x27;</span>,<br>    <span class="hljs-string">&#x27;font-family-no-missing-generic-family-keyword&#x27;</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;block-opening-brace-space-before&#x27;</span>:<span class="hljs-string">&#x27;always&#x27;</span>,<br>    <span class="hljs-string">&#x27;property-no-unknown&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;no-empty-source&#x27;</span>:<span class="hljs-literal">null</span>,<br>   <br>    <span class="hljs-string">&quot;order/properties-order&quot;</span>: [<br><br>      <span class="hljs-comment">//css内容&#x27;content&#x27;,</span><br>      <span class="hljs-string">&#x27;counter-increment&#x27;</span>,<br>      <span class="hljs-string">&#x27;counter-reset&#x27;</span>,<br>      <span class="hljs-string">&#x27;quotes&#x27;</span>,<br>      <span class="hljs-string">&#x27;crop&#x27;</span>,<br>      <span class="hljs-string">&#x27;move-to&#x27;</span>,<br>      <span class="hljs-string">&#x27;page-policy&#x27;</span>,<br>      ...<br>    ]<br>  &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="git提交"><a href="#git提交" class="headerlink" title="git提交"></a>git提交</h1><ul>
+<li>配置commitlint</li>
+</ul>
+<p>帮我们检查 git commit 所提交信息是否符合<strong>conventional commit format</strong>的工具</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>    <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;@commitlint/config-angular&#x27;</span>],<br>    <span class="hljs-attr">rules</span>: &#123;<br>        <span class="hljs-string">&#x27;type-enum&#x27;</span>: [<br>            <span class="hljs-number">2</span>,<br>            <span class="hljs-string">&#x27;always&#x27;</span>,<br>            [<br>                <span class="hljs-string">&#x27;WIP&#x27;</span>,      <span class="hljs-comment">// 开发中</span><br>                <span class="hljs-string">&#x27;feat&#x27;</span>,     <span class="hljs-comment">// 新特性</span><br>                <span class="hljs-string">&#x27;improvement&#x27;</span>, <span class="hljs-comment">// 加强现有特性</span><br>                <span class="hljs-string">&#x27;fix&#x27;</span>,      <span class="hljs-comment">// 修补bug</span><br>                <span class="hljs-string">&#x27;refactor&#x27;</span>, <span class="hljs-comment">// 重构</span><br>                <span class="hljs-string">&#x27;docs&#x27;</span>,     <span class="hljs-comment">// 文档</span><br>                <span class="hljs-string">&#x27;test&#x27;</span>,     <span class="hljs-comment">// 单元测试</span><br>                <span class="hljs-string">&#x27;config&#x27;</span>,   <span class="hljs-comment">// 配置文件</span><br>                <span class="hljs-string">&#x27;style&#x27;</span>,    <span class="hljs-comment">// 格式需改</span><br>                <span class="hljs-string">&#x27;perf&#x27;</span>,     <span class="hljs-comment">// 性能提升</span><br>                <span class="hljs-string">&#x27;ci&#x27;</span>,       <span class="hljs-comment">// ci</span><br>                <span class="hljs-string">&#x27;revert&#x27;</span>,   <span class="hljs-comment">// 版本回退</span><br>                <span class="hljs-string">&#x27;chore&#x27;</span>,    <span class="hljs-comment">// 其他修改</span><br>            ],<br>        ],<br>        <span class="hljs-string">&#x27;type-empty&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;never&#x27;</span>],               <span class="hljs-comment">// type不能为空</span><br>        <span class="hljs-string">&#x27;type-case&#x27;</span>: [<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-string">&#x27;lower-case&#x27;</span>], <span class="hljs-comment">// type不限制大小写</span><br>        <span class="hljs-string">&#x27;subject-empty&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;never&#x27;</span>],            <span class="hljs-comment">// subject（简短得描述）不能为空</span><br>        <span class="hljs-string">&#x27;subject-max-length&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-number">50</span>],  <span class="hljs-comment">// subject最大长度，超出只会警告，不阻止提交</span><br>        <span class="hljs-string">&#x27;body-leading-blank&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>],<br>                <span class="hljs-string">&#x27;footer-leading-blank&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>],<br>                <span class="hljs-string">&#x27;header-max-length&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-number">72</span>],<br>      &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安装husky</li>
+</ul>
+<p>帮我们每次 git 提交时自动执行检查</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// packge.json</span><br><span class="hljs-string">&quot;husky&quot;</span>: &#123;<br>  <span class="hljs-string">&quot;hooks&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;commit-msg&quot;</span>: <span class="hljs-string">&quot;commitlint -E HUSKY_GIT_PARAMS&quot;</span><br>  &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<h1 id="Create-react-app"><a href="#Create-react-app" class="headerlink" title="Create-react-app"></a>Create-react-app</h1><blockquote>
+<p>有关create-react-app中用到的插件和loader</p>
+</blockquote>
+<h2 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h2><ul>
+<li>html-webpack-plugin</li>
+</ul>
+<blockquote>
+<p>当使用webpack打包时，创建 &#x2F; 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中</p>
+</blockquote>
+<ul>
+<li>case-sensitive-paths-webpack-plugin</li>
+</ul>
+<blockquote>
+<p>如果路径有误则直接报错</p>
+</blockquote>
+<ul>
+<li>terser-webpack-plugin</li>
+</ul>
+<blockquote>
+<p>使用terser压缩JS代码</p>
+</blockquote>
+<ul>
+<li>mini-css-extract-plugin</li>
+</ul>
+<blockquote>
+<p>将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap</p>
+</blockquote>
+<ul>
+<li>css-minimizer-webpack-plugin</li>
+</ul>
+<blockquote>
+<p>使用 cssnano 优化和压缩 CSS</p>
+</blockquote>
+<ul>
+<li>webpack-manifest-plugin</li>
+</ul>
+<blockquote>
+<p>生产资产的显示清单文件</p>
+</blockquote>
+<ul>
+<li>workbox-webpack-plugin</li>
+</ul>
+<blockquote>
+<p>自动生成 Service Worker 和 静态资源列表 用于PWA</p>
+</blockquote>
+<ul>
+<li>eslint-webpack-plugin</li>
+</ul>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><ul>
+<li>Css-loader</li>
+</ul>
+<blockquote>
+<p>处理css文件</p>
+</blockquote>
+<ul>
+<li>Style-loader</li>
+</ul>
+<blockquote>
+<p>将css插入dom</p>
+</blockquote>
+<ul>
+<li>Postcss-loader</li>
+</ul>
+<blockquote>
+<p>使用PostCSS处理CSS 可以补全兼容性前缀</p>
+</blockquote>
+<ul>
+<li>resolve-url-loader</li>
+</ul>
+<blockquote>
+<p>可基于原始源文件解析 url （）语句中的相对路径</p>
+</blockquote>
+<ul>
+<li>source-map-loader</li>
+</ul>
+<blockquote>
+<p>将源代码与打包过的代码建立映射关系</p>
+</blockquote>
+<ul>
+<li>@svgr&#x2F;webpack</li>
+</ul>
+<blockquote>
+<p>支持svg作为组件引入</p>
+</blockquote>
+<ul>
+<li>file-loader</li>
+</ul>
+<blockquote>
+<p>在JS代码中import&#x2F;require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名</p>
+</blockquote>
+<ul>
+<li>babel-loader</li>
+</ul>
+<blockquote>
+<p>es6 -&gt; es5</p>
+</blockquote>
+<ul>
+<li>sass-loader</li>
+</ul>
+<blockquote>
+<p>处理sass 、scss</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/jing-jiu/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/jing-jiu/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">#工程化</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>配置React工程化环境</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2022/09/15/工程化/配置React工程化环境/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jing-Jiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/09/19/%E5%B7%A5%E7%A8%8B%E5%8C%96/Vite%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" title="Vite工作流程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vite工作流程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/jing-jiu/2022/09/09/%E5%B7%A5%E7%A8%8B%E5%8C%96/Plugin%E5%85%A5%E9%97%A8/" title="Plugin入门">
+                        <span class="hidden-mobile">Plugin入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/jing-jiu/js/events.js" ></script>
+<script  src="/jing-jiu/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/jing-jiu/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/jing-jiu/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/jing-jiu/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
