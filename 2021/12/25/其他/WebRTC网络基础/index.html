@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-star.jpg">
 <meta property="article:published_time" content="2021-12-25T02:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-07T06:43:37.099Z">
+<meta property="article:modified_time" content="2023-01-07T06:55:21.485Z">
 <meta property="article:author" content="Jing-Jiu">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
@@ -293,14 +293,10 @@
 <p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，任何外部主机只要知道这个(PublicIP:PublicPort)就可以发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包。</p>
 <p>其在NAT上建立的内外网的映射表如下：</p>
 <p>{</p>
-<pre><code class="hljs">内网:IP,
-
-内网端口,
-
-映射的外网IP,
-
-映射的外网端口
-</code></pre>
+<p>内网:IP,</p>
+<p>内网端口,</p>
+<p>映射的外网IP,</p>
+<p>映射的外网端口</p>
 <p>}</p>
 <ul>
 <li>C1，C2向STUN发消息</li>
@@ -311,16 +307,11 @@
 <p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，如果任何外部主机想要发送数据给这个内网主机，只要知道这个(PublicIP:PublicPort)<strong>并且内网主机之前用这个socket曾向这个外部主机IP发送过数据</strong>。只要满足这两个条件，这个外部主机就可以用自己的**(IP,任何端口)**发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包。</p>
 <p>其在NAT上建立的内外网的映射表如下：</p>
 <p>{</p>
-<pre><code class="hljs">内网:IP,
-
-内网端口,
-
-映射的外网IP,
-
-映射的外网端口,
-
-被访问主机的IP
-</code></pre>
+<p>内网:IP,</p>
+<p>内网端口,</p>
+<p>映射的外网IP,</p>
+<p>映射的外网端口,</p>
+<p>被访问主机的IP</p>
 <p>}</p>
 <ul>
 <li>C1向C2发请求  C2通过C1发的请求返回数据</li>
@@ -331,18 +322,12 @@
 <p>内网主机建立一个UDP socket(LocalIP:LocalPort) 第一次使用这个socket给外部主机发送数据时NAT会给其分配一个公网(PublicIP:PublicPort),以后用这个socket向外面任何主机发送数据都将使用这对(PublicIP:PublicPort)。此外，如果任何外部主机想要发送数据给这个内网主机，只要知道这个(PublicIP:PublicPort)并且内网主机之前用这个socket曾向这个外部主机(IP,Port)发送过数据。只要满足这两个条件，这个外部主机就可以用自己的**(IP,Port)**发送数据给(PublicIP:PublicPort)，内网的主机就能收到这个数据包</p>
 <p>其在NAT上建立的内外网的映射表如下：</p>
 <p>{</p>
-<pre><code class="hljs">内网:IP,
-
-内网端口,
-
-映射的外网IP,
-
-映射的外网端口,
-
-被访问主机的IP,
-
-被访问主机的端口
-</code></pre>
+<p>内网:IP,</p>
+<p>内网端口,</p>
+<p>映射的外网IP,</p>
+<p>映射的外网端口,</p>
+<p>被访问主机的IP,</p>
+<p>被访问主机的端口</p>
 <p>}</p>
 </li>
 <li><p>对称型</p>
@@ -495,12 +480,12 @@ src net 192.168.1.0/24 : 数据包的源网络地址为192.168.1.0/24
     
       <span class="category-chain">
         
-  <a href="/jing-jiu/categories/WebRTC/" class="category-chain-item">WebRTC</a>
+  <a href="/jing-jiu/categories/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
   
   
     <span>></span>
     
-  <a href="/jing-jiu/categories/WebRTC/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  <a href="/jing-jiu/categories/%E5%85%B6%E4%BB%96/WebRTC/" class="category-chain-item">WebRTC</a>
   
   
 
