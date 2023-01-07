@@ -44,6 +44,8 @@
       
       <category>读书笔记</category>
       
+      <category>JavaScript设计模式与开发实践</category>
+      
     </categories>
     
     
@@ -70,6 +72,8 @@
     <categories>
       
       <category>读书笔记</category>
+      
+      <category>JavaScript设计模式与开发实践</category>
       
     </categories>
     
@@ -98,6 +102,8 @@
       
       <category>读书笔记</category>
       
+      <category>JavaScript设计模式与开发实践</category>
+      
     </categories>
     
     
@@ -125,6 +131,8 @@
       
       <category>读书笔记</category>
       
+      <category>JavaScript设计模式与开发实践</category>
+      
     </categories>
     
     
@@ -150,7 +158,9 @@
     
     <categories>
       
-      <category>TS</category>
+      <category>读书笔记</category>
+      
+      <category>TypeScript 全面进阶指南</category>
       
     </categories>
     
@@ -208,7 +218,9 @@
     
     <categories>
       
-      <category>TS</category>
+      <category>读书笔记</category>
+      
+      <category>TypeScript 全面进阶指南</category>
       
     </categories>
     
@@ -446,9 +458,9 @@
     
     <tags>
       
-      <tag>Node</tag>
-      
       <tag>Express</tag>
+      
+      <tag>Node</tag>
       
     </tags>
     
@@ -500,9 +512,9 @@
     
     <tags>
       
-      <tag>Egg</tag>
-      
       <tag>Node</tag>
+      
+      <tag>Egg</tag>
       
     </tags>
     
