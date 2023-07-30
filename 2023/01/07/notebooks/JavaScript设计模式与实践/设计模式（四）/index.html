@@ -46,6 +46,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -281,31 +283,31 @@
             
               <div class="markdown-body">
                 
-                <h1 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h1><blockquote>
+                <h1>迭代器模式</h1>
+<blockquote>
 <p>迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象 的内部表示。</p>
 <p>迭代器模式可以把迭代的过程从业务逻辑中分离出来，在使用迭代器模式之后，即使不知道对象的内部构造，也可以按顺序访问其中的每个元素。</p>
 </blockquote>
-<h2 id="内部迭代器"><a href="#内部迭代器" class="headerlink" title="内部迭代器"></a>内部迭代器</h2><blockquote>
+<h2 id="内部迭代器">内部迭代器</h2>
+<blockquote>
 <p>可以类比成JavaScript数组中的forEach方法。函数的内部已经定义好了迭代规则，它完全接手整个迭代过程，外部只需要一次初始调用。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">forEach</span>(<span class="hljs-params">arr, callback</span>) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">if</span> (callback) &#123;<br>            <span class="hljs-title function_">callback</span>(i, arr[i])<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-title function_">forEach</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-function">(<span class="hljs-params">index, item</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(index, item);<br>&#125;)<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>同时我们希望当传入的函数返回false终止迭代。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">forEach</span>(<span class="hljs-params">arr, callback</span>) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-property">length</span>; i++) &#123;<br>       <span class="hljs-keyword">if</span> (<span class="hljs-title function_">callback</span>(i, arr[i]) === <span class="hljs-literal">false</span>) &#123;<br>            <span class="hljs-keyword">break</span><br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-title function_">forEach</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-function">(<span class="hljs-params">index, item</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (item &gt; <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(item); <span class="hljs-comment">// 1 2</span><br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<h2 id="外部迭代器"><a href="#外部迭代器" class="headerlink" title="外部迭代器"></a>外部迭代器</h2><blockquote>
+<h2 id="外部迭代器">外部迭代器</h2>
+<blockquote>
 <p>外部迭代器必须显式地请求迭代下一个元素。外部迭代器增加了一些调用的复杂度，但相对也增强了迭代器的灵活性，我们可以手工控制迭代的过程或者顺序。（在JavaScript中的实现是Iterator）</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Iterator</span>(<span class="hljs-params">obj</span>) &#123;<br>    <span class="hljs-keyword">let</span> current = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">next</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">value</span>: obj[current++],<br>            <span class="hljs-attr">done</span>: current === obj.<span class="hljs-property">length</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123;<br>        next<br>    &#125;<br>&#125;<br><span class="hljs-keyword">const</span> iterator = <span class="hljs-title class_">Iterator</span>(&#123; <span class="hljs-number">0</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-attr">length</span>: <span class="hljs-number">3</span> &#125;)<br><span class="hljs-keyword">const</span> res1 = iterator.<span class="hljs-title function_">next</span>()<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res1.<span class="hljs-property">done</span>,res1.<span class="hljs-property">value</span>);<br><span class="hljs-keyword">const</span> res2 = iterator.<span class="hljs-title function_">next</span>()<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res2.<span class="hljs-property">done</span>,res2.<span class="hljs-property">value</span>);<br><span class="hljs-keyword">const</span> res3 = iterator.<span class="hljs-title function_">next</span>()<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res3.<span class="hljs-property">done</span>,res3.<span class="hljs-property">value</span>);<br></code></pre></td></tr></table></figure>
-
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><blockquote>
+<h2 id="应用">应用</h2>
+<blockquote>
 <p>在不同的浏览器环境下，选择的上传方式是不一样的。因为使用浏览器的上传控件进行上传速度快，可以暂停和续传，所以我们首先会优先使用控件上传。如果浏览器没有安装上传控件， 则使用 Flash上传，如果Flash也没安装，那就使用浏览器原生的表单上传。</p>
 <p>但是下面的实现方式有些问题，充斥着try catch 和一些if else语句，同时后续可能会有一些新的上传方式，这显然不是我们所期望的。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> getUploadObj = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ActiveXObject</span>(<span class="hljs-string">&quot;TXFTNActiveX.FTNUpload&quot;</span>); <span class="hljs-comment">// IE 上传控件</span><br>    &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-title function_">supportFlash</span>()) &#123; <span class="hljs-comment">// supportFlash 函数未提供</span><br>            <span class="hljs-keyword">const</span> str = <span class="hljs-string">&#x27;&lt;object type=&quot;application/x-shockwave-flash&quot;&gt;&lt;/object&gt;&#x27;</span>;<br>            <span class="hljs-keyword">return</span> $(str).<span class="hljs-title function_">appendTo</span>($(<span class="hljs-string">&#x27;body&#x27;</span>));<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">const</span> str = <span class="hljs-string">&#x27;&lt;input name=&quot;file&quot; type=&quot;file&quot;/&gt;&#x27;</span>; <span class="hljs-comment">// 表单上传</span><br>            <span class="hljs-keyword">return</span> $(str).<span class="hljs-title function_">appendTo</span>($(<span class="hljs-string">&#x27;body&#x27;</span>));<br>        &#125;<br>    &#125;<br>&#125;;<br><span class="hljs-title function_">getUploadObj</span>()<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>我们可以将不同方式的上传各自封装成函数，交给迭代器来进行迭代，选择一个可用的上传方式。</p>
 </blockquote>
@@ -474,6 +476,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

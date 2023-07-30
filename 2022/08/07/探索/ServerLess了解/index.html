@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,13 +282,15 @@
             
               <div class="markdown-body">
                 
-                <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Serverless指的是由开发者实现的Server逻辑运行在无状态的计算容器中，开发者只需要关注业务逻辑的开发，不需要关注底层资源的调度、管理以及维护服务器等基础设施。这些容器一般由事件触发，根据负载进行自动扩缩容，按需使用，按量付费，能极大的节省用户运维成本和服务使用成本。（Goofy，ByteFaaS就是这一类产品）一般认为其由FaaS（函数即服务）和BaaS（后端即服务）组成。</p>
-<h1 id="FaaS"><a href="#FaaS" class="headerlink" title="FaaS"></a>FaaS</h1><p>由事件驱动的全托管计算服务，用户只需要编写函数代码以及选择对应的触发器（trigger），如MQ、Cron、HTTP等，其余的诸如流量调度、扩缩容、部署、容灾、监控、日志等功能全部由FaaS服务提供商托管。同时，用户只需要为代码实际运行时消耗的资源付费。</p>
+                <h1>简介</h1>
+<p>Serverless指的是由开发者实现的Server逻辑运行在无状态的计算容器中，开发者只需要关注业务逻辑的开发，不需要关注底层资源的调度、管理以及维护服务器等基础设施。这些容器一般由事件触发，根据负载进行自动扩缩容，按需使用，按量付费，能极大的节省用户运维成本和服务使用成本。（Goofy，ByteFaaS就是这一类产品）一般认为其由FaaS（函数即服务）和BaaS（后端即服务）组成。</p>
+<h1>FaaS</h1>
+<p>由事件驱动的全托管计算服务，用户只需要编写函数代码以及选择对应的触发器（trigger），如MQ、Cron、HTTP等，其余的诸如流量调度、扩缩容、部署、容灾、监控、日志等功能全部由FaaS服务提供商托管。同时，用户只需要为代码实际运行时消耗的资源付费。</p>
 <p>如下一段FaaS代码，用户在使用时调用对应sdk：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> dayjs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dayjs&#x27;</span>;<br><span class="hljs-comment">// import xxx from &#x27;~/xxx&#x27;;</span><br><span class="hljs-comment">// 可通过 &#x27;~/xxx&#x27;来引用其他云函数</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> (<span class="hljs-attr">params</span>: <span class="hljs-title class_">FaaS</span>.<span class="hljs-property">Params</span>, <span class="hljs-attr">context</span>: <span class="hljs-title class_">FaaS</span>.<span class="hljs-property">Context</span>) =&gt; &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;invoke faas: &#x27;</span>, params);<br>  <span class="hljs-comment">// 调用其他云函数</span><br>  <span class="hljs-comment">// xxx();</span><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;Hello World!&#x27;</span>,<br>    <span class="hljs-attr">time</span>: <span class="hljs-title function_">dayjs</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD HH:mm:ss&#x27;</span>),<br>    <span class="hljs-attr">user</span>: (<span class="hljs-keyword">await</span> sdk.<span class="hljs-property">auth</span>.<span class="hljs-title function_">getCurrentUser</span>()) + <span class="hljs-string">&#x27;111&#x27;</span>,<br><br>    <span class="hljs-attr">token</span>: <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">redis</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;xxx&#x27;),</span><br><span class="hljs-string">  &#125;;</span><br><span class="hljs-string">&#125;;</span><br></code></pre></td></tr></table></figure>
-
 <p>也就是说，FaaS服务商帮我们做好业务之外的事情，我们根据业务需要书写函数就好，而且按量计费的方式也会对有明显波峰的场景节约成本。</p>
-<h1 id="BaaS"><a href="#BaaS" class="headerlink" title="BaaS"></a>BaaS</h1><p>是一种自动化后端开发和维护云基础设施的平台。使用 BaaS后，开发者将把运维程序逻辑的责任外包给第三方，并将重点放在前端或客户端开发上。BaaS服务提供商将诸如身份验证、文件存储、数据存储、消息通知等多种能力整合，让开发者通过API或者SDK的方式提供，方便缺少后端知识的前端&#x2F;客户端开发工程师接入，缩短开发周期。</p>
+<h1>BaaS</h1>
+<p>是一种自动化后端开发和维护云基础设施的平台。使用 BaaS后，开发者将把运维程序逻辑的责任外包给第三方，并将重点放在前端或客户端开发上。BaaS服务提供商将诸如身份验证、文件存储、数据存储、消息通知等多种能力整合，让开发者通过API或者SDK的方式提供，方便缺少后端知识的前端/客户端开发工程师接入，缩短开发周期。</p>
 <p><a target="_blank" rel="noopener" href="https://tech.bytedance.net/videos/set/6978749141803335688/6993174149501976584">贴一个链接</a></p>
 
                 
@@ -450,6 +454,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

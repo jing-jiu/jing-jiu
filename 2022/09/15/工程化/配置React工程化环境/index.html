@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -283,87 +285,95 @@
                 <blockquote>
 <p>通过手动配置React开发环境了解常用webpack的loader &amp; plugin。</p>
 </blockquote>
-<h1 id="处理常见资源"><a href="#处理常见资源" class="headerlink" title="处理常见资源"></a>处理常见资源</h1><blockquote>
+<h1>处理常见资源</h1>
+<blockquote>
 <p>众所周知，webpack只能识别js，其他文件如果直接引入是无法识别的，那么就需要借助loader &amp; plugin的能力帮助webpack处理这些文件。</p>
 </blockquote>
 <ol>
-<li>图片资源<ol>
-<li>File-loader<br>在JS代码中import&#x2F;require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名。</li>
+<li>图片资源
+<ol>
+<li>File-loader<br>
+在JS代码中import/require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名。</li>
 </ol>
 </li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(png|jpg|gif)$/</span>,<br>    <span class="hljs-attr">use</span>: &#123;<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;file-loader&#x27;</span>,<br>        <span class="hljs-attr">options</span>: &#123;<br>            <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;[name].[ext]&#x27;</span>,<br>            <span class="hljs-attr">outputPath</span>: <span class="hljs-string">&#x27;images&#x27;</span>,<br>        &#125;<br>    &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
-
 <ol>
-<li>Url-loader<br>功能与File-loader类似，但是在设定limit字段后，当引入的文件小于指定大小会将文件转为Base64格式。</li>
+<li>Url-loader<br>
+功能与File-loader类似，但是在设定limit字段后，当引入的文件小于指定大小会将文件转为Base64格式。</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(png|jpg|gif)$/i</span>,<br>    <span class="hljs-attr">use</span>: [&#123;<br>      <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;url-loader&#x27;</span>,<br>      <span class="hljs-attr">options</span>: &#123;<br>        <span class="hljs-attr">limit</span>: <span class="hljs-number">8192</span>,<br>      &#125;,<br>    &#125;]<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ol>
-<li>svg-inline-loader<br>会将 SVG 文件内联为模块。</li>
-<li>css文件<ol>
-<li>Css-loader<br>解析@import&#x2F;url()引入的文件。</li>
+<li>svg-inline-loader<br>
+会将 SVG 文件内联为模块。</li>
+<li>css文件
+<ol>
+<li>Css-loader<br>
+解析@import/url()引入的文件。</li>
 </ol>
 </li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>    <span class="hljs-attr">use</span>: [<span class="hljs-string">&#x27;style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>]<br>&#125;,<br></code></pre></td></tr></table></figure>
-
 <ol>
-<li>style-loader<br>配合css-loader使用，将css插入到dom中。</li>
-<li>html文件<ol>
-<li>HtmlWebpackPlugin<br>当使用webpack打包时，创建 &#x2F; 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中。</li>
+<li>style-loader<br>
+配合css-loader使用，将css插入到dom中。</li>
+<li>html文件
+<ol>
+<li>HtmlWebpackPlugin<br>
+当使用webpack打包时，创建 / 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中。</li>
 </ol>
 </li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlWebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;/public/index.html&#x27;</span><br>&#125;)<br></code></pre></td></tr></table></figure>
-
 <ol>
-<li>jsx or tsx<ol>
-<li>Babel-loader + @babel&#x2F;preset-react &#x2F; @babel&#x2F;preset-typescript<br>将jsx &#x2F; tsx文件使用babel-loader，React 预设规则集 @babel&#x2F;preset-react ，完成 JSX 到 JS 的转换。</li>
+<li>jsx or tsx
+<ol>
+<li>Babel-loader + @babel/preset-react / @babel/preset-typescript<br>
+将jsx / tsx文件使用babel-loader，React 预设规则集 @babel/preset-react ，完成 JSX 到 JS 的转换。</li>
 </ol>
 </li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.tsx$/</span>,<br>    <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel-loader&#x27;</span>,<br>    <span class="hljs-attr">options</span>: &#123;<br>        <span class="hljs-attr">presets</span>: [[<span class="hljs-string">&#x27;@babel/preset-react&#x27;</span>, &#123;<br>            <span class="hljs-string">&#x27;runtime&#x27;</span>: <span class="hljs-string">&#x27;automatic&#x27;</span><br>        &#125;], <span class="hljs-string">&quot;@babel/preset-typescript&quot;</span>]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ol>
 <li>vue</li>
 <li>vue-loader vue单文件的解析</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> &#123; <span class="hljs-title class_">VueLoaderPlugin</span> &#125; = <span class="hljs-title function_">require</span>(<span class="hljs-params"><span class="hljs-string">&#x27;vue-loader&#x27;</span></span>)<br>&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>    <span class="hljs-attr">use</span>: [<span class="hljs-string">&#x27;vue-loader&#x27;</span>]<br>&#125;<br><span class="hljs-attr">plugins</span>: [ <span class="hljs-keyword">new</span> <span class="hljs-title class_">VueLoaderPlugin</span>() ]<br></code></pre></td></tr></table></figure>
-
-<h1 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h1><p>安装 <strong>webpack-dev-server，</strong> 如下配置</p>
+<h1>热更新</h1>
+<p>安装 <strong>webpack-dev-server，</strong> 如下配置</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">open</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h1><ul>
-<li>Eslint<br>js语法检测</li>
+<h1>代码规范</h1>
+<ul>
+<li>Eslint<br>
+js语法检测</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// .eslintrc.js</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>    <span class="hljs-attr">extends</span>: [<br>        <span class="hljs-comment">// 启用Eslint推荐规则</span><br>        <span class="hljs-string">&#x27;eslint:recommended&#x27;</span>,<br>        <span class="hljs-comment">// 启用React推荐规则</span><br>        <span class="hljs-string">&#x27;plugin:react/recommended&#x27;</span>,<br>    ],<br>    <span class="hljs-attr">overrides</span>: [<br>        &#123;<br>            <span class="hljs-comment">// 对ts tsx调用如下配置进行处理 关闭一些处理规则</span><br>            <span class="hljs-attr">files</span>: [<span class="hljs-string">&#x27;*.ts&#x27;</span>, <span class="hljs-string">&#x27;*.tsx&#x27;</span>],<br>            <span class="hljs-attr">extends</span>: [<br>                <span class="hljs-string">&#x27;plugin:@typescript-eslint/eslint-recommended&#x27;</span>,<br>                <span class="hljs-string">&#x27;plugin:@typescript-eslint/recommended&#x27;</span><br>            ],<br>            <span class="hljs-attr">parser</span>: <span class="hljs-string">&#x27;@typescript-eslint/parser&#x27;</span>,<br>            <span class="hljs-attr">plugins</span>: [<br>                <span class="hljs-string">&#x27;@typescript-eslint/eslint-plugin&#x27;</span>,<br>            ],<br>            <span class="hljs-attr">rules</span>: &#123;<br>                <span class="hljs-string">&#x27;@typescript-eslint/ban-ts-ignore&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span>,<br>                <span class="hljs-string">&#x27;@typescript-eslint/no-explicit-any&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span>,<br>                <span class="hljs-string">&#x27;@typescript-eslint/no-use-before-define&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span><br>            &#125;,<br>        &#125;<br>    ],<br>    <span class="hljs-comment">// 自动设置检查的React版本是安装的React的版本</span><br>    <span class="hljs-attr">settings</span>: &#123;<br>        <span class="hljs-attr">react</span>: &#123;<br>            <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;detect&#x27;</span>,<br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">rules</span>: &#123;<br>        <span class="hljs-string">&#x27;react/jsx-no-undef&#x27;</span>: <span class="hljs-string">&#x27;off&#x27;</span><br>    &#125;,<br>    <span class="hljs-comment">// 表示支持browser、es2020、node、commonjs中预定义的全局变量</span><br>    <span class="hljs-attr">env</span>: &#123;<br>        <span class="hljs-attr">browser</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">es2020</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">node</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">commonjs</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>    <span class="hljs-comment">//配置之前的步骤中设置的全局变量，比如React</span><br>    <span class="hljs-attr">globals</span>: &#123;<br>        <span class="hljs-title class_">React</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">ReduxConnect</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">Axios</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-title class_">UseEffect</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>    <span class="hljs-attr">ignorePatterns</span>: [<span class="hljs-string">&#x27;dist/&#x27;</span>],<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
-<li>stylelint<br>样式文件语法检测。</li>
+<li>stylelint<br>
+样式文件语法检测。</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;stylelint-config-standard&#x27;</span>],<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-string">&quot;stylelint-order&quot;</span>],<br>  <span class="hljs-attr">rules</span>:&#123;<br>    <span class="hljs-string">&#x27;no-descending-specificity&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;function-url-quotes&#x27;</span>: <span class="hljs-string">&#x27;always&#x27;</span>,<br>    <span class="hljs-string">&#x27;string-quotes&#x27;</span>: <span class="hljs-string">&#x27;double&#x27;</span>, <br>    <span class="hljs-string">&#x27;indentation&#x27;</span>: <span class="hljs-number">2</span>,<br>    <span class="hljs-string">&#x27;unit-case&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;color-hex-case&#x27;</span>: <span class="hljs-string">&#x27;upper&#x27;</span>,<br>    <span class="hljs-string">&#x27;color-hex-length&#x27;</span>: <span class="hljs-string">&#x27;long&#x27;</span>,<br>    <span class="hljs-string">&#x27;rule-empty-line-before&#x27;</span>: <span class="hljs-string">&#x27;never&#x27;</span>,<br>    <span class="hljs-string">&#x27;font-family-no-missing-generic-family-keyword&#x27;</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;block-opening-brace-space-before&#x27;</span>:<span class="hljs-string">&#x27;always&#x27;</span>,<br>    <span class="hljs-string">&#x27;property-no-unknown&#x27;</span>:<span class="hljs-literal">null</span>,<br>    <span class="hljs-string">&#x27;no-empty-source&#x27;</span>:<span class="hljs-literal">null</span>,<br>   <br>    <span class="hljs-string">&quot;order/properties-order&quot;</span>: [<br><br>      <span class="hljs-comment">//css内容&#x27;content&#x27;,</span><br>      <span class="hljs-string">&#x27;counter-increment&#x27;</span>,<br>      <span class="hljs-string">&#x27;counter-reset&#x27;</span>,<br>      <span class="hljs-string">&#x27;quotes&#x27;</span>,<br>      <span class="hljs-string">&#x27;crop&#x27;</span>,<br>      <span class="hljs-string">&#x27;move-to&#x27;</span>,<br>      <span class="hljs-string">&#x27;page-policy&#x27;</span>,<br>      ...<br>    ]<br>  &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="git提交"><a href="#git提交" class="headerlink" title="git提交"></a>git提交</h1><ul>
+<h1>git提交</h1>
+<ul>
 <li>配置commitlint</li>
 </ul>
 <p>帮我们检查 git commit 所提交信息是否符合<strong>conventional commit format</strong>的工具</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>    <span class="hljs-attr">extends</span>: [<span class="hljs-string">&#x27;@commitlint/config-angular&#x27;</span>],<br>    <span class="hljs-attr">rules</span>: &#123;<br>        <span class="hljs-string">&#x27;type-enum&#x27;</span>: [<br>            <span class="hljs-number">2</span>,<br>            <span class="hljs-string">&#x27;always&#x27;</span>,<br>            [<br>                <span class="hljs-string">&#x27;WIP&#x27;</span>,      <span class="hljs-comment">// 开发中</span><br>                <span class="hljs-string">&#x27;feat&#x27;</span>,     <span class="hljs-comment">// 新特性</span><br>                <span class="hljs-string">&#x27;improvement&#x27;</span>, <span class="hljs-comment">// 加强现有特性</span><br>                <span class="hljs-string">&#x27;fix&#x27;</span>,      <span class="hljs-comment">// 修补bug</span><br>                <span class="hljs-string">&#x27;refactor&#x27;</span>, <span class="hljs-comment">// 重构</span><br>                <span class="hljs-string">&#x27;docs&#x27;</span>,     <span class="hljs-comment">// 文档</span><br>                <span class="hljs-string">&#x27;test&#x27;</span>,     <span class="hljs-comment">// 单元测试</span><br>                <span class="hljs-string">&#x27;config&#x27;</span>,   <span class="hljs-comment">// 配置文件</span><br>                <span class="hljs-string">&#x27;style&#x27;</span>,    <span class="hljs-comment">// 格式需改</span><br>                <span class="hljs-string">&#x27;perf&#x27;</span>,     <span class="hljs-comment">// 性能提升</span><br>                <span class="hljs-string">&#x27;ci&#x27;</span>,       <span class="hljs-comment">// ci</span><br>                <span class="hljs-string">&#x27;revert&#x27;</span>,   <span class="hljs-comment">// 版本回退</span><br>                <span class="hljs-string">&#x27;chore&#x27;</span>,    <span class="hljs-comment">// 其他修改</span><br>            ],<br>        ],<br>        <span class="hljs-string">&#x27;type-empty&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;never&#x27;</span>],               <span class="hljs-comment">// type不能为空</span><br>        <span class="hljs-string">&#x27;type-case&#x27;</span>: [<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-string">&#x27;lower-case&#x27;</span>], <span class="hljs-comment">// type不限制大小写</span><br>        <span class="hljs-string">&#x27;subject-empty&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;never&#x27;</span>],            <span class="hljs-comment">// subject（简短得描述）不能为空</span><br>        <span class="hljs-string">&#x27;subject-max-length&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-number">50</span>],  <span class="hljs-comment">// subject最大长度，超出只会警告，不阻止提交</span><br>        <span class="hljs-string">&#x27;body-leading-blank&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>],<br>                <span class="hljs-string">&#x27;footer-leading-blank&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;always&#x27;</span>],<br>                <span class="hljs-string">&#x27;header-max-length&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;always&#x27;</span>, <span class="hljs-number">72</span>],<br>      &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>安装husky</li>
 </ul>
 <p>帮我们每次 git 提交时自动执行检查</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// packge.json</span><br><span class="hljs-string">&quot;husky&quot;</span>: &#123;<br>  <span class="hljs-string">&quot;hooks&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;commit-msg&quot;</span>: <span class="hljs-string">&quot;commitlint -E HUSKY_GIT_PARAMS&quot;</span><br>  &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
-
-<h1 id="Create-react-app"><a href="#Create-react-app" class="headerlink" title="Create-react-app"></a>Create-react-app</h1><blockquote>
+<h1>Create-react-app</h1>
+<blockquote>
 <p>有关create-react-app中用到的插件和loader</p>
 </blockquote>
-<h2 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h2><ul>
+<h2 id="Plugin">Plugin</h2>
+<ul>
 <li>html-webpack-plugin</li>
 </ul>
 <blockquote>
-<p>当使用webpack打包时，创建 &#x2F; 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中</p>
+<p>当使用webpack打包时，创建 / 引用一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中</p>
 </blockquote>
 <ul>
 <li>case-sensitive-paths-webpack-plugin</li>
@@ -404,7 +414,8 @@
 <ul>
 <li>eslint-webpack-plugin</li>
 </ul>
-<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><ul>
+<h2 id="Loader">Loader</h2>
+<ul>
 <li>Css-loader</li>
 </ul>
 <blockquote>
@@ -435,7 +446,7 @@
 <p>将源代码与打包过的代码建立映射关系</p>
 </blockquote>
 <ul>
-<li>@svgr&#x2F;webpack</li>
+<li>@svgr/webpack</li>
 </ul>
 <blockquote>
 <p>支持svg作为组件引入</p>
@@ -444,7 +455,7 @@
 <li>file-loader</li>
 </ul>
 <blockquote>
-<p>在JS代码中import&#x2F;require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名</p>
+<p>在JS代码中import/require文件时，会将该文件生成到输出目录,默认文件名是哈希值，可以自定义文件名</p>
 </blockquote>
 <ul>
 <li>babel-loader</li>
@@ -613,6 +624,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

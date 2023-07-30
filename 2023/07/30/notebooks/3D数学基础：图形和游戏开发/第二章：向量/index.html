@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-gxy1.jpg">
 <meta property="article:published_time" content="2023-07-30T06:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-30T13:25:16.509Z">
+<meta property="article:modified_time" content="2023-07-30T13:59:39.569Z">
 <meta property="article:author" content="Jing-Jiu">
 <meta property="article:tag" content="图形学">
 <meta property="article:tag" content="3D">
@@ -45,6 +45,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -227,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k 字
+          4.5k 字
         
       </span>
     
@@ -238,7 +240,7 @@
         
         
         
-          41 分钟
+          38 分钟
         
       </span>
     
@@ -284,29 +286,37 @@
                 <blockquote>
 <p>向量是数学和物理学等领域中常见的概念，它是由大小（或称为模或长度）和方向组成的量。在二维空间中，向量通常表示为具有两个分量（x 和 y）的有序对 (x, y)，在三维空间中则通常表示为具有三个分量（x、y 和 z）的有序三元组 (x, y, z）</p>
 </blockquote>
-<h1 id="点积"><a href="#点积" class="headerlink" title="点积"></a>点积</h1><p>向量之间的点积，也称为内积或数量积，是向量运算中的一种重要操作。给定两个 n 维向量 A 和 B，它们的点积（记作 A·B 或 &lt;A, B&gt;）定义为：</p>
-<p>A·B &#x3D; A₁ * B₁ + A₂ * B₂ + … + Aₙ * Bₙ</p>
+<h1>点积</h1>
+<p>向量之间的点积，也称为内积或数量积，是向量运算中的一种重要操作。给定两个 n 维向量 A 和 B，它们的点积（记作 A·B 或 &lt;A, B&gt;）定义为：</p>
+<p>A·B = A₁ * B₁ + A₂ * B₂ + … + Aₙ * Bₙ</p>
 <p>其中 A₁、A₂、…、Aₙ 和 B₁、B₂、…、Bₙ 分别表示向量 A 和 B 的各个分量。</p>
 <p>点积的结果是一个标量（即一个实数），而不是一个向量。点积的计算方法是将两个向量对应分量相乘，然后将这些乘积相加得到一个标量。</p>
 <p>点积有一些重要的性质：</p>
 <ol>
-<li>交换律： A·B &#x3D; B·A</li>
-<li>分配律： A·(B + C) &#x3D; A·B + A·C</li>
-<li>结合律： k(A·B) &#x3D; (kA)·B &#x3D; A·(kB)，其中 k 是一个标量（实数）</li>
-<li>计算夹角： 如果 A 和 B 是非零向量，它们的夹角 θ 可以通过以下公式计算：cos(θ) &#x3D; (A·B) &#x2F; (|A| * |B|)，其中 |A| 和 |B| 分别表示向量 A 和 B 的模（长度）。</li>
+<li>交换律： A·B = B·A</li>
+<li>分配律： A·(B + C) = A·B + A·C</li>
+<li>结合律： k(A·B) = (kA)·B = A·(kB)，其中 k 是一个标量（实数）</li>
+<li>计算夹角： 如果 A 和 B 是非零向量，它们的夹角 θ 可以通过以下公式计算：cos(θ) = (A·B) / (|A| * |B|)，其中 |A| 和 |B| 分别表示向量 A 和 B 的模（长度）。</li>
 </ol>
-<h2 id="相关性质及推导"><a href="#相关性质及推导" class="headerlink" title="相关性质及推导"></a>相关性质及推导</h2><ol>
-<li>交换律：A·B &#x3D; B·A</li>
+<h2 id="相关性质及推导">相关性质及推导</h2>
+<ol>
+<li>交换律：A·B = B·A</li>
 </ol>
 <p>从几何角度来看，点积 A·B 表示向量 A 在向量 B 方向上的投影与向量 B 的长度的乘积（即B<em>Acosθ）。而点积 B·A 表示向量 B 在向量 A 方向上的投影与向量 A 的长度的乘积（即A</em>Bcosθ）。由于投影的长度与投影方向无关，所以 A·B 和 B·A 的结果相同。</p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDJjZWQ0NjNlZDQxM2UwOTY5NjZjMWYwNGUyYTBlYTNfM3BUTzM1dktwTkw0aW9EQXB4UDN2NkNjVDA1VUd3TjNfVG9rZW46TEZwM2J4MDdLb2dURWx4N2VQbGN6UjdjbldlXzE2OTA3MjM0MDQ6MTY5MDcyNzAwNF9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDJjZWQ0NjNlZDQxM2UwOTY5NjZjMWYwNGUyYTBlYTNfM3BUTzM1dktwTkw0aW9EQXB4UDN2NkNjVDA1VUd3TjNfVG9rZW46TEZwM2J4MDdLb2dURWx4N2VQbGN6UjdjbldlXzE2OTA3MjM0MDQ6MTY5MDcyNzAwNF9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ol start="2">
-<li><p>结合律 k(A·B) &#x3D; (kA)·B &#x3D; A·(kB)，其中 k 是一个标量（实数）<br>我们假设有两个二维向量 A 和 B，以及标量 k。它们的分量分别为 A₁、A₂ 和 B₁、B₂。</p>
+<li>
+<p>结合律 k(A·B) = (kA)·B = A·(kB)，其中 k 是一个标量（实数）<br>
+我们假设有两个二维向量 A 和 B，以及标量 k。它们的分量分别为 A₁、A₂ 和 B₁、B₂。</p>
 <p>首先，我们来看 k(A·B) 的计算过程，它表示向量 A 在向量 B 方向上的投影与向量 B 的长度的乘积再乘以标量 k。</p>
 <ol>
-<li><p>计算向量 B 的长度：<br><code>  |B| = √(B₁² + B₂²)</code></p>
+<li>
+<p>计算向量 B 的长度：<br>
+<code>  |B| = √(B₁² + B₂²)</code></p>
 </li>
-<li><p>计算向量 A 在向量 B 方向上的投影：<br><code> A 在向量 B 方向上的投影 = |A| * cos(θ₁)</code></p>
+<li>
+<p>计算向量 A 在向量 B 方向上的投影：<br>
+<code> A 在向量 B 方向上的投影 = |A| * cos(θ₁)</code></p>
 <p>其中 θ₁ 表示向量 A 与向量 B 之间的夹角，可以通过点积的计算得到：</p>
 <p><code> cos(θ₁) = (A·B) / (|A| * |B|)</code></p>
 <p>代入 A 在向量 B 方向上的投影的计算式：</p>
@@ -314,132 +324,201 @@
 </ol>
 <p><code>  A 在向量 B 方向上的投影 = |A| * ((A·B) / (|A| * |B|))</code></p>
 <ol>
-<li><p>现在，我们将 A 在向量 B 方向上的投影乘以标量 k：<br><code> k(A 在向量 B 方向上的投影) = k * (|A| * ((A·B) / (|A| * |B|))) = (kA)·B</code></p>
+<li>
+<p>现在，我们将 A 在向量 B 方向上的投影乘以标量 k：<br>
+<code> k(A 在向量 B 方向上的投影) = k * (|A| * ((A·B) / (|A| * |B|))) = (kA)·B</code></p>
 <p>这里我们引入了向量 kA，它是向量 A 的每个分量都乘以标量 k 后得到的向量。</p>
 </li>
-<li><p>接下来，我们来计算 (kA)·B，这表示向量 kA 在向量 B 方向上的投影。<br><code> (kA) 在向量 B 方向上的投影 = |kA| * cos(θ₂)</code></p>
+<li>
+<p>接下来，我们来计算 (kA)·B，这表示向量 kA 在向量 B 方向上的投影。<br>
+<code> (kA) 在向量 B 方向上的投影 = |kA| * cos(θ₂)</code></p>
 <p>其中 θ₂ 表示向量 kA 与向量 B 之间的夹角，可以通过点积的计算得到：</p>
 </li>
 </ol>
 <p><code> cos(θ₂) = ((kA)·B) / (|kA| * |B|)</code></p>
-<p>因为 |kA| &#x3D; |k| * |A|，所以：</p>
+<p>因为 |kA| = |k| * |A|，所以：</p>
 <p><code> ((kA)·B) / (|kA| * |B|) = ((kA)·B) / (|k| * |A| * |B|)</code></p>
 <p>代入 (kA) 在向量 B 方向上的投影的计算式：</p>
 <p><code> (kA) 在向量 B 方向上的投影 = |kA| * ((kA)·B) / (|k| * |A| * |B|)  = |k| * |A| * ((kA)·B) / (|k| * |A| * |B|) = k * (A·B)</code></p>
 <ol>
-<li>最后，我们将向量 kA 在向量 B 方向上的投影与向量 B 的长度相乘，得到 (kA)·B 的结果：<br><code> (kA)·B = |kA| * ((kA)·B) / (|k| * |A| * |B|)  = k * (A·B)</code></li>
+<li>最后，我们将向量 kA 在向量 B 方向上的投影与向量 B 的长度相乘，得到 (kA)·B 的结果：<br>
+<code> (kA)·B = |kA| * ((kA)·B) / (|k| * |A| * |B|)  = k * (A·B)</code></li>
 </ol>
-<p>综上所述，我们得到 k(A·B) &#x3D; (kA)·B，其中向量 kA 是向量 A 的每个分量都乘以标量 k 后得到的向量。同时，我们也得到 k(A·B) &#x3D; A·(kB)，其中向量 kB 是向量 B 的每个分量都乘以标量 k 后得到的向量。这就是点积的结合律的几何推导过程。</p>
+<p>综上所述，我们得到 k(A·B) = (kA)·B，其中向量 kA 是向量 A 的每个分量都乘以标量 k 后得到的向量。同时，我们也得到 k(A·B) = A·(kB)，其中向量 kB 是向量 B 的每个分量都乘以标量 k 后得到的向量。这就是点积的结合律的几何推导过程。</p>
 </li>
 </ol>
-<h1 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h1><p>与点积不同，叉积的结果是一个新的向量，而不是一个标量。叉积通常在三维空间中定义，用来计算两个向量之间垂直于它们所在平面的向量。</p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NzQ4OTY2NmJjZGRlODNjNDVlNzE0OWU1MGMwZTYwNDdfWHBRN3g1bGwyVjcxUDNJWXl1ZTIyelc5QUhlOVJPMnFfVG9rZW46WGxuaWJzaEFpb2dPSTB4dXQyWmNmallIblBkXzE2OTA3MjM0MDQ6MTY5MDcyNzAwNF9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
-<p>给定两个三维向量 A &#x3D; (A₁, A₂, A₃) 和 B &#x3D; (B₁, B₂, B₃)，它们的叉积为C（记作 A × B）定义为：</p>
+<h1>叉积</h1>
+<p>与点积不同，叉积的结果是一个新的向量，而不是一个标量。叉积通常在三维空间中定义，用来计算两个向量之间垂直于它们所在平面的向量。</p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NzQ4OTY2NmJjZGRlODNjNDVlNzE0OWU1MGMwZTYwNDdfWHBRN3g1bGwyVjcxUDNJWXl1ZTIyelc5QUhlOVJPMnFfVG9rZW46WGxuaWJzaEFpb2dPSTB4dXQyWmNmallIblBkXzE2OTA3MjM0MDQ6MTY5MDcyNzAwNF9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
+<p>给定两个三维向量 A = (A₁, A₂, A₃) 和 B = (B₁, B₂, B₃)，它们的叉积为C（记作 A × B）定义为：</p>
 <p><code>C₁ = A₂ * B₃ - A₃ * B₂ ``C₂ = A₃ * B₁ - A₁ * B₃ ``C₃ = A₁ * B₂ - A₂ * B₁</code></p>
 <p>其中 A₁、A₂、A₃ 和 B₁、B₂、B₃ 分别表示向量 A 和 B 的三个分量。</p>
-<p><strong>叉积的结果是一个新的向量，它垂直于原来的两个向量所在的平面，并且方向满足右手法则。</strong>右手法则用来确定结果向量的方向：将右手的食指指向向量 A 的方向，将中指指向向量 B 的方向，然后拇指的方向就是结果向量的方向。</p>
+<p>**叉积的结果是一个新的向量，它垂直于原来的两个向量所在的平面，并且方向满足右手法则。**右手法则用来确定结果向量的方向：将右手的食指指向向量 A 的方向，将中指指向向量 B 的方向，然后拇指的方向就是结果向量的方向。</p>
 <p>叉积有一些重要的性质：</p>
 <ol>
-<li>反交换律： A × B &#x3D; - (B × A)，即叉积不满足交换律，其结果方向与顺序有关。</li>
-<li>分配律： A × (B + C) &#x3D; A × B + A × C，即叉积满足分配律，可以在展开后分别计算再相加。</li>
+<li>反交换律： A × B = - (B × A)，即叉积不满足交换律，其结果方向与顺序有关。</li>
+<li>分配律： A × (B + C) = A × B + A × C，即叉积满足分配律，可以在展开后分别计算再相加。</li>
 <li>结合律： 叉积没有结合律，即 (A × B) × C 不等于 A × (B × C)。</li>
 <li>共线性： 如果两个向量 A 和 B 共线（即平行或反向），则它们的叉积结果为零向量。</li>
 </ol>
-<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><ol>
-<li><p>将一个向量 V 分解为与另一个向量 U 垂直和水平的分量<br>通常采用向量投影的方法。首先，来计算 V 在 U 方向上的投影，即 V 在 U 方向上的垂直分量。然后，我们可以通过减去这个投影向量，得到 V 在 U 方向上的水平分量。</p>
+<h1>应用</h1>
+<ol>
+<li>
+<p>将一个向量 V 分解为与另一个向量 U 垂直和水平的分量<br>
+通常采用向量投影的方法。首先，来计算 V 在 U 方向上的投影，即 V 在 U 方向上的垂直分量。然后，我们可以通过减去这个投影向量，得到 V 在 U 方向上的水平分量。</p>
 <p>步骤如下：</p>
 <ol>
-<li>如果 U 不是单位向量，计算 U 的单位向量 U’，即将 U 除以它的模（长度），得到长度为 1 的向量 U’（ U’ &#x3D; U &#x2F; |U| ）。</li>
-<li>计算 V 在 U 方向上的投影 P，即 V 在 U’ 方向上的投影。投影 P &#x3D; V·U’。</li>
-<li>计算垂直分量 Vv，即 V 在 U 方向上的垂直分量：Vv &#x3D; P * U’。</li>
-<li>计算水平分量 Vh，即 V 减去垂直分量的结果：Vh &#x3D; V - Vv。</li>
+<li>如果 U 不是单位向量，计算 U 的单位向量 U’，即将 U 除以它的模（长度），得到长度为 1 的向量 U’（ U’ = U / |U| ）。</li>
+<li>计算 V 在 U 方向上的投影 P，即 V 在 U’ 方向上的投影。投影 P = V·U’。</li>
+<li>计算垂直分量 Vv，即 V 在 U 方向上的垂直分量：Vv = P * U’。</li>
+<li>计算水平分量 Vh，即 V 减去垂直分量的结果：Vh = V - Vv。</li>
 </ol>
 </li>
-<li><p>确定NPC与玩家的相对位置</p>
+<li>
+<p>确定NPC与玩家的相对位置</p>
 <ol>
-<li><p>游戏中的npc站在P位置，方向为V，玩家在X，确定NPC在X的前面还是后面</p>
+<li>
+<p>游戏中的npc站在P位置，方向为V，玩家在X，确定NPC在X的前面还是后面</p>
 <ol>
-<li>首先，计算玩家到NPC的向量 D，即 D &#x3D; P - X。这个向量表示从玩家位置指向NPC位置的方向。</li>
-<li>计算向量 D 和朝向向量 V 的夹角 θ。夹角可以通过计算向量的点积来得到，点积公式如下：<br><code>  D · V = |D| * |V| * cos(θ)</code><br>其中，· 表示向量的点积，|D| 表示向量 D 的模（长度），|V| 表示向量 V 的模，θ 是向量 D 和 V 的夹角。</li>
+<li>首先，计算玩家到NPC的向量 D，即 D = P - X。这个向量表示从玩家位置指向NPC位置的方向。</li>
+<li>计算向量 D 和朝向向量 V 的夹角 θ。夹角可以通过计算向量的点积来得到，点积公式如下：<br>
+<code>  D · V = |D| * |V| * cos(θ)</code><br>
+其中，· 表示向量的点积，|D| 表示向量 D 的模（长度），|V| 表示向量 V 的模，θ 是向量 D 和 V 的夹角。</li>
 <li>通过上面的公式可以解出 cos(θ)：<code>cos(θ) = (D · V) / (|D| * |V|)</code></li>
 <li>如果 cos(θ) 大于 0，则表示夹角 θ 处于 0 到 90 度之间，NPC在玩家的前面。如果 cos(θ) 小于 0，则表示夹角 θ 处于 90 到 180 度之间，NPC在玩家的后面，如果等于0，说明玩家在npc的正左边或者右边。</li>
 </ol>
 </li>
-<li><p>设p&#x3D;[-3 4]且v&#x3D;[5 -2]。对于以下每个点x是在NPC的前面还是后面。<br>(1) x&#x3D;[0 0]<br>(2) x&#x3D;[1 6]<br>给定：</p>
-<p>**<strong>为NPC的位置，</strong><br>$$<br>\mathbf{v} &#x3D; [5, -2]<br>$$</p>
+<li>
+<p>设p=[-3 4]且v=[5 -2]。对于以下每个点x是在NPC的前面还是后面。<br>
+(1) x=[0 0]<br>
+(2) x=[1 6]<br>
+给定：</p>
+<p>**<strong>为NPC的位置，</strong><br>
+$$<br>
+\mathbf{v} = [5, -2]<br>
+$$</p>
 <p>** 为NPC的朝向向量。</p>
 <ol>
-<li><p>x &#x3D; [0, 0]<br>向量 **<br>$$<br>\mathbf{D} &#x3D; \mathbf{p} - \mathbf{x} &#x3D; [-3, 4] - [0, 0] &#x3D; [-3, 4]<br>$$</p>
-<p>**<br>**<br>$$<br>\cos(\theta) &#x3D; \frac{\mathbf{D} \cdot \mathbf{v}}{|\mathbf{D}| |\mathbf{v}|} &#x3D; \frac{(-3\cdot5 + 4\cdot(-2))}{\sqrt{(-3)^2 + 4^2} \sqrt{5^2 + (-2)^2}} &#x3D; \frac{(-15 - 8)}{\sqrt{9 + 16} \sqrt{25 + 4}} &#x3D; \frac{-23}{5 \sqrt{5}} &lt; 0<br>$$</p>
-<p>**<br>结论：x &#x3D; [0, 0] 在NPC的后面。</p>
+<li>
+<p>x = [0, 0]<br>
+向量 **<br>
+$$<br>
+\mathbf{D} = \mathbf{p} - \mathbf{x} = [-3, 4] - [0, 0] = [-3, 4]<br>
+$$</p>
+<p>**<br>
+**<br>
+$$<br>
+\cos(\theta) = \frac{\mathbf{D} \cdot \mathbf{v}}{|\mathbf{D}| |\mathbf{v}|} = \frac{(-3\cdot5 + 4\cdot(-2))}{\sqrt{(-3)^2 + 4^2} \sqrt{5^2 + (-2)^2}} = \frac{(-15 - 8)}{\sqrt{9 + 16} \sqrt{25 + 4}} = \frac{-23}{5 \sqrt{5}} &lt; 0<br>
+$$</p>
+<p>**<br>
+结论：x = [0, 0] 在NPC的后面。</p>
 </li>
-<li><p>x &#x3D; [1, 6]<br>向量 **<br>$$<br>\mathbf{D} &#x3D; \mathbf{p} - \mathbf{x} &#x3D; [-3, 4] - [1, 6] &#x3D; [-4, -2]<br>$$</p>
-<p>**<br>**<br>$$<br>\cos(\theta) &#x3D; \frac{\mathbf{D} \cdot \mathbf{v}}{|\mathbf{D}| |\mathbf{v}|} &#x3D; \frac{(-4\cdot5 + (-2)\cdot(-2))}{\sqrt{(-4)^2 + (-2)^2} \sqrt{5^2 + (-2)^2}} &#x3D; \frac{(-20 + 4)}{\sqrt{16 + 4} \sqrt{25 + 4}} &#x3D; \frac{-16}{2 \sqrt{29}} &lt; 0<br>$$</p>
-<p>**<br>结论：x &#x3D; [1, 6] 在NPC的后面。</p>
+<li>
+<p>x = [1, 6]<br>
+向量 **<br>
+$$<br>
+\mathbf{D} = \mathbf{p} - \mathbf{x} = [-3, 4] - [1, 6] = [-4, -2]<br>
+$$</p>
+<p>**<br>
+**<br>
+$$<br>
+\cos(\theta) = \frac{\mathbf{D} \cdot \mathbf{v}}{|\mathbf{D}| |\mathbf{v}|} = \frac{(-4\cdot5 + (-2)\cdot(-2))}{\sqrt{(-4)^2 + (-2)^2} \sqrt{5^2 + (-2)^2}} = \frac{(-20 + 4)}{\sqrt{16 + 4} \sqrt{25 + 4}} = \frac{-16}{2 \sqrt{29}} &lt; 0<br>
+$$</p>
+<p>**<br>
+结论：x = [1, 6] 在NPC的后面。</p>
 </li>
 </ol>
 </li>
 </ol>
 </li>
-<li><p>在题2的条件下，考虑NPC的视场(Field of View,FOV)受限的情况。如果总FOV角是θ,则NPC可以在其向前方向的左侧或右侧能看到的最大角度是θ&#x2F;2。如何使用点积来确定点x是否对NPC可见?</p>
+<li>
+<p>在题2的条件下，考虑NPC的视场(Field of View,FOV)受限的情况。如果总FOV角是θ,则NPC可以在其向前方向的左侧或右侧能看到的最大角度是θ/2。如何使用点积来确定点x是否对NPC可见?</p>
 </li>
 </ol>
 <p>考虑NPC的视场（Field of View, FOV）受限的情况下，我们可以使用点积来确定一个点 x 是否对NPC可见。具体方法如下：</p>
 <ul>
-<li><p>计算向量 D，即从NPC位置指向点 x 的向量。即</p>
+<li>
+<p>计算向量 D，即从NPC位置指向点 x 的向量。即</p>
 <p>，其中 p 是NPC的位置。</p>
 </li>
-<li><p>计算向量 D 和NPC的朝向向量 V 之间的夹角 θ。使用点积公式计算夹角：</p>
+<li>
+<p>计算向量 D 和NPC的朝向向量 V 之间的夹角 θ。使用点积公式计算夹角：</p>
 </li>
-<li><p>如果</p>
+<li>
+<p>如果</p>
 <p>，则表示点 x 对NPC可见。否则，点 x 不在NPC的视场范围内，对NPC不可见。</p>
 <p>总结：</p>
 </li>
-<li><p>点 x 在NPC的FOV范围内，即</p>
+<li>
+<p>点 x 在NPC的FOV范围内，即</p>
 <p>。</p>
 </li>
-<li><p>点 x 与NPC的距离小于等于最大观察距离。</p>
+<li>
+<p>点 x 与NPC的距离小于等于最大观察距离。</p>
 <p>如果以上两个条件同时满足，那么点 x 对NPC可见。否则，点 x 不在NPC的视野范围内或距离过远，对NPC不可见。</p>
 </li>
 </ul>
 <ol start="4">
-<li><p>考虑在我们的左手坐标系的xz平面中标记为a、b和c的3个点,它们代表NPC路径上的航点(Waypoint)。</p>
+<li>
+<p>考虑在我们的左手坐标系的xz平面中标记为a、b和c的3个点,它们代表NPC路径上的航点(Waypoint)。</p>
 <ol>
-<li><p>当从上方观察路径时,如何使用叉积来确定,NPC从a移动到b再移动到c时,应该顺时针还是逆时针转向b?<br>使用叉积判断转向为顺时针还是逆时针：</p>
+<li>
+<p>当从上方观察路径时,如何使用叉积来确定,NPC从a移动到b再移动到c时,应该顺时针还是逆时针转向b?<br>
+使用叉积判断转向为顺时针还是逆时针：</p>
 <ol>
-<li><p>首先，计算向量 AB 和向量 BC。向量 AB 表示从点 a 指向点 b 的向量，向量 BC 表示从点 b 指向点 c 的向量。</p>
+<li>
+<p>首先，计算向量 AB 和向量 BC。向量 AB 表示从点 a 指向点 b 的向量，向量 BC 表示从点 b 指向点 c 的向量。</p>
 </li>
-<li><p>接下来，计算向量 AB 和向量 BC 的叉积。叉积的计算公式如下：<br>**</p>
-<p>$$<br>\mathbf{AB} \times \mathbf{BC} &#x3D; (AB_x \cdot BC_z - AB_z \cdot BC_x)<br>$$</p>
+<li>
+<p>接下来，计算向量 AB 和向量 BC 的叉积。叉积的计算公式如下：<br>
+**</p>
+<p>$$<br>
+\mathbf{AB} \times \mathbf{BC} = (AB_x \cdot BC_z - AB_z \cdot BC_x)<br>
+$$</p>
 <p>**</p>
 </li>
-<li><p>根据叉积的结果来判断转向。如果 **</p>
-<p>$$<br>\mathbf{AB} \times \mathbf{BC}<br>$$</p>
+<li>
+<p>根据叉积的结果来判断转向。如果 **</p>
+<p>$$<br>
+\mathbf{AB} \times \mathbf{BC}<br>
+$$</p>
 <p>** 的结果为正值，说明向量 AB 和向量 BC 的夹角是逆时针方向的；如果为负值，则说明夹角是顺时针方向的。</p>
 </li>
-<li><p>如果 **</p>
-<p>$$<br>\mathbf{AB} \times \mathbf{BC}<br>$$</p>
+<li>
+<p>如果 **</p>
+<p>$$<br>
+\mathbf{AB} \times \mathbf{BC}<br>
+$$</p>
 <p>** 为正值，表示NPC从 a 移动到 b 再移动到 c 时，应该选择逆时针方向转向 b。反之，如果为负值，应该选择顺时针方向转向 b。</p>
 </li>
-<li><p>这样，通过计算向量的叉积，我们可以确定NPC在从 a 移动到 b 再移动到 c 的路径上应该选择顺时针还是逆时针转向 b。</p>
+<li>
+<p>这样，通过计算向量的叉积，我们可以确定NPC在从 a 移动到 b 再移动到 c 的路径上应该选择顺时针还是逆时针转向 b。</p>
 </li>
 </ol>
 </li>
-<li><p>对于以下3组中的每一组,确定当NPC从a移动到b再移动到e时,它应该顺时针还是逆时针转向。<br>给定向量 $\mathbf{a}$，$\mathbf{b}$ 和 $\mathbf{e}$，我们有：*</p>
+<li>
+<p>对于以下3组中的每一组,确定当NPC从a移动到b再移动到e时,它应该顺时针还是逆时针转向。<br>
+给定向量 $\mathbf{a}$，$\mathbf{b}$ 和 $\mathbf{e}$，我们有：*</p>
 <p>**</p>
-<p>$$<br>\mathbf{AB} &#x3D; \mathbf{b} - \mathbf{a} &#x3D; [-1, 0, 5] - [2, 0, 3] &#x3D; [-3, 0, 2]<br>$$</p>
+<p>$$<br>
+\mathbf{AB} = \mathbf{b} - \mathbf{a} = [-1, 0, 5] - [2, 0, 3] = [-3, 0, 2]<br>
+$$</p>
 <p>**</p>
 <p>由于结果为负值 (-6)，NPC在从 a 移动到 b 再移动到 e 时应该选择顺时针转向。</p>
+</li>
+</ol>
 <hr>
-<p>$$<br>mathbf{AB} &#x3D; \mathbf{b} - \mathbf{a} &#x3D; [4, 0, 0] - [-3, 0, -5] &#x3D; [7, 0, 5]<br>$$</p>
+<p>$$<br>
+mathbf{AB} = \mathbf{b} - \mathbf{a} = [4, 0, 0] - [-3, 0, -5] = [7, 0, 5]<br>
+$$</p>
 <p>**</p>
 <p>由于结果为正值 (26)，NPC在从 a 移动到 b 再移动到 e 时应该选择逆时针转向。</p>
 <hr>
-<p>$$<br>mathbf{AB} &#x3D; \mathbf{b} - \mathbf{a} &#x3D; [7, 0, -1] - [1, 0, 4] &#x3D; [6, 0, -5]<br>$$</p>
+<p>$$<br>
+mathbf{AB} = \mathbf{b} - \mathbf{a} = [7, 0, -1] - [1, 0, 4] = [6, 0, -5]<br>
+$$</p>
 <p>**</p>
 <p>由于结果为正值 (30)，NPC在从 a 移动到 b 再移动到 e 时应该选择逆时针转向。</p>
-</li>
-</ol>
 </li>
 </ol>
 
@@ -606,6 +685,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

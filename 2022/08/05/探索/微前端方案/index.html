@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -226,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          4.6k 字
         
       </span>
     
@@ -280,7 +282,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>微前端是一种类似于微服务的架构，是一种由多个独立交付的前端应用组成整体的架构风格，将前端应用分解成一些更小、更简单的能够独立开发、测试、部署的应用，而在用户看来仍然是一个完整的应用；或者将一些原本独立运行的应用，没有关联的应用糅合成一个整体。</p>
+                <h1>介绍</h1>
+<p>微前端是一种类似于微服务的架构，是一种由多个独立交付的前端应用组成整体的架构风格，将前端应用分解成一些更小、更简单的能够独立开发、测试、部署的应用，而在用户看来仍然是一个完整的应用；或者将一些原本独立运行的应用，没有关联的应用糅合成一个整体。</p>
 <p>它主要解决如下问题：</p>
 <ul>
 <li>将大型项目拆分 便于维护</li>
@@ -288,9 +291,12 @@
 <li>技术栈无关&amp;业务无关 React，Vue 不同团队可以选择适合自己的技术栈</li>
 <li>子应用只需要关系业务细节 诸如鉴权，登陆之类的交给主应用来做</li>
 </ul>
-<h1 id="现有的几种方案"><a href="#现有的几种方案" class="headerlink" title="现有的几种方案"></a>现有的几种方案</h1><h2 id="Iframe"><a href="#Iframe" class="headerlink" title="Iframe"></a>Iframe</h2><ul>
+<h1>现有的几种方案</h1>
+<h2 id="Iframe">Iframe</h2>
+<ul>
 <li>由于iframe自身的特性，完全隔离了css和js，不会造成不同子应用css或js的污染，同时子应用接入的成本较低，不需要做太大的改造。</li>
-<li>缺点也很明显<ul>
+<li>缺点也很明显
+<ul>
 <li>由于完全隔离，父子应用通信需要通过postMessage进行（仅能传递字符串）</li>
 <li>对于需要登陆的场景，需要思考如何将主应用的cookie透传到根域名不同的各个子应用中</li>
 <li>浏览器刷新 iframe url 状态丢失、后退前进按钮无法使用</li>
@@ -299,18 +305,23 @@
 </ul>
 </li>
 </ul>
-<h2 id="single-spa-amp-Garfish-amp-qiankun"><a href="#single-spa-amp-Garfish-amp-qiankun" class="headerlink" title="single-spa &amp; Garfish &amp; qiankun"></a>single-spa &amp; Garfish &amp; qiankun</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p><strong>single-spa</strong>是通过监听 url change 事件，在路由变化时匹配到渲染的子应用并进行渲染，同时<strong>single-spa</strong>要求子应用修改渲染逻辑并暴露出三个方法： <strong>bootstrap</strong> 、 <strong>mount</strong> 、 <strong>unmount</strong> ，分别对应初始化、渲染和卸载，这也导致子应用需要对入口文件进行修改。</p>
+<h2 id="single-spa-Garfish-qiankun">single-spa &amp; Garfish &amp; qiankun</h2>
+<h3 id="介绍">介绍</h3>
+<p><strong>single-spa</strong>是通过监听 url change 事件，在路由变化时匹配到渲染的子应用并进行渲染，同时<strong>single-spa</strong>要求子应用修改渲染逻辑并暴露出三个方法： <strong>bootstrap</strong> 、 <strong>mount</strong> 、 <strong>unmount</strong> ，分别对应初始化、渲染和卸载，这也导致子应用需要对入口文件进行修改。</p>
 <p>因为<strong>qiankun</strong>是基于<strong>single-spa</strong>进行封装，所以这些特点也被<strong>qiankun</strong>继承下来，并且需要对webpack配置进行一些修改，并扩展了沙箱隔离，预加载，缓存，路由，插件等能力。</p>
 <p>Garfish在qiankun的基础上做了一下优化，如沙箱隔离使用new Function替换Eval。</p>
 <p>但目前来看spa方案qiankun使用的人数较多，社区活跃度较高，且方案更为成熟。</p>
-<h3 id="主应用"><a href="#主应用" class="headerlink" title="主应用"></a>主应用</h3><p>主应用中注册子应用</p>
+<h3 id="主应用">主应用</h3>
+<p>主应用中注册子应用</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Garfish</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;garfish&#x27;</span>;<br><br><span class="hljs-comment">//无需手动控制加载</span><br><span class="hljs-title class_">Garfish</span>.<span class="hljs-title function_">run</span>(&#123;<br>  <span class="hljs-attr">basename</span>: <span class="hljs-string">&#x27;/&#x27;</span>,<br>  <span class="hljs-attr">domGetter</span>: <span class="hljs-string">&#x27;#container&#x27;</span>,<br>  <span class="hljs-comment">//子应用列表信息</span><br>  <span class="hljs-attr">apps</span>: [<br>    &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;react&#x27;</span>,<br>      <span class="hljs-attr">activeWhen</span>: <span class="hljs-string">&#x27;/react&#x27;</span>,<br>      <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;http://localhost:3000&#x27;</span>, <span class="hljs-comment">// html入口</span><br>    &#125;,<br>    &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;vue&#x27;</span>,<br>      <span class="hljs-attr">activeWhen</span>: <span class="hljs-string">&#x27;/vue&#x27;</span>,<br>      <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;http://localhost:8080/index.js&#x27;</span>, <span class="hljs-comment">// js入口</span><br>    &#125;,<br>  ],<br>&#125;);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-title function_">useEffect</span>(<span class="hljs-keyword">async</span> () =&gt; &#123;<br>    <span class="hljs-comment">//手动控制子应用加载</span><br>    <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Garfish</span>.<span class="hljs-title function_">loadApp</span>(<span class="hljs-string">&#x27;app1&#x27;</span>, &#123;<br>      <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;http://localhost:3001&#x27;</span>,<span class="hljs-comment">//子应用资源入口</span><br>      <span class="hljs-attr">basename</span>: <span class="hljs-string">&#x27;/&#x27;</span>,<span class="hljs-comment">//子应用基础路径</span><br>      <span class="hljs-attr">domGetter</span>: <span class="hljs-string">&#x27;#container&#x27;</span>,<span class="hljs-comment">//默认挂载点</span><br>      <span class="hljs-comment">//子应用provider导出函数 生命周期方法中将接收到此数据</span><br>      <span class="hljs-attr">props</span>: &#123;<br>        <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;hello world&#x27;</span>,<br>      &#125;,<br>    &#125;);<br>    <span class="hljs-keyword">await</span> app.<span class="hljs-title function_">mount</span>();<br>  &#125;);<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#x27;main&#x27;</span>&gt;</span> </span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Main App<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;<br></code></pre></td></tr></table></figure>
-
-<h3 id="子应用"><a href="#子应用" class="headerlink" title="子应用"></a>子应用</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-comment">// vite.config.js</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">base</span>: <span class="hljs-string">&#x27;http://localhost:3000/&#x27;</span>,<br>  <span class="hljs-attr">server</span>: &#123;<br>    <span class="hljs-attr">port</span>: <span class="hljs-number">3000</span>,<br>    <span class="hljs-attr">cors</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">origin</span>: <span class="hljs-string">&#x27;http://localhost:3000&#x27;</span>,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<h3 id="机制"><a href="#机制" class="headerlink" title="机制"></a>机制</h3><ul>
-<li>生命周期<ul>
-<li>Mount<ul>
+<h3 id="子应用">子应用</h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-comment">// vite.config.js</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">base</span>: <span class="hljs-string">&#x27;http://localhost:3000/&#x27;</span>,<br>  <span class="hljs-attr">server</span>: &#123;<br>    <span class="hljs-attr">port</span>: <span class="hljs-number">3000</span>,<br>    <span class="hljs-attr">cors</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">origin</span>: <span class="hljs-string">&#x27;http://localhost:3000&#x27;</span>,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="机制">机制</h3>
+<ul>
+<li>生命周期
+<ul>
+<li>Mount
+<ul>
 <li>创建app容器添加到dom上</li>
 <li>编译子应用的代码</li>
 <li>拿到子应用的provider</li>
@@ -321,58 +332,65 @@
 <li>如果渲染失败app.mount会返回false</li>
 </ul>
 </li>
-<li>Unmount<ul>
+<li>Unmount
+<ul>
 <li>调用app.options.beforeUnmount钩子</li>
 <li>调用provider.destroy</li>
 <li>移除app的dom</li>
-<li>app.display,app.mounted &#x3D; false</li>
+<li>app.display,app.mounted = false</li>
 <li>将app从Garfish.activeApps中delete</li>
 <li>调用 app.options.afterUnmount 钩子</li>
 <li>根据app.unmount判断是否卸载成功</li>
 </ul>
 </li>
-<li>Show<ul>
+<li>Show
+<ul>
 <li>app的容器添加到dom上</li>
 <li>调用provider.render</li>
-<li>app.dispaly &#x3D; true</li>
+<li>app.dispaly = true</li>
 <li>app.show判断是否渲染</li>
 </ul>
 </li>
-<li>Hide<ul>
+<li>Hide
+<ul>
 <li>调用provider.destory</li>
 <li>将app从dom移除</li>
-<li>app.dispaly &#x3D; false</li>
+<li>app.dispaly = false</li>
 <li>app.hide判断是否隐藏成功</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>沙箱机制</li>
-<li>不使用iframe隔离的情况下保证样式，全局变量不冲突<ul>
+<li>不使用iframe隔离的情况下保证样式，全局变量不冲突
+<ul>
 <li>Eval</li>
-<li>New Function eval需要每次都执行 new Function是重复执行一个函数 因此选用New Function<br>隔离方案</li>
-<li>快照沙箱<br>在某个阶段给当前运行环境打上快照，需要的时候恢复快照。（运行时保存window所有的变量 卸载后把window缺失的变量存起来 等下一次调用恢复）</li>
+<li>New Function eval需要每次都执行 new Function是重复执行一个函数 因此选用New Function<br>
+隔离方案</li>
+<li>快照沙箱<br>
+在某个阶段给当前运行环境打上快照，需要的时候恢复快照。（运行时保存window所有的变量 卸载后把window缺失的变量存起来 等下一次调用恢复）</li>
 <li>vm沙箱</li>
 <li>防止逃逸</li>
 </ul>
 </li>
 <li>路由机制</li>
 </ul>
-<h2 id="micro-app"><a href="#micro-app" class="headerlink" title="micro-app"></a>micro-app</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>借鉴了<strong>WebComponent</strong>的思想，通过<strong>CustomElement</strong>结合自定义的 <strong>ShadowDom</strong> ，将微前端封装成一个类<strong>WebComponent</strong>组件，从而实现微前端的组件化渲染。并且由于自定义<strong>ShadowDom</strong>的隔离特性，<strong>micro-app</strong>不需要像<strong>single-spa</strong>和<strong>qiankun</strong>一样要求子应用修改渲染逻辑并暴露出方法，也不需要修改webpack配置， <strong>相对接入微前端成本较低</strong> 。</p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDc5ZTJhZWM0NzE3ODVlYTNmZjc2YzQxMTlhOWY4MDFfRk1KcDE5dnVQcGxibTFsM2UweDAwckNuZjRYVjZrVFFfVG9rZW46Ym94Y25KTnk0eTBhRVJrT0syU0dCelc2TWRiXzE2NzMwNjk1MDI6MTY3MzA3MzEwMl9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MGI0MTVkMzE2NjdiZWZjZTQ0ZjBjNWJhYTc2ZTQ0YmJfSUhMMmgzNFQwdm0xV0IxSUJBYmFJTnN5aEZwTG9WcU5fVG9rZW46Ym94Y25sNDBWd25oOVFyT0FDT3pLT2ZCcVBoXzE2NzMwNjk1MDI6MTY3MzA3MzEwMl9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
-<h3 id="主应用-1"><a href="#主应用-1" class="headerlink" title="主应用"></a>主应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Router</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./router&#x27;</span>;<br><span class="hljs-keyword">import</span> microApp <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@micro-zoe/micro-app&#x27;</span><br><br><span class="hljs-comment">//入口引入</span><br>microApp.<span class="hljs-title function_">start</span>()<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> /&gt;</span></span>,<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>)<br>);<br></code></pre></td></tr></table></figure>
-
+<h2 id="micro-app">micro-app</h2>
+<h3 id="介绍-2">介绍</h3>
+<p>借鉴了<strong>WebComponent</strong>的思想，通过<strong>CustomElement</strong>结合自定义的 <strong>ShadowDom</strong> ，将微前端封装成一个类<strong>WebComponent</strong>组件，从而实现微前端的组件化渲染。并且由于自定义<strong>ShadowDom</strong>的隔离特性，<strong>micro-app</strong>不需要像<strong>single-spa</strong>和<strong>qiankun</strong>一样要求子应用修改渲染逻辑并暴露出方法，也不需要修改webpack配置， <strong>相对接入微前端成本较低</strong> 。</p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDc5ZTJhZWM0NzE3ODVlYTNmZjc2YzQxMTlhOWY4MDFfRk1KcDE5dnVQcGxibTFsM2UweDAwckNuZjRYVjZrVFFfVG9rZW46Ym94Y25KTnk0eTBhRVJrT0syU0dCelc2TWRiXzE2NzMwNjk1MDI6MTY3MzA3MzEwMl9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MGI0MTVkMzE2NjdiZWZjZTQ0ZjBjNWJhYTc2ZTQ0YmJfSUhMMmgzNFQwdm0xV0IxSUJBYmFJTnN5aEZwTG9WcU5fVG9rZW46Ym94Y25sNDBWd25oOVFyT0FDT3pLT2ZCcVBoXzE2NzMwNjk1MDI6MTY3MzA3MzEwMl9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
+<h3 id="主应用-2">主应用</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Router</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./router&#x27;</span>;<br><span class="hljs-keyword">import</span> microApp <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@micro-zoe/micro-app&#x27;</span><br><br><span class="hljs-comment">//入口引入</span><br>microApp.<span class="hljs-title function_">start</span>()<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> /&gt;</span></span>,<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>)<br>);<br></code></pre></td></tr></table></figure>
 <p>为子应用添加路由</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Suspense</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">BrowserRouter</span>, <span class="hljs-title class_">Switch</span>, <span class="hljs-title class_">Route</span>, <span class="hljs-title class_">Redirect</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-router-dom&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Home</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./pages/home/home&#x27;</span><br><span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./config&#x27;</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="hljs-comment">// 设置主应用基础路由为main-react17(用于后续部署)，则子应用基础路由(baseroute)为/main-react17/xxx</span><br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">BrowserRouter</span> <span class="hljs-attr">basename</span>=<span class="hljs-string">&#x27;/main-react17&#x27;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;router-container&#x27;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Switch</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">exact</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Home</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">Route</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/app-vue3_hxh&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;&gt;</span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">micro-app</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;appname-vue3&#x27;</span></span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">url</span>=<span class="hljs-string">&#123;</span>`$&#123;<span class="hljs-attr">config.vue3</span>&#125;/<span class="hljs-attr">child</span>/<span class="hljs-attr">vue3</span>/`&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">                <span class="hljs-attr">baseroute</span>=<span class="hljs-string">&#x27;/main-react17/app-vue3_hxh&#x27;</span></span></span><br><span class="hljs-tag"><span class="language-xml">              &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">micro-app</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">Route</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Redirect</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&#x27;/&#x27;</span> /&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Switch</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">BrowserRouter</span>&gt;</span></span><br>  )<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="子应用-1"><a href="#子应用-1" class="headerlink" title="子应用"></a>子应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mount</span> () &#123;<br>  <span class="hljs-comment">// __MICRO_APP_BASE_ROUTE__ 为micro-app传入的基础路由</span><br>  history = <span class="hljs-title function_">createWebHistory</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">__MICRO_APP_BASE_ROUTE__</span> || process.<span class="hljs-property">env</span>.<span class="hljs-property">BASE_URL</span>)<br>  router = <span class="hljs-title function_">createRouter</span>(&#123;<br>    history,<br>    routes,<br>  &#125;) <span class="hljs-keyword">as</span> <span class="hljs-title class_">Router</span><br><br>  <span class="hljs-comment">// @ts-ignore</span><br>  app = <span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>)<br>  app.<span class="hljs-title function_">use</span>(router)<br>  app.<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#vue3-app&#x27;</span>)<br><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;微应用child-vue3渲染了&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<h3 id="子应用-2">子应用</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mount</span> () &#123;<br>  <span class="hljs-comment">// __MICRO_APP_BASE_ROUTE__ 为micro-app传入的基础路由</span><br>  history = <span class="hljs-title function_">createWebHistory</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">__MICRO_APP_BASE_ROUTE__</span> || process.<span class="hljs-property">env</span>.<span class="hljs-property">BASE_URL</span>)<br>  router = <span class="hljs-title function_">createRouter</span>(&#123;<br>    history,<br>    routes,<br>  &#125;) <span class="hljs-keyword">as</span> <span class="hljs-title class_">Router</span><br><br>  <span class="hljs-comment">// @ts-ignore</span><br>  app = <span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>)<br>  app.<span class="hljs-title function_">use</span>(router)<br>  app.<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#vue3-app&#x27;</span>)<br><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;微应用child-vue3渲染了&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>webpack配置</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">// 开发环境</span><br><span class="hljs-attr">devServer</span>: &#123;<br>  <span class="hljs-attr">headers</span>: &#123;<span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;*&#x27;</span>&#125;<br>&#125;<br><span class="hljs-comment">// 线上环境</span><br><span class="hljs-title class_">Nginx</span>代理<br></code></pre></td></tr></table></figure>
-
 <p>生命周期等其他概念与qiankun or Garfish类似。</p>
-<h2 id="Module-Federation"><a href="#Module-Federation" class="headerlink" title="Module Federation"></a>Module Federation</h2><p>WIP……</p>
+<h2 id="Module-Federation">Module Federation</h2>
+<p>WIP……</p>
 
                 
               </div>
@@ -535,6 +553,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

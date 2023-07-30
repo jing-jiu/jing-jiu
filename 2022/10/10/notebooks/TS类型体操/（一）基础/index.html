@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,39 +282,53 @@
             
               <div class="markdown-body">
                 
-                <h1 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h1><ol>
+                <h1>类型</h1>
+<ol>
 <li>JS的运行时类型 <strong>Boolean Number String undefind null Bigint Symbol</strong> ts都支持</li>
 <li>复杂类型** Class Array** 元组（ <strong>Tuple</strong> ） 接口（ <strong>Interface</strong> ）枚举（ <strong>Enum</strong> ）</li>
-<li>特殊类型<ol>
-<li>模板字面量定义类型<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">let</span> <span class="hljs-attr">str</span>: <span class="hljs-string">`#<span class="hljs-subst">$&#123;<span class="hljs-built_in">string</span>&#125;</span>`</span> = <span class="hljs-string">&#x27;#str&#x27;</span> <span class="hljs-comment">// 匹配 # 开头的字符串</span><br></code></pre></td></tr></table></figure></li>
+<li>特殊类型
+<ol>
+<li>模板字面量定义类型<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">let</span> <span class="hljs-attr">str</span>: <span class="hljs-string">`#<span class="hljs-subst">$&#123;<span class="hljs-built_in">string</span>&#125;</span>`</span> = <span class="hljs-string">&#x27;#str&#x27;</span> <span class="hljs-comment">// 匹配 # 开头的字符串</span><br></code></pre></td></tr></table></figure>
+</li>
 <li><strong>never</strong> 代表不可达，比如函数抛异常的时候，返回值就是 never。</li>
 <li><strong>void</strong> 代表空，可以是 undefined 或 never。</li>
 <li><strong>any</strong> 是任意类型，任何类型都可以赋值给它，它也可以赋值给任何类型（除了 never）。</li>
 <li><strong>unknown</strong> 是未知类型，任何类型都可以赋值给它，但是它不可以赋值给别的类型。</li>
 </ol>
 </li>
-<li>Type 和 interface的区别<ol>
-<li>type可以 <strong>定义基本类型的别名</strong> ，如 type myString &#x3D; string</li>
+<li>Type 和 interface的区别
+<ol>
+<li>type可以 <strong>定义基本类型的别名</strong> ，如 type myString = string</li>
 <li>interface可以  <strong>声明合并</strong> ，这种情况下，如果是type的话，就会报 <strong>重复定义</strong> 的警告</li>
 </ol>
 </li>
 </ol>
 <ul>
 <li>用interface描述 <strong>数据结构</strong> ，用type描述<strong>类型关系</strong></li>
-<li>类型层级 never - 1 | 2 | “3” - string - String - Object - any &#x2F; unknow</li>
+<li>类型层级 never - 1 | 2 | “3” - string - String - Object - any / unknow</li>
 </ul>
-<h1 id="类型运算"><a href="#类型运算" class="headerlink" title="类型运算"></a>类型运算</h1><ol>
-<li><p>extends</p>
+<h1>类型运算</h1>
 <ol>
-<li>条件判断 一般用于动态类型的判断<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> isString&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">type</span> res_False = isString&lt;<span class="hljs-number">1</span>&gt; <span class="hljs-comment">// false</span><br><span class="hljs-keyword">type</span> res_True = isString&lt;<span class="hljs-string">&#x27;1&#x27;</span>&gt; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure></li>
-<li>对类型进行约束（第一个extends）<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ExampleType</span>&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">&quot;5&quot;</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-keyword">type</span> isFive = <span class="hljs-title class_">ExampleType</span>&lt;<span class="hljs-string">&#x27;4&#x27;</span>&gt; <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure></li>
+<li>
+<p>extends</p>
+<ol>
+<li>条件判断 一般用于动态类型的判断<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> isString&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">type</span> res_False = isString&lt;<span class="hljs-number">1</span>&gt; <span class="hljs-comment">// false</span><br><span class="hljs-keyword">type</span> res_True = isString&lt;<span class="hljs-string">&#x27;1&#x27;</span>&gt; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+</li>
+<li>对类型进行约束（第一个extends）<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ExampleType</span>&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">&quot;5&quot;</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-keyword">type</span> isFive = <span class="hljs-title class_">ExampleType</span>&lt;<span class="hljs-string">&#x27;4&#x27;</span>&gt; <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+</li>
 </ol>
 </li>
-<li><p>infer</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">FirstType</span>&lt;<span class="hljs-title class_">Tuple</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">unknown</span>[]&gt; = <span class="hljs-title class_">Tuple</span> <span class="hljs-keyword">extends</span> [infer T, ...infer rest] ? T : <span class="hljs-built_in">never</span>; <span class="hljs-comment">// 提取第一个的类型</span><br><span class="hljs-keyword">type</span> res = <span class="hljs-title class_">FirstType</span>&lt;[<span class="hljs-built_in">string</span>, <span class="hljs-built_in">number</span>, <span class="hljs-built_in">boolean</span>]&gt;; <span class="hljs-comment">// string </span><br></code></pre></td></tr></table></figure></li>
-<li><p>联合 |  交叉 &amp;</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-comment">// 联合</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">NumberType</span> = <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span> | <span class="hljs-number">4</span><br><span class="hljs-keyword">let</span> <span class="hljs-attr">one</span>:<span class="hljs-title class_">NumberType</span> = <span class="hljs-number">5</span> <span class="hljs-comment">// error: 不能将类型“5”分配给类型“NumberType”。</span><br><br><span class="hljs-comment">// 交叉</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">NumOrStrType</span> = &#123; <span class="hljs-attr">num</span>: <span class="hljs-built_in">number</span> &#125; &amp; &#123; <span class="hljs-attr">str</span>: <span class="hljs-built_in">string</span> &#125;<br><span class="hljs-keyword">let</span> <span class="hljs-attr">foo</span>: <span class="hljs-title class_">NumOrStrType</span> = &#123;<br>    <span class="hljs-attr">num</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">str</span>: <span class="hljs-string">&#x27;str&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
-<li><p>keyof<br>keyof T 是查询索引类型中所有的索引，叫做 <code>索引查询</code>。</p>
+<li>
+<p>infer</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">FirstType</span>&lt;<span class="hljs-title class_">Tuple</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">unknown</span>[]&gt; = <span class="hljs-title class_">Tuple</span> <span class="hljs-keyword">extends</span> [infer T, ...infer rest] ? T : <span class="hljs-built_in">never</span>; <span class="hljs-comment">// 提取第一个的类型</span><br><span class="hljs-keyword">type</span> res = <span class="hljs-title class_">FirstType</span>&lt;[<span class="hljs-built_in">string</span>, <span class="hljs-built_in">number</span>, <span class="hljs-built_in">boolean</span>]&gt;; <span class="hljs-comment">// string </span><br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>联合 |  交叉 &amp;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-comment">// 联合</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">NumberType</span> = <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span> | <span class="hljs-number">4</span><br><span class="hljs-keyword">let</span> <span class="hljs-attr">one</span>:<span class="hljs-title class_">NumberType</span> = <span class="hljs-number">5</span> <span class="hljs-comment">// error: 不能将类型“5”分配给类型“NumberType”。</span><br><br><span class="hljs-comment">// 交叉</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">NumOrStrType</span> = &#123; <span class="hljs-attr">num</span>: <span class="hljs-built_in">number</span> &#125; &amp; &#123; <span class="hljs-attr">str</span>: <span class="hljs-built_in">string</span> &#125;<br><span class="hljs-keyword">let</span> <span class="hljs-attr">foo</span>: <span class="hljs-title class_">NumOrStrType</span> = &#123;<br>    <span class="hljs-attr">num</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">str</span>: <span class="hljs-string">&#x27;str&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>keyof<br>
+keyof T 是查询索引类型中所有的索引，叫做 <code>索引查询</code>。</p>
 <p>T[Key] 是取索引类型某个索引的值，叫做 <code>索引访问</code>。</p>
 <p>in 是用于遍历联合类型的运算符。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs TypeScript"><span class="hljs-comment">// 修改值</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">MapType</span>&lt;T&gt; = &#123;<br>    [key <span class="hljs-keyword">in</span> keyof T]: [T[key]]<br>&#125;<br><span class="hljs-keyword">type</span> res_Map = <span class="hljs-title class_">MapType</span>&lt;&#123; <span class="hljs-attr">num</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">str</span>: <span class="hljs-built_in">string</span> &#125;&gt;<br><span class="hljs-comment">//type res_Map = &#123;</span><br><span class="hljs-comment">//     num: [number];</span><br><span class="hljs-comment">//     str: [string];</span><br><span class="hljs-comment">// &#125;</span><br><br><span class="hljs-comment">// 修改索引</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">MapType</span>&lt;T&gt; = &#123;<br>    [key <span class="hljs-keyword">in</span> keyof T <span class="hljs-keyword">as</span> <span class="hljs-string">`my<span class="hljs-subst">$&#123;key &amp; <span class="hljs-built_in">string</span>&#125;</span>`</span>]: [T[key]]<br>&#125;<br><span class="hljs-keyword">type</span> res_Map = <span class="hljs-title class_">MapType</span>&lt;&#123; <span class="hljs-attr">num</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">str</span>: <span class="hljs-built_in">string</span> &#125;&gt;<br><span class="hljs-comment">// type res_Map = &#123;</span><br><span class="hljs-comment">//     mynum: [number];</span><br><span class="hljs-comment">//     mystr: [string];</span><br><span class="hljs-comment">// &#125;</span><br><br><span class="hljs-comment">// 遍历</span><br><span class="hljs-keyword">type</span> <span class="hljs-title class_">Ref</span>&lt;<span class="hljs-title class_">Props</span>&gt; = keyof <span class="hljs-title class_">Props</span><br><span class="hljs-keyword">type</span> res_Union = <span class="hljs-title class_">Ref</span>&lt;&#123; ref?: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">props</span>: <span class="hljs-built_in">string</span> &#125;&gt; <span class="hljs-comment">// type res_Union = &quot;ref&quot; | &quot;props&quot;</span><br></code></pre></td></tr></table></figure>
@@ -482,6 +498,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

@@ -46,6 +46,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -227,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          829 字
+          824 字
         
       </span>
     
@@ -281,14 +283,16 @@
             
               <div class="markdown-body">
                 
-                <h1 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h1><table>
+                <h1>名词解释</h1>
+<table>
 <thead>
 <tr>
 <th>名称</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>笛卡尔坐标系</td>
 <td>使用计算机以数学方式精确测量在三维空间中的位置，距离和角度</td>
 </tr>
@@ -300,35 +304,39 @@
 <td>三维笛卡尔坐标系</td>
 <td>* 自旋性 左手坐标系 &amp; 右手坐标系* 三维坐标系中，其中一个轴固定进行旋转，如果两个坐标系的自旋性不同，则不能使其旋转重叠* 围绕一个轴将另外两个轴翻转</td>
 </tr>
-</tbody></table>
-<h1 id="左-x2F-右手坐标系的相互转换"><a href="#左-x2F-右手坐标系的相互转换" class="headerlink" title="左&#x2F;右手坐标系的相互转换"></a>左&#x2F;右手坐标系的相互转换</h1><ul>
-<li><p>数学方法</p>
+</tbody>
+</table>
+<h1>左/右手坐标系的相互转换</h1>
+<ul>
+<li>
+<p>数学方法</p>
 <ul>
 <li>坐标轴转换：首先，将左手坐标系的X轴与右手坐标系的X轴对齐。这可以通过将左手坐标系的X轴与右手坐标系的X轴翻转（即乘以-1）来实现。</li>
 <li>方向转换：其次，需要将左手坐标系的Z轴与右手坐标系的Z轴反向。这可以通过将左手坐标系的Z轴乘以-1来实现。</li>
 <li>坐标点转换：对于每个坐标点，将其X坐标乘以-1，然后将Z坐标乘以-1。</li>
 </ul>
 </li>
-<li><p>线性代数方法<br>左手坐标系转右手坐标系需要一个转换矩阵Z：</p>
+<li>
+<p>线性代数方法<br>
+左手坐标系转右手坐标系需要一个转换矩阵Z：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">[x&#x27;]   [ <span class="hljs-number">1</span>  <span class="hljs-number">0</span>  <span class="hljs-number">0</span> ]   [x]<br>[y&#x27;] = [ <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">0</span> ] * [y]<br>[z&#x27;]   [ <span class="hljs-number">0</span>  <span class="hljs-number">0</span> <span class="hljs-number">-1</span> ]   [z]<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>对于向量T(左),将其从左手坐标系转换到右手坐标系：</li>
 </ul>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDkxYTlmOGM1ZTAwMjBhMzZkZTc4MDIyMGJjOWFjNmFfREhuY0liZ1dKR3BnSDhLWk95R2dYYUtOWWthUW1Lb3NfVG9rZW46VU1UZ2JDNGc1bzZzNWh4OGpERGNtaE5pblFmXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDkxYTlmOGM1ZTAwMjBhMzZkZTc4MDIyMGJjOWFjNmFfREhuY0liZ1dKR3BnSDhLWk95R2dYYUtOWWthUW1Lb3NfVG9rZW46VU1UZ2JDNGc1bzZzNWh4OGpERGNtaE5pblFmXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ul>
 <li>对于旋转矩阵R(左),将其转换到右手坐标系：</li>
 </ul>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MmIwODE2NWJmY2IwZGI5YzM0YmE5MDcwOTMxMTkyM2JfODJTZDNRekwzS1BKQmpWNkN4QmF6SjB1MjRQYkVvS3pfVG9rZW46WGFSaGJWSWM0b3FmTW94MkZlMWNWNGRRbjVjXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MmIwODE2NWJmY2IwZGI5YzM0YmE5MDcwOTMxMTkyM2JfODJTZDNRekwzS1BKQmpWNkN4QmF6SjB1MjRQYkVvS3pfVG9rZW46WGFSaGJWSWM0b3FmTW94MkZlMWNWNGRRbjVjXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <p>2、右手坐标系转换到左手坐标系：</p>
 <ul>
 <li>对于向量T(右),将其从右手坐标系转换到左手坐标系：</li>
 </ul>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MzU4ZTQxZTIyZDgzY2MyNDAxMDRmN2IzMWIwMzBjOGJfRFJVcnN2Z3E4U0cybjBpOE5GSjNNNWNvdWRVU3lBMTJfVG9rZW46UnE1aWJhVEdvb1FGSFF4TkR1RWMxd0RUblliXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MzU4ZTQxZTIyZDgzY2MyNDAxMDRmN2IzMWIwMzBjOGJfRFJVcnN2Z3E4U0cybjBpOE5GSjNNNWNvdWRVU3lBMTJfVG9rZW46UnE1aWJhVEdvb1FGSFF4TkR1RWMxd0RUblliXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ul>
 <li>对于旋转矩阵R(右),将其转换到左手坐标系：</li>
 </ul>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=OWNjMjJkZDc4ODg5ZDBlNmFjM2MzNTcwMmUwZWE5OWNfa0RLREF0RFdRb2V0WXdQbWtZMUZRSW5Pb0cybzB5T0JfVG9rZW46WXBiZGJaZ3Q3b0xhdXh4TktVYWNObUgwbkVnXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=OWNjMjJkZDc4ODg5ZDBlNmFjM2MzNTcwMmUwZWE5OWNfa0RLREF0RFdRb2V0WXdQbWtZMUZRSW5Pb0cybzB5T0JfVG9rZW46WXBiZGJaZ3Q3b0xhdXh4TktVYWNObUgwbkVnXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 </li>
 </ul>
 <p>在3D图形中，坐标系有两种主要的约定：右手坐标系和左手坐标系。这两个坐标系的区别在于他们的方向。右手坐标系通常定义为：当你的右手的拇指指向X轴，食指指向Y轴时，中指就会自然而然地指向Z轴。左手坐标系的定义相反。</p>
@@ -499,6 +507,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -237,7 +239,7 @@
         
         
         
-          13 分钟
+          12 分钟
         
       </span>
     
@@ -280,70 +282,83 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Rollup"><a href="#Rollup" class="headerlink" title="Rollup"></a>Rollup</h1><ul>
+                <h1>Rollup</h1>
+<ul>
 <li>利用 ES6 模块设计，利用 tree-shaking生成更简洁、更简单的代码</li>
 <li>一般而言，对于应用使用 Webpack，对于类库使用 Rollup</li>
 <li>需要代码拆分(Code Splitting)，或者很多静态资源需要处理，再或者构建的项目需要引入很多 CommonJS 模块的依赖时，使用 webpack</li>
 <li>代码库是基于 ES6 模块，而且希望代码能够被其他人直接使用，使用 Rollup</li>
 <li>打包出的文件仍具有可读性</li>
 </ul>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<h2 id="优点">优点</h2>
+<ul>
 <li>输出结果更加扁平，执行效率更高</li>
 <li>自动移除未引用的代码</li>
 <li>打包结果依然完全可读</li>
 </ul>
-<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<h2 id="缺点">缺点</h2>
+<ul>
 <li>加载非ESM的第三方模块比较复杂</li>
 <li>模块最终都会被打包到一个函数中，无法实现HMR</li>
 <li>浏览器环境中，代码拆分功能依赖AMD库</li>
 <li>需要代码拆分，或者很多静态资源需要处理，再或者构建的项目需要引入很多 CommonJS 模块的依赖时，使用 webpack</li>
 </ul>
-<h1 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h1><ul>
+<h1>Gulp</h1>
+<ul>
 <li>基于 nodejs 的 <code>steam</code> 流打包</li>
 <li>定位是基于任务流的自动化构建工具</li>
 <li>Gulp是通过task对整个开发过程进行构建</li>
 </ul>
-<h2 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a><strong>优点</strong></h2><ul>
+<h2 id="优点-2"><strong>优点</strong></h2>
+<ul>
 <li>流式的写法简单直观</li>
 <li>API简单,代码量少</li>
 <li>易于学习和使用</li>
 <li>适合多页面应用开发</li>
 </ul>
-<h2 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<h2 id="缺点-2">缺点</h2>
+<ul>
 <li>异常处理比较麻烦</li>
 <li>工作流程顺序难以精细控制</li>
 <li>不太适合单页或者自定义模块的开发</li>
 </ul>
-<h1 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h1><ul>
+<h1>Webpack</h1>
+<ul>
 <li>一切皆模块，它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源</li>
-<li>它定位是模块打包器，而 Gulp&#x2F;Grunt 属于构建工具。Webpack 可以代替 Gulp&#x2F;Grunt 的一些功能，但不是一个职能的工具，可以配合使用</li>
+<li>它定位是模块打包器，而 Gulp/Grunt 属于构建工具。Webpack 可以代替 Gulp/Grunt 的一些功能，但不是一个职能的工具，可以配合使用</li>
 </ul>
-<h4 id="1-3-1-优点"><a href="#1-3-1-优点" class="headerlink" title="1.3.1 优点"></a><strong>1.3.1 优点</strong></h4><ul>
+<h4 id="1-3-1-优点"><strong>1.3.1 优点</strong></h4>
+<ul>
 <li>可以模块化的打包任何资源</li>
 <li>适配任何模块系统</li>
 <li>适合SPA单页应用的开发</li>
 </ul>
-<h4 id="1-3-2-缺点"><a href="#1-3-2-缺点" class="headerlink" title="1.3.2 缺点"></a><strong>1.3.2 缺点</strong></h4><ul>
+<h4 id="1-3-2-缺点"><strong>1.3.2 缺点</strong></h4>
+<ul>
 <li>通过babel编译后的js代码打包后体积过大</li>
 </ul>
 <p><strong>Webpack</strong> <strong>大而全，</strong> <strong>Rollup小而美</strong></p>
-<h1 id="Parcel"><a href="#Parcel" class="headerlink" title="Parcel"></a>Parcel</h1><ul>
+<h1>Parcel</h1>
+<ul>
 <li>Parcel 是快速、零配置的 Web 应用程序打包器</li>
 <li>目前 Parcel 只能用来构建用于运行在浏览器中的网页，这也是他的出发点和专注点</li>
 </ul>
-<h4 id="1-5-1-优点"><a href="#1-5-1-优点" class="headerlink" title="1.5.1 优点"></a><strong>1.5.1 优点</strong></h4><ul>
+<h4 id="1-5-1-优点"><strong>1.5.1 优点</strong></h4>
+<ul>
 <li>Parcel 内置了常见场景的构建方案及其依赖，无需再安装各种依赖</li>
 <li>Parcel 能以 HTML 为入口，自动检测和打包依赖资源</li>
 <li>Parcel 默认支持模块热替换，真正的开箱即用</li>
 </ul>
-<h4 id="1-5-2-缺点"><a href="#1-5-2-缺点" class="headerlink" title="1.5.2 缺点"></a><strong>1.5.2 缺点</strong></h4><ul>
+<h4 id="1-5-2-缺点"><strong>1.5.2 缺点</strong></h4>
+<ul>
 <li>不支持 SourceMap</li>
 <li>不支持 TreeShaking</li>
 <li>配置不灵活</li>
 </ul>
 <p><strong>对于相同体量的项目进行打包，Parcel会比Webpack快很多，因为在Parcel内部使用的是多进程同时去工作，充分发挥了多核CPU的性能，而Webpack中可以使用happypack插件实现这一点。</strong></p>
-<h1 id="Vite"><a href="#Vite" class="headerlink" title="Vite"></a>Vite</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://cn.vitejs.dev/">Vite (法语意为 &amp;#34;快速的&amp;#34;，发音 &#x2F;vit&#x2F;) </a>是下一代前端开发与构建工具</li>
+<h1>Vite</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cn.vitejs.dev/">Vite (法语意为 &quot;快速的&quot;，发音 /vit/) </a>是下一代前端开发与构建工具</li>
 <li>💡 极速的服务启动 使用原生 ESM 文件，无需打包</li>
 <li>⚡️ 轻量快速的热重载 无论应用程序大小如何，都始终极快的模块热重载（HMR）</li>
 <li>🛠️ 丰富的功能 对 TypeScript、JSX、CSS 等支持开箱即用。</li>
@@ -351,10 +366,12 @@
 <li>🔩 通用的插件 在开发和构建之间共享 Rollup-superset 插件接口。</li>
 <li>🔑 完全类型化的API 灵活的 API 和完整 TypeS</li>
 </ul>
-<h2 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h2><p>1.使用 <code>esbuild</code>构建依赖比webpack快得多</p>
+<h2 id="优点-3">优点</h2>
+<p>1.使用 <code>esbuild</code>构建依赖比webpack快得多</p>
 <p>2.使用ESM在开发环境 <code>使用源码</code>而不进行打包，省略打包步骤</p>
 <p>3.使用HTTP头，源码模块使用 <code>304 Not Modified</code> 进行协商缓存，依赖模块使用 <code>Cache-Control: max-age=31536000,immutable</code> 进行强缓存</p>
-<h2 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<h2 id="缺点-3">缺点</h2>
+<ul>
 <li>生态</li>
 <li>应用于生产需要考量</li>
 <li>打包用的Rollup，因为esbuild对css等代码的分割能力不好</li>
@@ -514,6 +531,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

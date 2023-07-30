@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,7 +282,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="一-require导入机制"><a href="#一-require导入机制" class="headerlink" title="一.require导入机制"></a>一.require导入机制</h1><ol>
+                <h1>一.require导入机制</h1>
+<ol>
 <li>首先我们要清楚NodeJS的模块机制。导出的每个模块其实都是Module对象的实例。</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Module</span> &#123;<br>  <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;.&#x27;</span>,<br>  <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS&#x27;</span>,<br>  <span class="hljs-attr">exports</span>: &#123;&#125;,<br>  <span class="hljs-attr">parent</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS\\node.js&#x27;</span>,<br>  <span class="hljs-attr">loaded</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">children</span>: [],<br>  <span class="hljs-attr">paths</span>: [<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\node_modules&#x27;</span><br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -288,23 +291,31 @@
 <li>其次我们来看require。当我们通过require引入某个模块时，require函数内部会调用Module.load方法。在这个方法内部 首先调用Module.resolveFilename来获得这个模块的绝对路径filename（定位这个模块）之后在Module._cache[filename]查找是否有缓存，如果有就直接返回缓存的exports属性。如果没有，再看是否是内置的模块，如果是内置的模块，就返回NativeModule.require(filename);如果不是内置模块，就新建一个Module实例，然后把这个实例缓存起来。最后通过load方法加载这个模块，将exports属性返回。</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> <span class="hljs-title class_">Module</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;module&#x27;</span>)<br><span class="hljs-title class_">Module</span>.<span class="hljs-property">_load</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">request, parent, isMain</span>) &#123;<br>    <span class="hljs-keyword">var</span> filename = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">_resolveFilename</span>(request, parent);<br>    <span class="hljs-keyword">var</span> cachedModule = <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename];<br>    <span class="hljs-keyword">if</span> (cachedModule) &#123;<br>        <span class="hljs-keyword">return</span> cachedModule.<span class="hljs-property">exports</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">NativeModule</span>.<span class="hljs-title function_">exists</span>(filename)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title class_">NativeModule</span>.<span class="hljs-built_in">require</span>(filename);<br>    &#125;<br>    <span class="hljs-keyword">var</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Module</span>(filename, parent);<br>    <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename] = <span class="hljs-variable language_">module</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">load</span>(filename);<br>        hadException = <span class="hljs-literal">false</span>;<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-keyword">if</span> (hadException) &#123;<br>            <span class="hljs-keyword">delete</span> <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<h1 id="二-异步I-x2F-O"><a href="#二-异步I-x2F-O" class="headerlink" title="二.异步I&#x2F;O"></a>二.异步I&#x2F;O</h1><h2 id="1-事件循环机制"><a href="#1-事件循环机制" class="headerlink" title="1. 事件循环机制"></a>1. 事件循环机制</h2><ol>
-<li><p><strong>Timers（计时器阶段）</strong>:初次进入事件循环，会从计时器阶段开始。此阶段会判断是否存在过期的计时器回调（包含 setTimeout 和 setInterval），如果存在则会执行所有过期的计时器回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Pending callbacks 阶段。</p>
+<h1>二.异步I/O</h1>
+<h2 id="1-事件循环机制">1. 事件循环机制</h2>
+<ol>
+<li>
+<p><strong>Timers（计时器阶段）</strong>:初次进入事件循环，会从计时器阶段开始。此阶段会判断是否存在过期的计时器回调（包含 setTimeout 和 setInterval），如果存在则会执行所有过期的计时器回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Pending callbacks 阶段。</p>
 </li>
-<li><p><strong>Pending callbacks</strong>：执行上一循环推迟到下一个循环迭代的I &#x2F; O回调（系统调用相关的回调）。</p>
+<li>
+<p><strong>Pending callbacks</strong>：执行上一循环推迟到下一个循环迭代的I / O回调（系统调用相关的回调）。</p>
 </li>
-<li><p><strong>Idle&#x2F;Prepare</strong>：仅供内部使用。</p>
+<li>
+<p><strong>Idle/Prepare</strong>：仅供内部使用。</p>
 </li>
-<li><p><strong>Poll（轮询阶段）</strong>：当回调队列不为空时：</p>
+<li>
+<p><strong>Poll（轮询阶段）</strong>：当回调队列不为空时：</p>
 </li>
 </ol>
-<p>   会执行回调，若回调中触发了相应的微任务，针对每一个回调执行完毕后，就执行相应微任务。执行完所有的回到后，变为下面的情况。</p>
-<p>   当回调队列为空时（没有回调或所有回调执行完毕）：</p>
-<p>   但如果存在有计时器（setTimeout、setInterval和setImmediate）没有执行，会结束轮询阶段，进入 Check 阶段。否则会阻塞并等待任何正在执行的I&#x2F;O操作完成，并马上执行相应的回调，直到所有回调执行完毕。</p>
+<p>会执行回调，若回调中触发了相应的微任务，针对每一个回调执行完毕后，就执行相应微任务。执行完所有的回到后，变为下面的情况。</p>
+<p>当回调队列为空时（没有回调或所有回调执行完毕）：</p>
+<p>但如果存在有计时器（setTimeout、setInterval和setImmediate）没有执行，会结束轮询阶段，进入 Check 阶段。否则会阻塞并等待任何正在执行的I/O操作完成，并马上执行相应的回调，直到所有回调执行完毕。</p>
 <ol start="5">
-<li><p><strong>Check（查询阶段）</strong>：会检查是否存在 setImmediate 相关的回调，如果存在则执行所有回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Close callbacks 阶段。</p>
+<li>
+<p><strong>Check（查询阶段）</strong>：会检查是否存在 setImmediate 相关的回调，如果存在则执行所有回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Close callbacks 阶段。</p>
 </li>
-<li><p><strong>Close callbacks</strong>：执行一些关闭回调，比如 <code>socket.on(&#39;close&#39;, ...)</code>等。</p>
+<li>
+<p><strong>Close callbacks</strong>：执行一些关闭回调，比如 <code>socket.on('close', ...)</code>等。</p>
 </li>
 </ol>
 
@@ -462,6 +473,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

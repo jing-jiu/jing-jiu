@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,7 +282,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-全局调用-入口函数"><a href="#1-全局调用-入口函数" class="headerlink" title="1.全局调用(入口函数)"></a>1.全局调用(入口函数)</h1><pre><code class="hljs">## $(document).ready(function()&#123;
+                <h1>1.全局调用(入口函数)</h1>
+<pre><code class="hljs">## $(document).ready(function()&#123;
   DOM元素加载完毕就执行
 &#125;)
 问题:如果别的js文件也使用$符号  则会执行后面的(后面的js会覆盖前面的js文件)
@@ -288,103 +291,114 @@
       1.放弃$使用权使用JQuery
 2.使用其他字符替换  var hxh = jQuery.noConflict();
 </code></pre>
-<h1 id="2-核心函数-—-gt"><a href="#2-核心函数-—-gt" class="headerlink" title="2.核心函数 —&gt;$();"></a>2.核心函数 —&gt;$();</h1><pre><code class="hljs">接收函数：
-    1.函数
-    2.字符串
-        1&gt;字符串选择器(元素选择器,类选择器...)
-        2&gt;字符串代码片段  $p(&#39;`&lt;p&gt;`demo `&lt;/p&gt;`&#39;);
+<h1>2.核心函数 —&gt;$();</h1>
+<pre><code class="hljs">接收函数：
+	1.函数
+	2.字符串
+		1&gt;字符串选择器(元素选择器,类选择器...)
+		2&gt;字符串代码片段  $p('`&lt;p&gt;`demo `&lt;/p&gt;`');
 
 返回一个JQuery对象  里面保存所指定的/创建的DOM元素
-    3.DOM元素
-        包装成一个JQuery对象返回
+	3.DOM元素
+		包装成一个JQuery对象返回
 </code></pre>
-<h1 id="3-静态方法-static"><a href="#3-静态方法-static" class="headerlink" title="3.静态方法(static)"></a>3.静态方法(static)</h1><pre><code class="hljs">1.each方法 遍历数组(可遍历伪数组)
-    let arr = &#123;
-            0:1,
-            1:2,
-            2:3,
-            length:3
-    &#125;
-    $.each(arr,(index,value)=&gt;&#123;
-        console.log(index,value);
-    &#125;);
+<h1>3.静态方法(static)</h1>
+<pre><code class="hljs">1.each方法 遍历数组(可遍历伪数组)
+	let arr = &#123;
+			0:1,
+			1:2,
+			2:3,
+			length:3
+	&#125;
+	$.each(arr,(index,value)=&gt;&#123;
+		console.log(index,value);
+	&#125;);
 2.map方法
-    原生：不可遍历伪数组
-        arr.map((v,i,a)=&gt;&#123;//value,index,array
+	原生：不可遍历伪数组
+		arr.map((v,i,a)=&gt;&#123;//value,index,array
         console.log(v,i,a);
     &#125;)
-    JQuery:可遍历伪数组
-        $.map(arr,(i,v)=&gt;&#123;
-            console.log(i,v);
-        &#125;)
+	JQuery:可遍历伪数组
+		$.map(arr,(i,v)=&gt;&#123;
+        	console.log(i,v);
+    	&#125;)
 二者区别 map调用后默认返回一个空数组
-        each返回默认正在遍历的数组/伪数组
-        map可对遍历的数据进行处理后返回
-        each不会处理数据
+		each返回默认正在遍历的数组/伪数组
+		map可对遍历的数据进行处理后返回
+		each不会处理数据
 3. trim方法 去除字符串两端的空格 返回一个没有空格的字符串   demo   =&gt;demo
 4. isWindow方法
 5. isFunction方法
 6.holdReady方法   暂停/恢复ready方法
 </code></pre>
-<h1 id="4-选择器"><a href="#4-选择器" class="headerlink" title="4.选择器"></a>4.选择器</h1><pre><code class="hljs">1.内容选择器
-    div:empty   选中既没有文本内容又没有子元素的指定元素
-    div:parent  选中有文本内容/有子元素的指定元素
-    div:contains(text)  里面接收要查找的文本内容  选中包含该文本内容的指定元素
-    div:has(&#39;selector&#39;) 选中包含指定子元素的指定元素
+<h1>4.选择器</h1>
+<pre><code class="hljs">1.内容选择器
+	div:empty   选中既没有文本内容又没有子元素的指定元素
+	div:parent  选中有文本内容/有子元素的指定元素
+	div:contains(text)  里面接收要查找的文本内容  选中包含该文本内容的指定元素
+	div:has('selector') 选中包含指定子元素的指定元素
 2.其他(与css选择器语法相同)
 </code></pre>
-<h1 id="5-属性，属性节点"><a href="#5-属性，属性节点" class="headerlink" title="5.属性，属性节点"></a>5.属性，属性节点</h1><pre><code class="hljs">属性:这里指的是对象身上保存的变量
+<h1>5.属性，属性节点</h1>
+<pre><code class="hljs">属性:这里指的是对象身上保存的变量
 属性节点:在html标签中添加的属性`&lt;span name=&quot;span&quot;&gt;`
 1.attr方法
-    传入一个参数:获取所传入的属性   并返回找到符合条件的第一个元素
-    传入两个参数:修改目标属性的值   并返回一个包含所有目标属性的JQuery对象
+	传入一个参数:获取所传入的属性   并返回找到符合条件的第一个元素
+	传入两个参数:修改目标属性的值   并返回一个包含所有目标属性的JQuery对象
 2.removeAttr方法
-    传入一个参数:删除目标属性
+	传入一个参数:删除目标属性
 3.prop方法
-    与attr方法类似  唯一区别是调用prop方法获取返回为true/false的属性会返回布尔值 默认返回true
+	与attr方法类似  唯一区别是调用prop方法获取返回为true/false的属性会返回布尔值 默认返回true
 4.removeProp方法
-    与removeAttr方法一致
+	与removeAttr方法一致
 5.addClass方法,removeClass方法,toggleClass方法
-    增/删/查(有删无增)class
+	增/删/查(有删无增)class
 6.html,text,val方法
-    与原生js的innerHTML,innerText,value类似
+	与原生js的innerHTML,innerText,value类似
 </code></pre>
-<h1 id="6-操作样式"><a href="#6-操作样式" class="headerlink" title="6.操作样式"></a>6.操作样式</h1><h2 id="css方法"><a href="#css方法" class="headerlink" title="css方法"></a>css方法</h2><pre><code class="hljs">1.操作属性
+<h1>6.操作样式</h1>
+<h2 id="css方法">css方法</h2>
+<pre><code class="hljs">1.操作属性
 传入一个对象 语法与原生语法相同   设置对应DOM元素的样式
 传入字符串   获取对应DOM元素的属性的值
 </code></pre>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><pre><code class="hljs">2.操作尺寸
-    width() height()....
+<h2 id="其他">其他</h2>
+<pre><code class="hljs">2.操作尺寸
+	width() height()....
 3.offset 获取/修改相对于窗口的偏移量   position  获取/修改到relative的偏移量
 4.scrollLeft scrollTop  获取/修改滚动条的偏移量   注意传入的参数为数字
 </code></pre>
-<h1 id="7-事件绑定"><a href="#7-事件绑定" class="headerlink" title="7.事件绑定"></a>7.事件绑定</h1><pre><code class="hljs">1.eventName(fn)
+<h1>7.事件绑定</h1>
+<pre><code class="hljs">1.eventName(fn)
 2.on(eventName,fn)
 上述方法绑定事件不会覆盖  类似于addEventListener
 移出事件
 off()  不传参移出所有事件   传参移出对应事件
 
 自定义事件
-    on绑定事件   trigger触发事件
-    1.trigger  会触发默认行为
-        用trigger触发子元素带有命名空间的事件 父元素带有相同命名空间的事件也会被触发
-        用trigger触发子元素不带有命名空间的事件 父元素所有相同类型的事件都会被触发
-    2.triggerHandler
-        触发事件不会触发默认行为
+	on绑定事件   trigger触发事件
+	1.trigger  会触发默认行为
+		用trigger触发子元素带有命名空间的事件 父元素带有相同命名空间的事件也会被触发
+		用trigger触发子元素不带有命名空间的事件 父元素所有相同类型的事件都会被触发
+	2.triggerHandler
+		触发事件不会触发默认行为
 </code></pre>
-<h1 id="8-事件委托"><a href="#8-事件委托" class="headerlink" title="8.事件委托"></a>8.事件委托</h1><pre><code class="hljs">delegate()方法
+<h1>8.事件委托</h1>
+<pre><code class="hljs">delegate()方法
 参数:要委托监听的元素,委托监听的事件,回调函数
 </code></pre>
-<h1 id="8-移入移出"><a href="#8-移入移出" class="headerlink" title="8.移入移出"></a>8.移入移出</h1><pre><code class="hljs">hover() 传入两个函数  (鼠标移入,鼠标移出)
+<h1>8.移入移出</h1>
+<pre><code class="hljs">hover() 传入两个函数  (鼠标移入,鼠标移出)
 eq()  获取第n个元素 从0算起
 index() 获取当前元素的序号 从0算起
 siblings() 获取除了此元素外的其他同类元素
 scrall() 监听滚动事件
 </code></pre>
-<h1 id="9-展开收起动画"><a href="#9-展开收起动画" class="headerlink" title="9.展开收起动画"></a>9.展开收起动画</h1><pre><code class="hljs">参数:
-    speed:(slow normal fast)或 表示动画时长的毫秒数值
-    easing:切换效果 默认是&quot;swing&quot;，可用参数&quot;linear&quot;
-    fn:回调函数
+<h1>9.展开收起动画</h1>
+<pre><code class="hljs">参数:
+	speed:(slow normal fast)或 表示动画时长的毫秒数值
+	easing:切换效果 默认是&quot;swing&quot;，可用参数&quot;linear&quot;
+	fn:回调函数
 1.slideDown() 展开
 2.slideUp()	  收起
 3.slideToggle()	切换
@@ -392,21 +406,51 @@ scrall() 监听滚动事件
 5.stop()  停止当前元素的动画
 6.delay() 延迟执行动画
 </code></pre>
-<h1 id="10-淡入淡出动画"><a href="#10-淡入淡出动画" class="headerlink" title="10.淡入淡出动画"></a>10.淡入淡出动画</h1><pre><code class="hljs">参数:
-    同slide方法
+<h1>10.淡入淡出动画</h1>
+<pre><code class="hljs">参数:
+	同slide方法
 1.fadeIn()   淡入
 2.fadeOut()  淡出
 3.fadeTo()	 淡入/淡出到某种程度
 4.fadeToggle() 切换
 动画队列 a().b().c()....
 </code></pre>
-<h1 id="11-自定义动画"><a href="#11-自定义动画" class="headerlink" title="11.自定义动画"></a>11.自定义动画</h1><pre><code class="hljs">1.animate()
-    参数:&#123;传入的属性都会以动画效果呈现&#125;,time,fn
-         &#123;传入的属性都会以动画效果呈现&#125;,time,速度,fn
+<h1>11.自定义动画</h1>
+<pre><code class="hljs">1.animate()
+	参数:&#123;传入的属性都会以动画效果呈现&#125;,time,fn
+		 &#123;传入的属性都会以动画效果呈现&#125;,time,速度,fn
 2.jQuery.fx.interval()  改变动画帧数
   jQuery.fx.off()       关闭所有动画
 </code></pre>
-<h1 id="12-添加节点"><a href="#12-添加节点" class="headerlink" title="12.添加节点"></a>12.添加节点</h1><p>内部插入<br>    1.append()  内部末尾添加<br>    2.prepend() 内部头部添加<br>        传入要添加的子元素<br>    3.appendTo()<br>    4.prependTo()<br>        与1,2相同  书写形式不同<br>        传入目标父元素<br>外部插入<br>    1.after()<br>        加到指定元素外部的紧跟之后<br>      insertAfter() 同上<br>    2.before()<br>        加到指定元素外部的紧跟之前<br>      insertBefore()同上<br>删除节点<br>    1.remove()  删除指定元素<br>    2.empty()   删除指定元素的内容,子元素 子元素自己不会被删除<br>    3.detach()  同remove()<br>替换节点<br>    1.replaceWith()<br>    2.replaceAll()<br>        new.(old)&#x2F;old.(new)<br>复制节点<br>    1.clone(false)<br>        浅拷贝   复制元素不复制事件<br>    2.clone(true)<br>     	深拷贝	 都复制</p>
+<h1>12.添加节点</h1>
+<p>内部插入<br>
+1.append()  内部末尾添加<br>
+2.prepend() 内部头部添加<br>
+传入要添加的子元素<br>
+3.appendTo()<br>
+4.prependTo()<br>
+与1,2相同  书写形式不同<br>
+传入目标父元素<br>
+外部插入<br>
+1.after()<br>
+加到指定元素外部的紧跟之后<br>
+insertAfter() 同上<br>
+2.before()<br>
+加到指定元素外部的紧跟之前<br>
+insertBefore()同上<br>
+删除节点<br>
+1.remove()  删除指定元素<br>
+2.empty()   删除指定元素的内容,子元素 子元素自己不会被删除<br>
+3.detach()  同remove()<br>
+替换节点<br>
+1.replaceWith()<br>
+2.replaceAll()<br>
+new.(old)/old.(new)<br>
+复制节点<br>
+1.clone(false)<br>
+浅拷贝   复制元素不复制事件<br>
+2.clone(true)<br>
+深拷贝	 都复制</p>
 
                 
               </div>
@@ -569,6 +613,11 @@ scrall() 监听滚动事件
 
 
   
+
+
+  
+  
+
 
 
 

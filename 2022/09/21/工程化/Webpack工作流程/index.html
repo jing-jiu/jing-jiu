@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,28 +282,27 @@
             
               <div class="markdown-body">
                 
-                <h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><p>在VSCode中调用webpack进行构建，熟悉webpack的整体构建流程。</p>
+                <h1>入口</h1>
+<p>在VSCode中调用webpack进行构建，熟悉webpack的整体构建流程。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;webpack&quot;</span>);<br><span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./webpack.config.js&quot;</span>); <span class="hljs-comment">//1.读取配置文件</span><br><span class="hljs-keyword">debugger</span>;<br><span class="hljs-keyword">const</span> compiler = <span class="hljs-title function_">webpack</span>(config);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">compilerCallback</span>(<span class="hljs-params">err, stats</span>) &#123;<br>    <span class="hljs-keyword">const</span> statsString = stats.<span class="hljs-title function_">toString</span>();<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(statsString);<br>&#125;<br><span class="hljs-keyword">debugger</span>;<br>compiler.<span class="hljs-title function_">run</span>(<span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> &#123;<br>    <span class="hljs-title function_">compilerCallback</span>(err, stats);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ul>
+<h1>流程</h1>
+<ul>
 <li>初始化参数：从配置文件和Shell语句中读取与合并参数，得出最终的参数；</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">在命令行执行webpack的时候可以外加一些参数，webpack执行前会将这些参数与config文件中的参数进行merge。<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>开始编译：用上一步得到的参数初始化Compiler对象，加载所有配置的插件，执行对象的run方法开始执行编译； 确定入口：根据配置中的entry找出所有的入口文件</li>
 </ul>
 <p><strong>可以看到这里生成了一个Compiler对象，之后判断如果存在plugins对象，就会遍历加载所有的插件，插件会传入compiler实例，在实例上有插件需要的钩子</strong></p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=OWQwYmZhYWQxOWFlOTliZDZiYjRkZDI0MDc1MTFiZTZfR3NkVTMyTkxmbU02OWNDVnE5djYzM2M1VXhwSWNZaFRfVG9rZW46Ym94Y25BZzR3UUd4blFsdW1vR2ZVbFBUS2pZXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=OWQwYmZhYWQxOWFlOTliZDZiYjRkZDI0MDc1MTFiZTZfR3NkVTMyTkxmbU02OWNDVnE5djYzM2M1VXhwSWNZaFRfVG9rZW46Ym94Y25BZzR3UUd4blFsdW1vR2ZVbFBUS2pZXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <p>这里是compiler抛出去的钩子</p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MzUzMWJjYjM3MDhkYTJkN2VlNjE2ODkyN2Y0ZTExMzFfaTZWMVBBelBHZjhkeklHWnFoc2V3R2RGZ3NpNUFPQ09fVG9rZW46Ym94Y25Zbk9SU203R3diQlZXaTFndGtCNUJpXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MzUzMWJjYjM3MDhkYTJkN2VlNjE2ODkyN2Y0ZTExMzFfaTZWMVBBelBHZjhkeklHWnFoc2V3R2RGZ3NpNUFPQ09fVG9rZW46Ym94Y25Zbk9SU203R3diQlZXaTFndGtCNUJpXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;webpack&quot;</span>);<br><span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./webpack.config.js&quot;</span>); <span class="hljs-comment">//1.读取配置文件</span><br><span class="hljs-keyword">const</span> compiler = <span class="hljs-title function_">webpack</span>(config);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">compilerCallback</span>(<span class="hljs-params">err, stats</span>) &#123;<br>    <span class="hljs-keyword">const</span> statsString = stats.<span class="hljs-title function_">toString</span>();<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(statsString);<br>&#125;<br>compiler.<span class="hljs-title function_">run</span>(<span class="hljs-function">(<span class="hljs-params">err, stats</span>) =&gt;</span> &#123;<br>    <span class="hljs-title function_">compilerCallback</span>(err, stats);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>编译模块：从入口文件出发，调用所有配置的Loader对模块进行编译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理；</li>
 </ul>
 <p>经过一顿操作，会在这里加载loader构建内容，这里将文件转为ast，遍历ast触发各种loader</p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NjFlODQ5ODc2Y2MxYTY3NDc0OTBkMjJmNDFiMTMxOWFfUE9IeGY5RGt3aUNzZnBQbnAzY1ZmYWZpQUlvTlF2SmxfVG9rZW46Ym94Y25mRFZDWDlpMjVjald3bDVnazY3aXRnXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NjFlODQ5ODc2Y2MxYTY3NDc0OTBkMjJmNDFiMTMxOWFfUE9IeGY5RGt3aUNzZnBQbnAzY1ZmYWZpQUlvTlF2SmxfVG9rZW46Ym94Y25mRFZDWDlpMjVjald3bDVnazY3aXRnXzE2NzMwNjkzMTM6MTY3MzA3MjkxM19WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ul>
 <li>完成模块编译：在经过第 4 步使用Loader翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系 输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个Chunk转换成一个单独的文件加入到输出列表。</li>
 <li>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
@@ -464,6 +465,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

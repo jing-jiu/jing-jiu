@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -280,20 +282,24 @@
             
               <div class="markdown-body">
                 
-                <h1 id="RTP-Media"><a href="#RTP-Media" class="headerlink" title="RTP Media"></a>RTP Media</h1><blockquote>
+                <h1>RTP Media</h1>
+<blockquote>
 <p>媒体控制以及数据统计</p>
 </blockquote>
-<h2 id="RTCRtpSender"><a href="#RTCRtpSender" class="headerlink" title="RTCRtpSender"></a>RTCRtpSender</h2><h3 id="getSenders"><a href="#getSenders" class="headerlink" title="getSenders()"></a>getSenders()</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">RTCPeerConnection方法getSenders()返回的数组RTCRtpSender对象，其中每一个代表负责发送一个磁道的数据的RTP发送者。发送方对象提供用于检查和控制轨道数据的编码和传输的方法和属性。<br>返回RTCRtpSender对象的数组，每个用于连接的轨道。如果连接上没有RTP发送者，则该数组为空。<br></code></pre></td></tr></table></figure>
-
-<h3 id="getParmeters"><a href="#getParmeters" class="headerlink" title="getParmeters()"></a>getParmeters()</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">RTCRtpSender对象身上的一个方法。返回一个RTCRtpParameters对象，该对象描述 媒体编码和传输的当前配置<span class="hljs-built_in">track</span>。<br></code></pre></td></tr></table></figure>
-
-<h3 id="setParmeters"><a href="#setParmeters" class="headerlink" title="setParmeters()"></a>setParmeters()</h3><pre><code class="hljs">将更改应用于RTCRtpSender配置。
+<h2 id="RTCRtpSender">RTCRtpSender</h2>
+<h3 id="getSenders">getSenders()</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">RTCPeerConnection方法getSenders()返回的数组RTCRtpSender对象，其中每一个代表负责发送一个磁道的数据的RTP发送者。发送方对象提供用于检查和控制轨道数据的编码和传输的方法和属性。<br>返回RTCRtpSender对象的数组，每个用于连接的轨道。如果连接上没有RTP发送者，则该数组为空。<br></code></pre></td></tr></table></figure>
+<h3 id="getParmeters">getParmeters()</h3>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">RTCRtpSender对象身上的一个方法。返回一个RTCRtpParameters对象，该对象描述 媒体编码和传输的当前配置<span class="hljs-built_in">track</span>。<br></code></pre></td></tr></table></figure>
+<h3 id="setParmeters">setParmeters()</h3>
+<pre><code class="hljs">将更改应用于RTCRtpSender配置。
 </code></pre>
-<h3 id="RTCRtpSender-getStats"><a href="#RTCRtpSender-getStats" class="headerlink" title="RTCRtpSender.getStats()"></a>RTCRtpSender.getStats()</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">该RTCRtpSender方法getStats()异步请求一个 RTCStatsReport 对象，该对象提供有关 RTCPeerConnection 拥有发件人的传出流量的统计信息，并在结果可用时返回满足的对象。<br>接收一个RTCStatsReport包含收集到的统计信息的对象作为参数。<br>返回的 RTCStatsReport 累积所有使用发送的流 RTCRtpSender 的统计信息，以及这些流具有的任何依赖项的统计信息。<br></code></pre></td></tr></table></figure>
+<h3 id="RTCRtpSender-getStats">RTCRtpSender.getStats()</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">该RTCRtpSender方法getStats()异步请求一个 RTCStatsReport 对象，该对象提供有关 RTCPeerConnection 拥有发件人的传出流量的统计信息，并在结果可用时返回满足的对象。<br>接收一个RTCStatsReport包含收集到的统计信息的对象作为参数。<br>返回的 RTCStatsReport 累积所有使用发送的流 RTCRtpSender 的统计信息，以及这些流具有的任何依赖项的统计信息。<br></code></pre></td></tr></table></figure>
+<h3 id="replaceTrack">replaceTrack()</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">用于切换音视频轨道。<br>通常需要在手机的后置摄像头和前置摄像头之间切换。使用replaceTrack()，可以为每个摄像机设置一个跟踪对象，并根据需要在两者之间切换。<br>新的track的kind必须与旧的track的kind相同（音频 - 音频 视频 - 视频）。<br></code></pre></td></tr></table></figure>
+<h2 id="RTCRtpReceiver">RTCRtpReceiver</h2>
 
-<h3 id="replaceTrack"><a href="#replaceTrack" class="headerlink" title="replaceTrack()"></a>replaceTrack()</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">用于切换音视频轨道。<br>通常需要在手机的后置摄像头和前置摄像头之间切换。使用replaceTrack()，可以为每个摄像机设置一个跟踪对象，并根据需要在两者之间切换。<br>新的track的kind必须与旧的track的kind相同（音频 - 音频 视频 - 视频）。<br></code></pre></td></tr></table></figure>
-
-<h2 id="RTCRtpReceiver"><a href="#RTCRtpReceiver" class="headerlink" title="RTCRtpReceiver"></a>RTCRtpReceiver</h2>
                 
               </div>
             
@@ -400,8 +406,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/WebRTC/" title="WebRTC相关">
-                        <span class="hidden-mobile">WebRTC相关</span>
+                      <a href="/jing-jiu/2021/12/05/%E5%85%B6%E4%BB%96/TensorFlow/" title="TensorFlow相关">
+                        <span class="hidden-mobile">TensorFlow相关</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -455,6 +461,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

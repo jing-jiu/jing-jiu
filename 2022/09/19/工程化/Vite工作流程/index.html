@@ -45,6 +45,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -226,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          922 字
+          892 字
         
       </span>
     
@@ -280,32 +282,33 @@
             
               <div class="markdown-body">
                 
-                <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><ol>
+                <h1>开始</h1>
+<ol>
 <li>Vite通过服务端将首页（index.html）返回，首页中加载<strong>main.js</strong></li>
 </ol>
-<p><strong>HTTP缓存：</strong> 充分利用 <code>http</code>缓存做优化，依赖（不会变动的代码）部分用max-age&#x3D;0,immutable <strong>强缓存</strong> ，源码部分用304 <strong>协商缓存</strong> ，提升页面打开速度</p>
+<p><strong>HTTP缓存：</strong> 充分利用 <code>http</code>缓存做优化，依赖（不会变动的代码）部分用max-age=0,immutable <strong>强缓存</strong> ，源码部分用304 <strong>协商缓存</strong> ，提升页面打开速度</p>
 <blockquote>
-<p>max-age&#x3D;0 表示使用强缓存，但是使用前会给服务器发请求确认文件是否改变。</p>
+<p>max-age=0 表示使用强缓存，但是使用前会给服务器发请求确认文件是否改变。</p>
 </blockquote>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=YWVhZGFlMTkzNDhmMTNmOGY2ZDk4Mjg5MTBmMDA3YzZfZnNpOHE3NGRpYTI5bHNHbWpKR2x5MVFLT3Y0Y1lLblJfVG9rZW46Ym94Y25LRmJlcGNZWktHZVZNVldjYzV1ck5lXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=YWVhZGFlMTkzNDhmMTNmOGY2ZDk4Mjg5MTBmMDA3YzZfZnNpOHE3NGRpYTI5bHNHbWpKR2x5MVFLT3Y0Y1lLblJfVG9rZW46Ym94Y25LRmJlcGNZWktHZVZNVldjYzV1ck5lXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ol>
 <li><strong>main.js</strong></li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App.vue&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span><br><br><span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>).<span class="hljs-title function_">mount</span>(<span class="hljs-string">&#x27;#app&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
 <p>有几处需要作出说明：</p>
 <ol>
-<li>es6Module不支持直接导入第三方模块，路径必须是 .&#x2F; 或者 &#x2F; 才会发起请求。</li>
-<li>对比源码中的main.js可以看到，将vue的引入做了处理， <strong>import { createApp } from ‘vue’</strong> 变成了 ** ‘&#x2F;@modules&#x2F;vue.js’** ，表示是第三方依赖，会去node_modules下面找。</li>
+<li>es6Module不支持直接导入第三方模块，路径必须是 ./ 或者 / 才会发起请求。</li>
+<li>对比源码中的main.js可以看到，将vue的引入做了处理， <strong>import { createApp } from ‘vue’</strong> 变成了 ** ‘/@modules/vue.js’** ，表示是第三方依赖，会去node_modules下面找。</li>
 <li>当扫描到<strong>import语句</strong>时，会向服务器发送请求，返回需要的文件，这也是为什么vite启动速度比webpack快很多的原因， <strong>因为webpack在一开始就会对所有文件进行打包编译，而vite则不会打包，使用源文件，通过请求的方式按需动态加载</strong> 。</li>
 <li>对.vue服务器会内部进行处理，分成多import（也就是多个请求），将template，css转成对象最终导出。</li>
 </ol>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmM2ZWE4NGIxNWYzYmQzODE1NmNhYmYzNmFiYmI5NGFfZ0NUTG5DQ2tGNkJNSkRDdDcwRkxlRzZ3RWZXOWc4VzNfVG9rZW46Ym94Y242YzRDN0FWTmNqaG1yWDR6RWk3THVlXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
-<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MmRmZjc2NDE2ZDM2YjdlYTIxOWVkZDFmMzFhMWQzZTNfSjEwSFpPczN6bVpQTW1BTzczSllzMDN3Z0ZhRFExVzBfVG9rZW46Ym94Y240cFkzcEk3cjZmcng3enl0V0JLd1FoXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmM2ZWE4NGIxNWYzYmQzODE1NmNhYmYzNmFiYmI5NGFfZ0NUTG5DQ2tGNkJNSkRDdDcwRkxlRzZ3RWZXOWc4VzNfVG9rZW46Ym94Y242YzRDN0FWTmNqaG1yWDR6RWk3THVlXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MmRmZjc2NDE2ZDM2YjdlYTIxOWVkZDFmMzFhMWQzZTNfSjEwSFpPczN6bVpQTW1BTzczSllzMDN3Z0ZhRFExVzBfVG9rZW46Ym94Y240cFkzcEk3cjZmcng3enl0V0JLd1FoXzE2NzMwNjkyNzI6MTY3MzA3Mjg3Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload alt=""></p>
 <ol>
 <li>HMR同webpack类似，也是用的websocket当文件1内容修改进行局部更新。</li>
 </ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h1><ul>
+<h1><strong>总结</strong></h1>
+<ul>
 <li>在 <code>koa</code> 中间件里获取请求 body</li>
 <li>通过 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/es-module-lexer">es-module-lexer</a> 解析资源 <code>ast</code> 拿到 import 的内容</li>
 <li>判断 import 的资源是否是 <code>npm</code> 模块</li>
@@ -467,6 +470,11 @@
 
 
   
+
+
+  
+  
+
 
 
 
