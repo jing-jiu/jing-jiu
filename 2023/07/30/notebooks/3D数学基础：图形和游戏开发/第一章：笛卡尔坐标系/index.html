@@ -16,24 +16,25 @@
   <meta name="author" content="Jing-Jiu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Node相关知识">
+    <meta name="description" content="所谓&quot;3D数学&quot;就是以数学方式精确测量三维空间的位置距离和角度。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Node相关">
-<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2021/08/05/Node/node%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:title" content="3D数学基础 第一章：笛卡尔坐标系">
+<meta property="og:url" content="https://jing-jiu.github.io/jing-jiu/2023/07/30/notebooks/3D%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%92%8C%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E7%AC%9B%E5%8D%A1%E5%B0%94%E5%9D%90%E6%A0%87%E7%B3%BB/index.html">
 <meta property="og:site_name" content="Jing-Jiu Blog">
-<meta property="og:description" content="Node相关知识">
+<meta property="og:description" content="所谓&quot;3D数学&quot;就是以数学方式精确测量三维空间的位置距离和角度。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-naruto.jpg">
-<meta property="article:published_time" content="2021-08-05T02:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-07T06:25:01.481Z">
+<meta property="og:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-gxy1.jpg">
+<meta property="article:published_time" content="2023-07-30T06:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-30T06:53:21.841Z">
 <meta property="article:author" content="Jing-Jiu">
-<meta property="article:tag" content="Node">
+<meta property="article:tag" content="图形学">
+<meta property="article:tag" content="3D">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-naruto.jpg">
+<meta name="twitter:image" content="https://jing-jiu.github.io/jing-jiu/img/avatar-gxy1.jpg">
   
   
   
-  <title>Node相关 - Jing-Jiu Blog</title>
+  <title>3D数学基础 第一章：笛卡尔坐标系 - Jing-Jiu Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Node相关"></span>
+            <span id="subtitle" data-typed-text="3D数学基础 第一章：笛卡尔坐标系"></span>
           
         </div>
 
@@ -214,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-08-05 10:00" pubdate>
-          2021年8月5日 上午
+        <time datetime="2023-07-30 14:00" pubdate>
+          2023年7月30日 下午
         </time>
       </span>
     
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          829 字
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          19 分钟
+          7 分钟
         
       </span>
     
@@ -275,38 +276,71 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Node相关</h1>
+            <h1 style="display: none">3D数学基础 第一章：笛卡尔坐标系</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="一-require导入机制"><a href="#一-require导入机制" class="headerlink" title="一.require导入机制"></a>一.require导入机制</h1><ol>
-<li>首先我们要清楚NodeJS的模块机制。导出的每个模块其实都是Module对象的实例。</li>
+                <h1 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h1><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>笛卡尔坐标系</td>
+<td>使用计算机以数学方式精确测量在三维空间中的位置，距离和角度</td>
+</tr>
+<tr>
+<td>二维笛卡尔坐标系</td>
+<td>* 正常二维平面坐标系（初中数学）* 而所有的二维坐标系进行任意旋转都不会改变图像的形状</td>
+</tr>
+<tr>
+<td>三维笛卡尔坐标系</td>
+<td>* 自旋性 左手坐标系 &amp; 右手坐标系* 三维坐标系中，其中一个轴固定进行旋转，如果两个坐标系的自旋性不同，则不能使其旋转重叠* 围绕一个轴将另外两个轴翻转</td>
+</tr>
+</tbody></table>
+<h1 id="左-x2F-右手坐标系的相互转换"><a href="#左-x2F-右手坐标系的相互转换" class="headerlink" title="左&#x2F;右手坐标系的相互转换"></a>左&#x2F;右手坐标系的相互转换</h1><ul>
+<li><p>数学方法</p>
+<ul>
+<li>坐标轴转换：首先，将左手坐标系的X轴与右手坐标系的X轴对齐。这可以通过将左手坐标系的X轴与右手坐标系的X轴翻转（即乘以-1）来实现。</li>
+<li>方向转换：其次，需要将左手坐标系的Z轴与右手坐标系的Z轴反向。这可以通过将左手坐标系的Z轴乘以-1来实现。</li>
+<li>坐标点转换：对于每个坐标点，将其X坐标乘以-1，然后将Z坐标乘以-1。</li>
+</ul>
+</li>
+<li><p>线性代数方法<br>左手坐标系转右手坐标系需要一个转换矩阵Z：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">[x&#x27;]   [ <span class="hljs-number">1</span>  <span class="hljs-number">0</span>  <span class="hljs-number">0</span> ]   [x]<br>[y&#x27;] = [ <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">0</span> ] * [y]<br>[z&#x27;]   [ <span class="hljs-number">0</span>  <span class="hljs-number">0</span> <span class="hljs-number">-1</span> ]   [z]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>对于向量T(左),将其从左手坐标系转换到右手坐标系：</li>
+</ul>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=NDkxYTlmOGM1ZTAwMjBhMzZkZTc4MDIyMGJjOWFjNmFfREhuY0liZ1dKR3BnSDhLWk95R2dYYUtOWWthUW1Lb3NfVG9rZW46VU1UZ2JDNGc1bzZzNWh4OGpERGNtaE5pblFmXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<ul>
+<li>对于旋转矩阵R(左),将其转换到右手坐标系：</li>
+</ul>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MmIwODE2NWJmY2IwZGI5YzM0YmE5MDcwOTMxMTkyM2JfODJTZDNRekwzS1BKQmpWNkN4QmF6SjB1MjRQYkVvS3pfVG9rZW46WGFSaGJWSWM0b3FmTW94MkZlMWNWNGRRbjVjXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<p>2、右手坐标系转换到左手坐标系：</p>
+<ul>
+<li>对于向量T(右),将其从右手坐标系转换到左手坐标系：</li>
+</ul>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=MzU4ZTQxZTIyZDgzY2MyNDAxMDRmN2IzMWIwMzBjOGJfRFJVcnN2Z3E4U0cybjBpOE5GSjNNNWNvdWRVU3lBMTJfVG9rZW46UnE1aWJhVEdvb1FGSFF4TkR1RWMxd0RUblliXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+<ul>
+<li>对于旋转矩阵R(右),将其转换到左手坐标系：</li>
+</ul>
+<p><img src="https://dpmmrrpt3p.feishu.cn/space/api/box/stream/download/asynccode/?code=OWNjMjJkZDc4ODg5ZDBlNmFjM2MzNTcwMmUwZWE5OWNfa0RLREF0RFdRb2V0WXdQbWtZMUZRSW5Pb0cybzB5T0JfVG9rZW46WXBiZGJaZ3Q3b0xhdXh4TktVYWNObUgwbkVnXzE2OTA2OTk3ODI6MTY5MDcwMzM4Ml9WNA" srcset="/jing-jiu/img/loading.gif" lazyload></p>
+</li>
+</ul>
+<p>在3D图形中，坐标系有两种主要的约定：右手坐标系和左手坐标系。这两个坐标系的区别在于他们的方向。右手坐标系通常定义为：当你的右手的拇指指向X轴，食指指向Y轴时，中指就会自然而然地指向Z轴。左手坐标系的定义相反。</p>
+<p>要将右手坐标系转换为左手坐标系，你可以通过以下步骤来完成：</p>
+<ol>
+<li><strong>反射</strong> ：选择一个轴（最常见的选择是Z轴），并将所有的坐标点相对于这个轴进行反射。如果选择Z轴，那么新的坐标(x’, y’, z’)就等于原坐标的(-x, -y, z)。</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Module</span> &#123;<br>  <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;.&#x27;</span>,<br>  <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS&#x27;</span>,<br>  <span class="hljs-attr">exports</span>: &#123;&#125;,<br>  <span class="hljs-attr">parent</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS\\node.js&#x27;</span>,<br>  <span class="hljs-attr">loaded</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">children</span>: [],<br>  <span class="hljs-attr">paths</span>: [<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\NodeJS\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\笔记\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\Task\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\Desktop\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\14828\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\Users\\node_modules&#x27;</span>,<br>    <span class="hljs-string">&#x27;C:\\node_modules&#x27;</span><br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>或者</p>
 <ol start="2">
-<li>其次我们来看require。当我们通过require引入某个模块时，require函数内部会调用Module.load方法。在这个方法内部 首先调用Module.resolveFilename来获得这个模块的绝对路径filename（定位这个模块）之后在Module._cache[filename]查找是否有缓存，如果有就直接返回缓存的exports属性。如果没有，再看是否是内置的模块，如果是内置的模块，就返回NativeModule.require(filename);如果不是内置模块，就新建一个Module实例，然后把这个实例缓存起来。最后通过load方法加载这个模块，将exports属性返回。</li>
+<li><strong>旋转</strong> ：你也可以通过旋转来实现转换。例如，你可以围绕Z轴旋转180度，旋转矩阵为：</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> <span class="hljs-title class_">Module</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;module&#x27;</span>)<br><span class="hljs-title class_">Module</span>.<span class="hljs-property">_load</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">request, parent, isMain</span>) &#123;<br>    <span class="hljs-keyword">var</span> filename = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">_resolveFilename</span>(request, parent);<br>    <span class="hljs-keyword">var</span> cachedModule = <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename];<br>    <span class="hljs-keyword">if</span> (cachedModule) &#123;<br>        <span class="hljs-keyword">return</span> cachedModule.<span class="hljs-property">exports</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">NativeModule</span>.<span class="hljs-title function_">exists</span>(filename)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title class_">NativeModule</span>.<span class="hljs-built_in">require</span>(filename);<br>    &#125;<br>    <span class="hljs-keyword">var</span> <span class="hljs-variable language_">module</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Module</span>(filename, parent);<br>    <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename] = <span class="hljs-variable language_">module</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-variable language_">module</span>.<span class="hljs-title function_">load</span>(filename);<br>        hadException = <span class="hljs-literal">false</span>;<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-keyword">if</span> (hadException) &#123;<br>            <span class="hljs-keyword">delete</span> <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[filename];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<h1 id="二-异步I-x2F-O"><a href="#二-异步I-x2F-O" class="headerlink" title="二.异步I&#x2F;O"></a>二.异步I&#x2F;O</h1><h2 id="1-事件循环机制"><a href="#1-事件循环机制" class="headerlink" title="1. 事件循环机制"></a>1. 事件循环机制</h2><ol>
-<li><p><strong>Timers（计时器阶段）</strong>:初次进入事件循环，会从计时器阶段开始。此阶段会判断是否存在过期的计时器回调（包含 setTimeout 和 setInterval），如果存在则会执行所有过期的计时器回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Pending callbacks 阶段。</p>
-</li>
-<li><p><strong>Pending callbacks</strong>：执行上一循环推迟到下一个循环迭代的I &#x2F; O回调（系统调用相关的回调）。</p>
-</li>
-<li><p><strong>Idle&#x2F;Prepare</strong>：仅供内部使用。</p>
-</li>
-<li><p><strong>Poll（轮询阶段）</strong>：当回调队列不为空时：</p>
-</li>
-</ol>
-<p>   会执行回调，若回调中触发了相应的微任务，针对每一个回调执行完毕后，就执行相应微任务。执行完所有的回到后，变为下面的情况。</p>
-<p>   当回调队列为空时（没有回调或所有回调执行完毕）：</p>
-<p>   但如果存在有计时器（setTimeout、setInterval和setImmediate）没有执行，会结束轮询阶段，进入 Check 阶段。否则会阻塞并等待任何正在执行的I&#x2F;O操作完成，并马上执行相应的回调，直到所有回调执行完毕。</p>
-<ol start="5">
-<li><p><strong>Check（查询阶段）</strong>：会检查是否存在 setImmediate 相关的回调，如果存在则执行所有回调，执行完毕后，如果回调中触发了相应的微任务，会接着执行所有微任务，执行完微任务后再进入 Close callbacks 阶段。</p>
-</li>
-<li><p><strong>Close callbacks</strong>：执行一些关闭回调，比如 <code>socket.on(&#39;close&#39;, ...)</code>等。</p>
-</li>
-</ol>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs MATLAB">[<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>[ <span class="hljs-number">0</span>,<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>]<br>[ <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -325,8 +359,15 @@
     
       <span class="category-chain">
         
-  <a href="/jing-jiu/categories/Node/" class="category-chain-item">Node</a>
+  <a href="/jing-jiu/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="category-chain-item">读书笔记</a>
   
+  
+    <span>></span>
+    
+  <a href="/jing-jiu/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/3D%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%92%8C%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="category-chain-item">3D数学基础：图形和游戏开发</a>
+  
+  
+
   
 
       </span>
@@ -340,7 +381,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/jing-jiu/tags/Node/">#Node</a>
+        <a href="/jing-jiu/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">#图形学</a>
+      
+        <a href="/jing-jiu/tags/3D/">#3D</a>
       
     </div>
   
@@ -352,8 +395,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Node相关</div>
-      <div>https://jing-jiu.github.io/jing-jiu/2021/08/05/Node/node相关/</div>
+      <div>3D数学基础 第一章：笛卡尔坐标系</div>
+      <div>https://jing-jiu.github.io/jing-jiu/2023/07/30/notebooks/3D数学基础：图形和游戏开发/第一章：笛卡尔坐标系/</div>
     </div>
     <div class="license-meta">
       
@@ -365,7 +408,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年8月5日</div>
+          <div>2023年7月30日</div>
         </div>
       
       
@@ -397,18 +440,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/jing-jiu/2021/10/10/review/%E9%9D%A2%E8%AF%952021/" title="2021面试复习">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">2021面试复习</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/jing-jiu/2021/06/05/Framework/Vue2/%E8%99%9A%E6%8B%9FDOM&amp;diff%E7%AE%97%E6%B3%95/" title="Vue2虚拟DOM&amp;diff算法(简易版)">
-                        <span class="hidden-mobile">Vue2虚拟DOM&amp;diff算法(简易版)</span>
+                      <a href="/jing-jiu/2023/01/17/notebooks/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%AE%9E%E8%B7%B5/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89/" title="JavaScript设计模式与开发实践（十二）状态模式&amp;适配器模式">
+                        <span class="hidden-mobile">JavaScript设计模式与开发实践（十二）状态模式&amp;适配器模式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
