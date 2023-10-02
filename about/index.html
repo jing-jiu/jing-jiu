@@ -4,10 +4,41 @@
 <head>
   <title>Radio Player with Ant Design</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/antd/dist/antd.min.css">
   <style>
     body {
       padding: 20px;
+    }
+
+    .ant-btn {
+      line-height: 40px;
+      position: relative;
+      display: inline-block;
+      font-weight: 400;
+      white-space: nowrap;
+      text-align: center;
+      background-image: none;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .015);
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+      height: 40px;
+      padding: 0 15px;
+      border-radius: 2px;
+      color: rgba(0, 0, 0, .85);
+      border: 1px solid #d9d9d9;
+      background: #fff;
+    }
+
+    .ant-btn-primary {
+      color: #fff;
+      border-color: #1890ff;
+      background: #1890ff;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
     }
 
     .radio-buttons {
@@ -18,7 +49,7 @@
 
     .radio-button {
       width: 100%;
-      font-size: 18px;
+      font-size: 22px;
     }
 
     #program-schedule {
@@ -53,8 +84,6 @@
   <audio id="audio2" src="http://radio.sxtvs.com/radio/opera.mp3"></audio>
   <audio id="audio3" src="http://radio.sxtvs.com/radio/story.mp3"></audio>
   <audio id="audio4" src="http://radio.sxtvs.com/radio/news.mp3"></audio>
-
-  <script src="https://cdn.jsdelivr.net/npm/antd/dist/antd.min.js"></script>
   <script>
     let currentlyPlaying = null;
     const countrySchedule = [
@@ -130,7 +159,7 @@
       { "time": "23:00", "name": "《长安夜书房》" }
     ]
     const allSchedule = { countrySchedule, operaSchedule, newsSchedule };
-    function playAudio(audioId, schedule,audioName) {
+    function playAudio(audioId, schedule, audioName) {
       const audio = document.getElementById(audioId);
       document.getElementById('current-audio-name').innerText = `当前播放：${audioName}`;
       if (currentlyPlaying && currentlyPlaying !== audio) {
